@@ -1,0 +1,23 @@
+{
+  "name": "iris",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run generate_tokenizer_cpp && npm run compile && npx tsc",
+    "compile": "emcc cpp/source/core.cpp cpp/source/tokenizer.cpp --bind -std=c++20 -I cpp/include -O3 -s MODULARIZE=1 -s EXPORT_ES6=1 -s ENVIRONMENT=web -s SINGLE_FILE=1 -o ts/wasm.js",
+    "generate_tokenizer_cpp": "py .\\cpp\\tools\\generate_tokenizer.py"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cpy-cli": "^7.0.0",
+    "typescript": "^5.9.3"
+  }
+}

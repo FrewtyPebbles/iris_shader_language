@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    "rootDir": "ts",
+    "outDir": "dist",
+
+    "declaration": true,
+    "declarationMap": true,
+
+    "sourceMap": true,
+
+    "strict": true,
+    "skipLibCheck": true,
+
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "noEmit": false,
+    "allowJs": true,
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["ts"]
+}
