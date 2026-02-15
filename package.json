@@ -9,15 +9,16 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run generate_tokenizer_cpp && npm run compile && npx tsc",
-    "compile": "emcc cpp/source/core.cpp cpp/source/tokenizer.cpp --bind -std=c++20 -I cpp/include -O3 -s MODULARIZE=1 -s EXPORT_ES6=1 -s ENVIRONMENT=web -s SINGLE_FILE=1 -o ts/wasm.js",
-    "generate_tokenizer_cpp": "py .\\cpp\\tools\\generate_tokenizer.py"
+    "build": "npm run compile && npx tsc",
+    "compile": "rimraf cpp/antlr4_grammar cpp/.antlr && antlr4 -Dlanguage=Cpp -no-listener -visitor ./cpp/iris_grammar.g4 -o ./cpp/antlr4_grammar && emcmake cmake -B build && cmake --build build -- -j && move-file build/wasm.js ts/wasm.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "cpy-cli": "^7.0.0",
+    "move-file-cli": "^3.0.0",
+    "rimraf": "^6.1.2",
     "typescript": "^5.9.3"
   }
 }
