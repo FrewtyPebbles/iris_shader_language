@@ -2,226 +2,141 @@ grammar iris_grammar;
 
 options { language=Cpp; }
 
-tokens {
-    INDENT,
-    DEDENT
-}
+root: (function_definition | statement | NEWLINE)* EOF;
 
-@lexer::header {
-#include <stack>
-}
+// missing type implies none for functions
+function_definition: 'func' LABEL '(' (declaration (',' declaration)*)? ','? ')' ('->' type)? (block);
 
-@lexer::members {
+// ternary
+conditional: 'if' expr 'then' expr 'else' expr;
 
-static const int INDENT = 1;
-static const int DEDENT = 2;
+// if statement
+conditional_block: 'if' expr (block | statement) ('elif' expr (block | statement))* ( 'else' (block | statement))?;
 
-std::stack<int> indents;
-std::vector<std::unique_ptr<antlr4::Token>> pendingTokens;
+// block
+block: '{' statement* '}';
 
-std::unique_ptr<antlr4::Token> commonToken(int type, const std::string& text) {
-    return _factory->create(type, text);
-}
+// statement
+statement: expr | declaration (NEWLINE | ';');
 
-std::unique_ptr<antlr4::Token> nextToken() override {
-    if (!pendingTokens.empty()) {
-        auto t = std::move(pendingTokens.front());
-        pendingTokens.erase(pendingTokens.begin());
-        return t;
-    }
+expr
+    // Primary/Leaf nodes (The "base" cases that stop recursion)
+    // Call (High precedence)
+    : expr '(' (expr (',' expr)*)? ')' # Call
 
-    auto next = Lexer::nextToken();
+    |'(' expr ')' # Parentheses
+    // magnitude
+    | '||' expr '||' # Magnitude
 
-    if (next->getType() == antlr4::Token::EOF) {
-        while (!indents.empty()) {
-            indents.pop();
-            pendingTokens.push_back(commonToken(iris_grammarLexer::DEDENT, ""));
-        }
-        pendingTokens.push_back(std::move(next));
-        auto t = std::move(pendingTokens.front());
-        pendingTokens.erase(pendingTokens.begin());
-        return t;
-    }
+     // abs
+    | '|' expr '|' # AbsoluteValue
 
-    return next;
-}
+    | expr ('[' expr ']')+ # IndexOperator
+    
+    // getter
+    | expr '.' expr # Getter
+    
+    // Unary Operators
+    // ~ is normalize
+    | ('not' | 'bits_not' | '+' | '-' | 'norm' | 'inv' | 'trans' | 'det' | 'deg' | 'rad' ) expr # UnaryOperator
+    
 
-}
-
-
-/* =========================
-   PARSER RULES
-   ========================= */
-
-program
-    : statement* EOF
+    // Binary Operators (Ordered by Precedence)
+    // >< is cross product
+    // ' is dot product
+    // <-> is distance
+    // -> is reflect
+    // <- is also reflect
+    | expr ('^') expr # BinaryOperator
+    | expr ('*' | '/' | '%' | '\'' | '><' | '<->' ) expr # BinaryOperator
+    | expr ('+' | '-') expr # BinaryOperator
+    | expr ('bits_left' | 'bits_right') expr # BinaryOperator
+    | expr ('bits_and' | 'bits_xor' | 'bits_or') expr # BinaryOperator
+    | expr ('and' | 'or') expr # BinaryOperator
+    | expr ('<' | '>' | '>=' | '<=' | '==') expr # BinaryOperator
+    // cast
+    | expr 'as' type # Cast
+    | <assoc=right> expr '=' expr # BinaryOperator
+    | <assoc=right> declaration '=' expr # BinaryOperator
+    | expr ('^=' | '*=' | '/=' | '%=' | '\'=' | '><=' | '<->=' ) expr # BinaryOperator
+    | declaration ('^=' | '*=' | '/=' | '%=' | '\'=' | '><=' | '<->=' ) expr # BinaryOperator
+    | expr ('+=' | '-=') expr # BinaryOperator
+    | declaration ('+=' | '-=') expr # BinaryOperator
+    | expr ('bits_left=' | 'bits_right=') expr # BinaryOperator
+    | declaration ('bits_left=' | 'bits_right=') expr # BinaryOperator
+    | expr ('bits_and=' | 'bits_xor=' | 'bits_or=') expr # BinaryOperator
+    | declaration ('bits_and=' | 'bits_xor=' | 'bits_or=') expr # BinaryOperator
+    | expr ('and=' | 'or=') expr # BinaryOperator
+    | declaration ('and=' | 'or=') expr # BinaryOperator
+    | PRIMITIVE # Primitive
     ;
 
-statement
-    : macroDecl
-    | uniformDecl
-    | vertexDecl
-    | outDecl
-    | funcDecl
-    | simpleStmt
-    | NEWLINE
-    ;
+descriptor: 'def'
+          | 'in'
+          | 'out'
+          | 'uniform'
+          | 'vertex' '[' INT ']'
+          | 'mut'
+          ;
 
-simpleStmt
-    : expression NEWLINE
-    ;
+declaration: descriptor* LABEL (':' type)?;
 
-macroDecl
-    : DEF IDENTIFIER '=' expression NEWLINE
-    ;
-
-uniformDecl
-    : UNIFORM IDENTIFIER ':' type NEWLINE
-    ;
-
-vertexDecl
-    : VERTEX '[' INTEGER ']' IDENTIFIER ':' type NEWLINE
-    ;
-
-outDecl
-    : OUT IDENTIFIER ':' type NEWLINE
-    ;
-
-funcDecl
-    : FUNC IDENTIFIER '(' paramList? ')' ARROW type ':' NEWLINE INDENT block DEDENT
-    ;
-
-paramList
-    : param (',' param)*
-    ;
-
-param
-    : IDENTIFIER ':' type
-    ;
-
-block
-    : statement+
-    ;
-
-/* =========================
-   EXPRESSIONS
-   ========================= */
-
-expression
-    : assignment
-    ;
-
-assignment
-    : logicalOr ( '=' assignment )?
-    ;
-
-logicalOr
-    : logicalAnd ( '||' logicalAnd )*
-    ;
-
-logicalAnd
-    : equality ( '&&' equality )*
-    ;
-
-equality
-    : comparison ( ('==' | '!=') comparison )*
-    ;
-
-comparison
-    : term ( ('<' | '>' | '<=' | '>=') term )*
-    ;
-
-term
-    : factor ( ('+' | '-') factor )*
-    ;
-
-factor
-    : unary ( ('*' | '/') unary )*
-    ;
-
-unary
-    : ('!' | '-') unary
-    | primary
-    ;
-
-primary
-    : literal
-    | IDENTIFIER
-    | IDENTIFIER '.' IDENTIFIER
-    | functionCall
-    | '(' expression ')'
-    ;
-
-functionCall
-    : IDENTIFIER '(' argumentList? ')'
-    ;
-
-argumentList
-    : expression (',' expression)*
-    ;
-
-literal
-    : INTEGER
-    | FLOAT
-    ;
-
-type
-    : IDENTIFIER
-    ;
-
-/* =========================
-   LEXER
-   ========================= */
-
-DEF         : 'def';
-UNIFORM     : 'uniform';
-VERTEX      : 'vertex';
-OUT         : 'out';
-FUNC        : 'func';
-RETURN      : 'return';
-ARROW       : '->';
-
-INTEGER     : [0-9]+;
-FLOAT       : [0-9]+ '.' [0-9]*;
-
-IDENTIFIER  : [a-zA-Z_][a-zA-Z0-9_]*;
-
-COLON       : ':';
-LPAREN      : '(';
-RPAREN      : ')';
-LBRACK      : '[';
-RBRACK      : ']';
-
-NEWLINE
-    : ('\r'? '\n')+
-      {
-          {   // <-- add extra braces here
-              std::string newLine = getText();
-              std::string spaces;
-              int next = _input->LA(1);
-              while (next == ' ' || next == '\t') {
-                  spaces += (char)next;
-                  _input->consume();
-                  next = _input->LA(1);
-              }
-
-              int indent = spaces.length();
-              int previous = indents.empty() ? 0 : indents.top();
-
-              if (indent > previous) {
-                  indents.push(indent);
-                  emit(commonToken(INDENT, ""));
-              }
-              else {
-                  while (!indents.empty() && indents.top() > indent) {
-                      indents.pop();
-                      emit(commonToken(DEDENT, ""));
-                  }
-              }
-          }   // <-- end scope
-      }
+type:( precision_qualifier )?
+    ( 'none'
+    | 'i8'
+    | 'i16'
+    | 'i32'
+    | 'u8'
+    | 'u16'
+    | 'u32'
+    | 'f8'
+    | 'f16'
+    | 'f32'
+    | 'f64'
+    | 'bool'
+    | 'vec2'
+    | 'vec3'
+    | 'vec4'
+    | 'v2'
+    | 'v3'
+    | 'v4'
+    | 'm2'
+    | 'm3'
+    | 'm4'
+    | 'm2x2'
+    | 'm3x3'
+    | 'm4x4'
+    | 'm2x3'
+    | 'm3x2'
+    | 'm3x4'
+    | 'm4x3'
+    | 'm2x4'
+    | 'm4x2'
+    | 'mat2'
+    | 'mat3'
+    | 'mat4'
+    | 'mat2x3'
+    | 'mat2x4'
+    | 'mat3x2'
+    | 'mat3x4'
+    | 'mat4x2'
+    | 'mat4x3'
+    ) ('[' INT ']')*
     ;
 
 
-WS  : [ \t]+ -> skip;
-COMMENT : '#' ~[\r\n]* -> skip;
+precision_qualifier: 'lp' | 'mp' | 'hp';
+
+PRIMITIVE: INT | FLOAT | LABEL;
+
+FLOAT: [0-9]+'.'[0-9]+;
+LABEL: [a-zA-Z_] [a-zA-Z_0-9]*;
+INT: [0-9]+;
+
+NEWLINE: '\r'? '\n' | '\r';
+WS: [ \t]+ -> skip;
+BLOCK_COMMENT
+    : '#*' ( . | '\r' | '\n' )*? '*#' -> skip
+    ;
+LINE_COMMENT : '#' ~[\r\n]* -> skip ;
+ERROR_TOKEN: . ;

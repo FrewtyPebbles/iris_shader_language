@@ -21,9 +21,10 @@ uniform u_model:mat4
 uniform u_view:mat4
 uniform u_projection:mat4
 
-func main() -> none:
+func main() -> none {
     v_frag_pos = u_model * vec4(a_position, 1.0)
     v_normal = normalize(mat3(transpose(inverse(u_model))) * a_normal)
     v_uv = a_uv
 
     gl.position = u_projection * u_view * v_frag_pos
+}

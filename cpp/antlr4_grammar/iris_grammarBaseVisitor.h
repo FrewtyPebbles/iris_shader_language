@@ -15,43 +15,19 @@
 class  iris_grammarBaseVisitor : public iris_grammarVisitor {
 public:
 
-  virtual std::any visitProgram(iris_grammarParser::ProgramContext *ctx) override {
+  virtual std::any visitRoot(iris_grammarParser::RootContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitStatement(iris_grammarParser::StatementContext *ctx) override {
+  virtual std::any visitFunction_definition(iris_grammarParser::Function_definitionContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitSimpleStmt(iris_grammarParser::SimpleStmtContext *ctx) override {
+  virtual std::any visitConditional(iris_grammarParser::ConditionalContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitMacroDecl(iris_grammarParser::MacroDeclContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitUniformDecl(iris_grammarParser::UniformDeclContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitVertexDecl(iris_grammarParser::VertexDeclContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitOutDecl(iris_grammarParser::OutDeclContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitFuncDecl(iris_grammarParser::FuncDeclContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitParamList(iris_grammarParser::ParamListContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitParam(iris_grammarParser::ParamContext *ctx) override {
+  virtual std::any visitConditional_block(iris_grammarParser::Conditional_blockContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -59,59 +35,63 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitExpression(iris_grammarParser::ExpressionContext *ctx) override {
+  virtual std::any visitStatement(iris_grammarParser::StatementContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitAssignment(iris_grammarParser::AssignmentContext *ctx) override {
+  virtual std::any visitCast(iris_grammarParser::CastContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitLogicalOr(iris_grammarParser::LogicalOrContext *ctx) override {
+  virtual std::any visitCall(iris_grammarParser::CallContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitLogicalAnd(iris_grammarParser::LogicalAndContext *ctx) override {
+  virtual std::any visitAbsoluteValue(iris_grammarParser::AbsoluteValueContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitEquality(iris_grammarParser::EqualityContext *ctx) override {
+  virtual std::any visitPrimitive(iris_grammarParser::PrimitiveContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitComparison(iris_grammarParser::ComparisonContext *ctx) override {
+  virtual std::any visitGetter(iris_grammarParser::GetterContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitTerm(iris_grammarParser::TermContext *ctx) override {
+  virtual std::any visitMagnitude(iris_grammarParser::MagnitudeContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitFactor(iris_grammarParser::FactorContext *ctx) override {
+  virtual std::any visitUnaryOperator(iris_grammarParser::UnaryOperatorContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitUnary(iris_grammarParser::UnaryContext *ctx) override {
+  virtual std::any visitBinaryOperator(iris_grammarParser::BinaryOperatorContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitPrimary(iris_grammarParser::PrimaryContext *ctx) override {
+  virtual std::any visitParentheses(iris_grammarParser::ParenthesesContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitFunctionCall(iris_grammarParser::FunctionCallContext *ctx) override {
+  virtual std::any visitIndexOperator(iris_grammarParser::IndexOperatorContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitArgumentList(iris_grammarParser::ArgumentListContext *ctx) override {
+  virtual std::any visitDescriptor(iris_grammarParser::DescriptorContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitLiteral(iris_grammarParser::LiteralContext *ctx) override {
+  virtual std::any visitDeclaration(iris_grammarParser::DeclarationContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual std::any visitType(iris_grammarParser::TypeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitPrecision_qualifier(iris_grammarParser::Precision_qualifierContext *ctx) override {
     return visitChildren(ctx);
   }
 

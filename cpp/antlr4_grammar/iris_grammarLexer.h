@@ -1,7 +1,4 @@
 
-#include <stack>
-
-
 // Generated from ./cpp/iris_grammar.g4 by ANTLR 4.13.2
 
 #pragma once
@@ -17,51 +14,30 @@ public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    T__14 = 15, T__15 = 16, DEF = 17, UNIFORM = 18, VERTEX = 19, OUT = 20, 
-    FUNC = 21, RETURN = 22, ARROW = 23, INTEGER = 24, FLOAT = 25, IDENTIFIER = 26, 
-    COLON = 27, LPAREN = 28, RPAREN = 29, LBRACK = 30, RBRACK = 31, NEWLINE = 32, 
-    WS = 33, COMMENT = 34
+    T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
+    T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
+    T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, T__30 = 31, T__31 = 32, 
+    T__32 = 33, T__33 = 34, T__34 = 35, T__35 = 36, T__36 = 37, T__37 = 38, 
+    T__38 = 39, T__39 = 40, T__40 = 41, T__41 = 42, T__42 = 43, T__43 = 44, 
+    T__44 = 45, T__45 = 46, T__46 = 47, T__47 = 48, T__48 = 49, T__49 = 50, 
+    T__50 = 51, T__51 = 52, T__52 = 53, T__53 = 54, T__54 = 55, T__55 = 56, 
+    T__56 = 57, T__57 = 58, T__58 = 59, T__59 = 60, T__60 = 61, T__61 = 62, 
+    T__62 = 63, T__63 = 64, T__64 = 65, T__65 = 66, T__66 = 67, T__67 = 68, 
+    T__68 = 69, T__69 = 70, T__70 = 71, T__71 = 72, T__72 = 73, T__73 = 74, 
+    T__74 = 75, T__75 = 76, T__76 = 77, T__77 = 78, T__78 = 79, T__79 = 80, 
+    T__80 = 81, T__81 = 82, T__82 = 83, T__83 = 84, T__84 = 85, T__85 = 86, 
+    T__86 = 87, T__87 = 88, T__88 = 89, T__89 = 90, T__90 = 91, T__91 = 92, 
+    T__92 = 93, T__93 = 94, T__94 = 95, T__95 = 96, T__96 = 97, T__97 = 98, 
+    T__98 = 99, T__99 = 100, T__100 = 101, T__101 = 102, T__102 = 103, T__103 = 104, 
+    T__104 = 105, T__105 = 106, T__106 = 107, T__107 = 108, T__108 = 109, 
+    T__109 = 110, T__110 = 111, T__111 = 112, T__112 = 113, PRIMITIVE = 114, 
+    FLOAT = 115, LABEL = 116, INT = 117, NEWLINE = 118, WS = 119, BLOCK_COMMENT = 120, 
+    LINE_COMMENT = 121, ERROR_TOKEN = 122
   };
 
   explicit iris_grammarLexer(antlr4::CharStream *input);
 
   ~iris_grammarLexer() override;
-
-
-
-  static const int INDENT = 1;
-  static const int DEDENT = 2;
-
-  std::stack<int> indents;
-  std::vector<std::unique_ptr<antlr4::Token>> pendingTokens;
-
-  std::unique_ptr<antlr4::Token> commonToken(int type, const std::string& text) {
-      return _factory->create(type, text);
-  }
-
-  std::unique_ptr<antlr4::Token> nextToken() override {
-      if (!pendingTokens.empty()) {
-          auto t = std::move(pendingTokens.front());
-          pendingTokens.erase(pendingTokens.begin());
-          return t;
-      }
-
-      auto next = Lexer::nextToken();
-
-      if (next->getType() == antlr4::Token::EOF) {
-          while (!indents.empty()) {
-              indents.pop();
-              pendingTokens.push_back(commonToken(iris_grammarLexer::DEDENT, ""));
-          }
-          pendingTokens.push_back(std::move(next));
-          auto t = std::move(pendingTokens.front());
-          pendingTokens.erase(pendingTokens.begin());
-          return t;
-      }
-
-      return next;
-  }
-
 
 
   std::string getGrammarFileName() const override;
@@ -78,8 +54,6 @@ public:
 
   const antlr4::atn::ATN& getATN() const override;
 
-  void action(antlr4::RuleContext *context, size_t ruleIndex, size_t actionIndex) override;
-
   // By default the static state used to implement the lexer is lazily initialized during the first
   // call to the constructor. You can call this function if you wish to initialize the static state
   // ahead of time.
@@ -88,7 +62,6 @@ public:
 private:
 
   // Individual action functions triggered by action() above.
-  void NEWLINEAction(antlr4::RuleContext *context, size_t actionIndex);
 
   // Individual semantic predicate functions triggered by sempred() above.
 

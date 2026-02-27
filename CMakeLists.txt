@@ -21,7 +21,9 @@ add_executable(wasm
 
 target_link_options(wasm PRIVATE 
     "--bind"
-    "-O3"
+    # "-O3"
+    "-fexceptions"
+    "-sDISABLE_EXCEPTION_CATCHING=0"
     "-sMODULARIZE=1"
     "-sEXPORT_ES6=1"
     "-sENVIRONMENT=web"
