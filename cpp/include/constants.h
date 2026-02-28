@@ -1,0 +1,120 @@
+#pragma once
+#include <unordered_set>
+#include <string>
+
+using std::unordered_set;
+using std::string;
+
+const unordered_set<string> BUILT_IN_FUNCTION_NAMES = {
+    "radians","degrees","sin","cos","tan","asin","acos","atan","sinh","cosh","tanh","asinh","acosh","atanh",
+    "pow","exp","log","exp2","log2","sqrt","inversesqrt",
+    "abs","sign","floor","trunc","round","roundEven","ceil","fract","mod","modf",
+    "min","max","clamp","mix","step","smoothstep","isnan","isinf",
+    "floatBitsToInt","floatBitsToUint","intBitsToFloat","uintBitsToFloat",
+    "fma","frexp","ldexp",
+    "packUnorm2x16","packSnorm2x16","packUnorm4x8","packSnorm4x8",
+    "unpackUnorm2x16","unpackSnorm2x16","unpackUnorm4x8","unpackSnorm4x8",
+    "packHalf2x16","unpackHalf2x16",
+    "length","distance","dot","cross","normalize","faceforward","reflect","refract",
+    "matrixCompMult","outerProduct","transpose","determinant","inverse",
+    "lessThan","lessThanEqual","greaterThan","greaterThanEqual","equal","notEqual",
+    "any","all","not",
+    "uaddCarry","usubBorrow","umulExtended","imulExtended","bitfieldExtract","bitfieldInsert",
+    "bitfieldReverse","bitCount","findLSB","findMSB",
+    "textureSize","textureQueryLod","textureQueryLevels",
+    "texture","textureProj","textureLod","textureOffset","texelFetch","texelFetchOffset",
+    "textureProjOffset","textureLodOffset","textureProjLod","textureProjLodOffset",
+    "textureGrad","textureGradOffset","textureProjGrad","textureProjGradOffset",
+    "textureGather","textureGatherOffset","textureGatherOffsets",
+    "dFdx","dFdy","fwidth","dFdxFine","dFdyFine","fwidthFine","dFdxCoarse","dFdyCoarse","fwidthCoarse",
+    "atomicCounterIncrement","atomicCounterDecrement","atomicCounter","atomicAdd","atomicMin","atomicMax","atomicAnd","atomicOr","atomicXor","atomicExchange","atomicCompSwap",
+    "barrier","memoryBarrier","memoryBarrierAtomicCounter","memoryBarrierBuffer",
+    "memoryBarrierShared","memoryBarrierImage","groupMemoryBarrier"
+};
+
+const unordered_set<string> GL_BUILT_IN_VARIABLES = {
+    "gl_Position",
+    "gl_PointSize",
+    "gl_ClipDistance",
+    "gl_CullDistance",
+
+    "gl_VertexID",
+    "gl_InstanceID",
+    "gl_BaseVertex",
+    "gl_BaseInstance",
+    "gl_DrawID",
+
+    "gl_FragCoord",
+    "gl_FrontFacing",
+    "gl_PointCoord",
+    "gl_FragDepth",
+    "gl_SampleID",
+    "gl_SamplePosition",
+    "gl_SampleMaskIn",
+    "gl_SampleMask",
+    "gl_HelperInvocation",
+
+    "gl_PrimitiveID",
+    "gl_Layer",
+    "gl_ViewportIndex",
+
+    "gl_in",
+    "gl_out",
+
+    "gl_TessCoord",
+    "gl_PatchVerticesIn",
+    "gl_PrimitiveIDIn",
+    "gl_InvocationID",
+    "gl_TessLevelOuter",
+    "gl_TessLevelInner",
+
+    "gl_WorkGroupSize",
+    "gl_WorkGroupID",
+    "gl_LocalInvocationID",
+    "gl_GlobalInvocationID",
+    "gl_LocalInvocationIndex",
+    "gl_NumWorkGroups",
+
+    "gl_FrontColor",
+    "gl_BackColor",
+    "gl_FrontSecondaryColor",
+    "gl_BackSecondaryColor",
+    "gl_TexCoord",
+    "gl_FogFragCoord",
+    "gl_ClipVertex",
+
+    "gl_FragColor",
+    "gl_FragData",
+
+    "gl_MaxVertexAttribs",
+    "gl_MaxVertexUniformComponents",
+    "gl_MaxVertexUniformVectors",
+    "gl_MaxVertexOutputComponents",
+    "gl_MaxFragmentInputComponents",
+    "gl_MaxFragmentUniformComponents",
+    "gl_MaxFragmentUniformVectors",
+    "gl_MaxDrawBuffers",
+    "gl_MaxTextureImageUnits",
+    "gl_MaxCombinedTextureImageUnits",
+    "gl_MaxVertexTextureImageUnits",
+    "gl_MaxVaryingComponents",
+    "gl_MaxVaryingVectors",
+    "gl_MaxVertexUniformBlocks",
+    "gl_MaxFragmentUniformBlocks",
+    "gl_MaxCombinedUniformBlocks",
+    "gl_MaxUniformBlockSize",
+    "gl_MaxUniformBufferBindings",
+    "gl_MaxTransformFeedbackBuffers",
+    "gl_MaxTransformFeedbackInterleavedComponents",
+    "gl_MaxGeometryOutputVertices",
+    "gl_MaxGeometryTotalOutputComponents",
+    "gl_MaxGeometryUniformComponents",
+    "gl_MaxGeometryInputComponents",
+    "gl_MaxComputeWorkGroupCount",
+    "gl_MaxComputeWorkGroupSize",
+    "gl_MaxComputeUniformComponents",
+    "gl_MaxComputeTextureImageUnits",
+    "gl_MaxComputeImageUniforms",
+    "gl_MaxComputeAtomicCounters",
+    "gl_MaxComputeAtomicCounterBuffers"
+};

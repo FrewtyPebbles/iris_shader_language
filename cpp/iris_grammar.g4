@@ -129,16 +129,16 @@ conditional: IF expr THEN expr ELSE expr;
 expr
     // Primary/Leaf nodes (The "base" cases that stop recursion)
     // Call (High precedence)
-    : expr '=' expr # BinaryOperator
-    | expr ('[' expr ']')+ # IndexOp
+    : expr op='=' expr # BinaryOperator
+    | expr ('[' expr ']')+ # IndexOperator
     | expr '(' (expr (',' expr)*)? ')' # Call
-    | type '(' (expr (',' expr)*)? ')' # Construct
+    | type '(' (expr (',' expr)*)? ')' # Call
     |'(' expr ')' # Parentheses
     // magnitude
-    | '||' expr '||' # Mag
+    | '||' expr '||' # Magnitude
 
      // abs
-    | '|' expr '|' # Abs
+    | '|' expr '|' # AbsoluteValue
 
 
     | conditional # Ternary
@@ -157,20 +157,20 @@ expr
     // <-> is distance
     // -> is reflect
     // <- is also reflect
-    | expr ('^') expr # BinaryOperator
-    | expr ('*' | '/' | '%' | '\'' | '><' | '<->' ) expr # BinaryOperator
-    | expr ('+' | '-') expr # BinaryOperator
-    | expr (BITS_LEFT | BITS_RIGHT) expr # BinaryOperator
-    | expr (BITS_AND | BITS_XOR | BITS_OR) expr # BinaryOperator
-    | expr (AND | OR) expr # BinaryOperator
-    | expr ('<' | '>' | '>=' | '<=' | '==') expr # BinaryOperator
+    | expr op='^' expr # BinaryOperator
+    | expr op=('*' | '/' | '%' | '\'' | '><' | '<->' ) expr # BinaryOperator
+    | expr op=('+' | '-') expr # BinaryOperator
+    | expr op=(BITS_LEFT | BITS_RIGHT) expr # BinaryOperator
+    | expr op=(BITS_AND | BITS_XOR | BITS_OR) expr # BinaryOperator
+    | expr op=(AND | OR) expr # BinaryOperator
+    | expr op=('<' | '>' | '>=' | '<=' | '==') expr # BinaryOperator
     // cast
     | expr AS type # Cast
-    | expr ('^=' | '*=' | '/=' | '%=' | '\'=' | '><=' | '<->=' ) expr # BinaryOperator
-    | expr ('+=' | '-=') expr # BinaryOperator
-    | expr (BITS_LEFT_EQ | BITS_RIGHT_EQ) expr # BinaryOperator
-    | expr (BITS_AND_EQ | BITS_XOR_EQ | BITS_OR_EQ) expr # BinaryOperator
-    | expr (AND_EQ | OR_EQ) expr # BinaryOperator
+    | expr op=('^=' | '*=' | '/=' | '%=' | '\'=' | '><=' | '<->=' ) expr # BinaryOperator
+    | expr op=('+=' | '-=') expr # BinaryOperator
+    | expr op=(BITS_LEFT_EQ | BITS_RIGHT_EQ) expr # BinaryOperator
+    | expr op=(BITS_AND_EQ | BITS_XOR_EQ | BITS_OR_EQ) expr # BinaryOperator
+    | expr op=(AND_EQ | OR_EQ) expr # BinaryOperator
     | primitive # PrimitiveExpression
     ;
 

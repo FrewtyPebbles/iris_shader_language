@@ -91,7 +91,7 @@ void iris_grammarParserInitialize() {
     }
   );
   static const int32_t serializedATNSegment[] = {
-  	4,1,123,316,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
+  	4,1,123,317,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
   	7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,
   	14,1,0,1,0,3,0,33,8,0,1,0,1,0,3,0,37,8,0,5,0,39,8,0,10,0,12,0,42,9,0,
   	1,0,1,0,1,1,1,1,1,1,3,1,49,8,1,1,2,1,2,1,2,1,2,5,2,55,8,2,10,2,12,2,58,
@@ -111,35 +111,35 @@ void iris_grammarParserInitialize() {
   	8,12,8,253,9,8,3,8,255,8,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,5,8,264,8,8,10,
   	8,12,8,267,9,8,1,9,1,9,1,9,1,9,1,9,3,9,274,8,9,1,10,1,10,1,11,3,11,279,
   	8,11,1,11,1,11,1,11,1,11,5,11,285,8,11,10,11,12,11,288,9,11,1,12,1,12,
-  	1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,3,12,301,8,12,1,12,1,12,
-  	1,12,1,12,1,12,3,12,308,8,12,3,12,310,8,12,1,13,1,13,1,14,1,14,1,14,0,
-  	1,16,15,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,0,16,2,0,14,15,51,58,
-  	2,0,3,3,17,21,1,0,14,15,1,0,64,65,1,0,61,63,1,0,59,60,1,0,22,26,1,0,27,
-  	33,1,0,34,35,1,0,71,72,1,0,68,70,1,0,66,67,1,0,45,49,1,0,113,115,1,0,
-  	74,112,1,0,116,118,360,0,40,1,0,0,0,2,48,1,0,0,0,4,84,1,0,0,0,6,86,1,
-  	0,0,0,8,115,1,0,0,0,10,139,1,0,0,0,12,144,1,0,0,0,14,156,1,0,0,0,16,194,
-  	1,0,0,0,18,273,1,0,0,0,20,275,1,0,0,0,22,278,1,0,0,0,24,309,1,0,0,0,26,
-  	311,1,0,0,0,28,313,1,0,0,0,30,32,3,6,3,0,31,33,3,26,13,0,32,31,1,0,0,
-  	0,32,33,1,0,0,0,33,39,1,0,0,0,34,36,3,2,1,0,35,37,3,26,13,0,36,35,1,0,
-  	0,0,36,37,1,0,0,0,37,39,1,0,0,0,38,30,1,0,0,0,38,34,1,0,0,0,39,42,1,0,
-  	0,0,40,38,1,0,0,0,40,41,1,0,0,0,41,43,1,0,0,0,42,40,1,0,0,0,43,44,5,0,
-  	0,1,44,1,1,0,0,0,45,49,3,4,2,0,46,49,3,24,12,0,47,49,3,16,8,0,48,45,1,
-  	0,0,0,48,46,1,0,0,0,48,47,1,0,0,0,49,3,1,0,0,0,50,51,5,44,0,0,51,56,5,
-  	117,0,0,52,53,5,1,0,0,53,55,5,117,0,0,54,52,1,0,0,0,55,58,1,0,0,0,56,
-  	54,1,0,0,0,56,57,1,0,0,0,57,59,1,0,0,0,58,56,1,0,0,0,59,69,5,43,0,0,60,
-  	65,3,10,5,0,61,62,5,2,0,0,62,64,3,10,5,0,63,61,1,0,0,0,64,67,1,0,0,0,
-  	65,63,1,0,0,0,65,66,1,0,0,0,66,70,1,0,0,0,67,65,1,0,0,0,68,70,5,3,0,0,
-  	69,60,1,0,0,0,69,68,1,0,0,0,70,85,1,0,0,0,71,72,5,43,0,0,72,77,5,117,
-  	0,0,73,74,5,1,0,0,74,76,5,117,0,0,75,73,1,0,0,0,76,79,1,0,0,0,77,75,1,
-  	0,0,0,77,78,1,0,0,0,78,82,1,0,0,0,79,77,1,0,0,0,80,81,5,73,0,0,81,83,
-  	5,117,0,0,82,80,1,0,0,0,82,83,1,0,0,0,83,85,1,0,0,0,84,50,1,0,0,0,84,
-  	71,1,0,0,0,85,5,1,0,0,0,86,87,5,38,0,0,87,88,5,117,0,0,88,97,5,4,0,0,
-  	89,94,3,24,12,0,90,91,5,2,0,0,91,93,3,24,12,0,92,90,1,0,0,0,93,96,1,0,
-  	0,0,94,92,1,0,0,0,94,95,1,0,0,0,95,98,1,0,0,0,96,94,1,0,0,0,97,89,1,0,
-  	0,0,97,98,1,0,0,0,98,100,1,0,0,0,99,101,5,2,0,0,100,99,1,0,0,0,100,101,
-  	1,0,0,0,101,102,1,0,0,0,102,105,5,5,0,0,103,104,5,6,0,0,104,106,3,22,
-  	11,0,105,103,1,0,0,0,105,106,1,0,0,0,106,110,1,0,0,0,107,109,5,120,0,
-  	0,108,107,1,0,0,0,109,112,1,0,0,0,110,108,1,0,0,0,110,111,1,0,0,0,111,
+  	1,12,1,12,3,12,294,8,12,1,12,1,12,1,12,1,12,1,12,1,12,3,12,302,8,12,1,
+  	12,1,12,1,12,1,12,1,12,3,12,309,8,12,3,12,311,8,12,1,13,1,13,1,14,1,14,
+  	1,14,0,1,16,15,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,0,16,2,0,14,15,
+  	51,58,2,0,3,3,17,21,1,0,14,15,1,0,64,65,1,0,61,63,1,0,59,60,1,0,22,26,
+  	1,0,27,33,1,0,34,35,1,0,71,72,1,0,68,70,1,0,66,67,1,0,45,49,1,0,113,115,
+  	1,0,74,112,1,0,116,118,362,0,40,1,0,0,0,2,48,1,0,0,0,4,84,1,0,0,0,6,86,
+  	1,0,0,0,8,115,1,0,0,0,10,139,1,0,0,0,12,144,1,0,0,0,14,156,1,0,0,0,16,
+  	194,1,0,0,0,18,273,1,0,0,0,20,275,1,0,0,0,22,278,1,0,0,0,24,310,1,0,0,
+  	0,26,312,1,0,0,0,28,314,1,0,0,0,30,32,3,6,3,0,31,33,3,26,13,0,32,31,1,
+  	0,0,0,32,33,1,0,0,0,33,39,1,0,0,0,34,36,3,2,1,0,35,37,3,26,13,0,36,35,
+  	1,0,0,0,36,37,1,0,0,0,37,39,1,0,0,0,38,30,1,0,0,0,38,34,1,0,0,0,39,42,
+  	1,0,0,0,40,38,1,0,0,0,40,41,1,0,0,0,41,43,1,0,0,0,42,40,1,0,0,0,43,44,
+  	5,0,0,1,44,1,1,0,0,0,45,49,3,4,2,0,46,49,3,24,12,0,47,49,3,16,8,0,48,
+  	45,1,0,0,0,48,46,1,0,0,0,48,47,1,0,0,0,49,3,1,0,0,0,50,51,5,44,0,0,51,
+  	56,5,117,0,0,52,53,5,1,0,0,53,55,5,117,0,0,54,52,1,0,0,0,55,58,1,0,0,
+  	0,56,54,1,0,0,0,56,57,1,0,0,0,57,59,1,0,0,0,58,56,1,0,0,0,59,69,5,43,
+  	0,0,60,65,3,10,5,0,61,62,5,2,0,0,62,64,3,10,5,0,63,61,1,0,0,0,64,67,1,
+  	0,0,0,65,63,1,0,0,0,65,66,1,0,0,0,66,70,1,0,0,0,67,65,1,0,0,0,68,70,5,
+  	3,0,0,69,60,1,0,0,0,69,68,1,0,0,0,70,85,1,0,0,0,71,72,5,43,0,0,72,77,
+  	5,117,0,0,73,74,5,1,0,0,74,76,5,117,0,0,75,73,1,0,0,0,76,79,1,0,0,0,77,
+  	75,1,0,0,0,77,78,1,0,0,0,78,82,1,0,0,0,79,77,1,0,0,0,80,81,5,73,0,0,81,
+  	83,5,117,0,0,82,80,1,0,0,0,82,83,1,0,0,0,83,85,1,0,0,0,84,50,1,0,0,0,
+  	84,71,1,0,0,0,85,5,1,0,0,0,86,87,5,38,0,0,87,88,5,117,0,0,88,97,5,4,0,
+  	0,89,94,3,24,12,0,90,91,5,2,0,0,91,93,3,24,12,0,92,90,1,0,0,0,93,96,1,
+  	0,0,0,94,92,1,0,0,0,94,95,1,0,0,0,95,98,1,0,0,0,96,94,1,0,0,0,97,89,1,
+  	0,0,0,97,98,1,0,0,0,98,100,1,0,0,0,99,101,5,2,0,0,100,99,1,0,0,0,100,
+  	101,1,0,0,0,101,102,1,0,0,0,102,105,5,5,0,0,103,104,5,6,0,0,104,106,3,
+  	22,11,0,105,103,1,0,0,0,105,106,1,0,0,0,106,110,1,0,0,0,107,109,5,120,
+  	0,0,108,107,1,0,0,0,109,112,1,0,0,0,110,108,1,0,0,0,110,111,1,0,0,0,111,
   	113,1,0,0,0,112,110,1,0,0,0,113,114,3,12,6,0,114,7,1,0,0,0,115,116,5,
   	39,0,0,116,119,3,16,8,0,117,120,3,12,6,0,118,120,3,2,1,0,119,117,1,0,
   	0,0,119,118,1,0,0,0,120,129,1,0,0,0,121,122,5,40,0,0,122,125,3,16,8,0,
@@ -191,15 +191,16 @@ void iris_grammarParserInitialize() {
   	1,0,0,0,278,279,1,0,0,0,279,280,1,0,0,0,280,286,7,14,0,0,281,282,5,10,
   	0,0,282,283,5,118,0,0,283,285,5,11,0,0,284,281,1,0,0,0,285,288,1,0,0,
   	0,286,284,1,0,0,0,286,287,1,0,0,0,287,23,1,0,0,0,288,286,1,0,0,0,289,
-  	290,3,18,9,0,290,291,5,117,0,0,291,292,5,9,0,0,292,293,3,16,8,0,293,310,
-  	1,0,0,0,294,295,3,18,9,0,295,296,5,117,0,0,296,297,5,36,0,0,297,300,3,
-  	22,11,0,298,299,5,9,0,0,299,301,3,16,8,0,300,298,1,0,0,0,300,301,1,0,
-  	0,0,301,310,1,0,0,0,302,303,5,117,0,0,303,304,5,36,0,0,304,307,3,22,11,
-  	0,305,306,5,9,0,0,306,308,3,16,8,0,307,305,1,0,0,0,307,308,1,0,0,0,308,
-  	310,1,0,0,0,309,289,1,0,0,0,309,294,1,0,0,0,309,302,1,0,0,0,310,25,1,
-  	0,0,0,311,312,5,37,0,0,312,27,1,0,0,0,313,314,7,15,0,0,314,29,1,0,0,0,
-  	38,32,36,38,40,48,56,65,69,77,82,84,94,97,100,105,110,119,125,129,135,
-  	137,142,147,151,171,174,194,242,251,254,263,265,273,278,286,300,307,309
+  	290,3,18,9,0,290,293,5,117,0,0,291,292,5,9,0,0,292,294,3,16,8,0,293,291,
+  	1,0,0,0,293,294,1,0,0,0,294,311,1,0,0,0,295,296,3,18,9,0,296,297,5,117,
+  	0,0,297,298,5,36,0,0,298,301,3,22,11,0,299,300,5,9,0,0,300,302,3,16,8,
+  	0,301,299,1,0,0,0,301,302,1,0,0,0,302,311,1,0,0,0,303,304,5,117,0,0,304,
+  	305,5,36,0,0,305,308,3,22,11,0,306,307,5,9,0,0,307,309,3,16,8,0,308,306,
+  	1,0,0,0,308,309,1,0,0,0,309,311,1,0,0,0,310,289,1,0,0,0,310,295,1,0,0,
+  	0,310,303,1,0,0,0,311,25,1,0,0,0,312,313,5,37,0,0,313,27,1,0,0,0,314,
+  	315,7,15,0,0,315,29,1,0,0,0,39,32,36,38,40,48,56,65,69,77,82,84,94,97,
+  	100,105,110,119,125,129,135,137,142,147,151,171,174,194,242,251,254,263,
+  	265,273,278,286,293,301,308,310
   };
   staticData->serializedATN = antlr4::atn::SerializedATNView(serializedATNSegment, sizeof(serializedATNSegment) / sizeof(serializedATNSegment[0]));
 
@@ -1916,7 +1917,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 24))) throw FailedPredicateException(this, "precpred(_ctx, 24)");
           setState(197);
-          match(iris_grammarParser::T__8);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::T__8);
           setState(198);
           expr(25);
           break;
@@ -1929,9 +1930,8 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           setState(199);
 
           if (!(precpred(_ctx, 14))) throw FailedPredicateException(this, "precpred(_ctx, 14)");
-
           setState(200);
-          match(iris_grammarParser::T__15);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::T__15);
           setState(201);
           expr(15);
           break;
@@ -1945,10 +1945,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 13))) throw FailedPredicateException(this, "precpred(_ctx, 13)");
           setState(203);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!((((_la & ~ 0x3fULL) == 0) &&
             ((1ULL << _la) & 4063240) != 0))) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -1967,11 +1968,12 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 12))) throw FailedPredicateException(this, "precpred(_ctx, 12)");
           setState(206);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == iris_grammarParser::T__13
 
           || _la == iris_grammarParser::T__14)) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -1990,11 +1992,12 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 11))) throw FailedPredicateException(this, "precpred(_ctx, 11)");
           setState(209);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == iris_grammarParser::BITS_LEFT
 
           || _la == iris_grammarParser::BITS_RIGHT)) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2013,10 +2016,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 10))) throw FailedPredicateException(this, "precpred(_ctx, 10)");
           setState(212);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!((((_la & ~ 0x3fULL) == 0) &&
             ((1ULL << _la) & -2305843009213693952) != 0))) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2035,11 +2039,12 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 9))) throw FailedPredicateException(this, "precpred(_ctx, 9)");
           setState(215);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == iris_grammarParser::AND
 
           || _la == iris_grammarParser::OR)) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2058,10 +2063,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 8))) throw FailedPredicateException(this, "precpred(_ctx, 8)");
           setState(218);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!((((_la & ~ 0x3fULL) == 0) &&
             ((1ULL << _la) & 130023424) != 0))) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2080,10 +2086,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 6))) throw FailedPredicateException(this, "precpred(_ctx, 6)");
           setState(221);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!((((_la & ~ 0x3fULL) == 0) &&
             ((1ULL << _la) & 17045651456) != 0))) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2102,11 +2109,12 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 5))) throw FailedPredicateException(this, "precpred(_ctx, 5)");
           setState(224);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == iris_grammarParser::T__33
 
           || _la == iris_grammarParser::T__34)) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2125,11 +2133,12 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
           setState(227);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == iris_grammarParser::BITS_LEFT_EQ
 
           || _la == iris_grammarParser::BITS_RIGHT_EQ)) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2148,10 +2157,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
           setState(230);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(((((_la - 68) & ~ 0x3fULL) == 0) &&
             ((1ULL << (_la - 68)) & 7) != 0))) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2170,11 +2180,12 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
 
           if (!(precpred(_ctx, 2))) throw FailedPredicateException(this, "precpred(_ctx, 2)");
           setState(233);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == iris_grammarParser::AND_EQ
 
           || _la == iris_grammarParser::OR_EQ)) {
-          _errHandler->recoverInline(this);
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
@@ -2772,41 +2783,46 @@ iris_grammarParser::DeclarationContext* iris_grammarParser::declaration() {
     exitRule();
   });
   try {
-    setState(309);
+    setState(310);
     _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 37, _ctx)) {
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 38, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
       setState(289);
       descriptor();
       setState(290);
       match(iris_grammarParser::LABEL);
+      setState(293);
+      _errHandler->sync(this);
 
-      setState(291);
-      match(iris_grammarParser::T__8);
-      setState(292);
-      expr(0);
+      _la = _input->LA(1);
+      if (_la == iris_grammarParser::T__8) {
+        setState(291);
+        match(iris_grammarParser::T__8);
+        setState(292);
+        expr(0);
+      }
       break;
     }
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(294);
-      descriptor();
       setState(295);
-      match(iris_grammarParser::LABEL);
+      descriptor();
       setState(296);
-      match(iris_grammarParser::T__35);
+      match(iris_grammarParser::LABEL);
       setState(297);
+      match(iris_grammarParser::T__35);
+      setState(298);
       type();
-      setState(300);
+      setState(301);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
       if (_la == iris_grammarParser::T__8) {
-        setState(298);
-        match(iris_grammarParser::T__8);
         setState(299);
+        match(iris_grammarParser::T__8);
+        setState(300);
         expr(0);
       }
       break;
@@ -2814,20 +2830,20 @@ iris_grammarParser::DeclarationContext* iris_grammarParser::declaration() {
 
     case 3: {
       enterOuterAlt(_localctx, 3);
-      setState(302);
-      match(iris_grammarParser::LABEL);
       setState(303);
-      match(iris_grammarParser::T__35);
+      match(iris_grammarParser::LABEL);
       setState(304);
+      match(iris_grammarParser::T__35);
+      setState(305);
       type();
-      setState(307);
+      setState(308);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
       if (_la == iris_grammarParser::T__8) {
-        setState(305);
-        match(iris_grammarParser::T__8);
         setState(306);
+        match(iris_grammarParser::T__8);
+        setState(307);
         expr(0);
       }
       break;
@@ -2879,7 +2895,7 @@ iris_grammarParser::EosContext* iris_grammarParser::eos() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(311);
+    setState(312);
     match(iris_grammarParser::T__36);
    
   }
@@ -2937,7 +2953,7 @@ iris_grammarParser::PrimitiveContext* iris_grammarParser::primitive() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(313);
+    setState(314);
     _la = _input->LA(1);
     if (!(((((_la - 116) & ~ 0x3fULL) == 0) &&
       ((1ULL << (_la - 116)) & 7) != 0))) {

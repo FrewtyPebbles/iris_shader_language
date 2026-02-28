@@ -10,15 +10,18 @@ public:
 
 class Parentheses : public Braces {
 public:
+    using Braces::Braces;
     string compile() override;
 };
 
 class Magnitude : public Braces {
 public:
+    using Braces::Braces;
     string compile() override;
 };
 
 class AbsoluteValue : public Braces {
 public:
+    using Braces::Braces;
     string compile() override;
 };

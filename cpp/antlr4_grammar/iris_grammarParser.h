@@ -314,6 +314,7 @@ public:
   public:
     BinaryOperatorContext(ExprContext *ctx);
 
+    antlr4::Token *op = nullptr;
     std::vector<ExprContext *> expr();
     ExprContext* expr(size_t i);
     antlr4::tree::TerminalNode *BITS_LEFT();

@@ -8,11 +8,13 @@ Module::Module(string name)
 
 string Module::compile() {
     string ret = "#version 300 es\n";
-    for (const auto& [key, function] : functions) {
-        ret += function->compile_prototype();
-    }
     for (const auto& statement : statements) {
         ret += statement->compile();
+    }
+    for (const auto& [key, function] : functions) {
+        if (key == "main")
+            continue;
+        ret += function->compile_prototype();
     }
     for (const auto& [key, function] : functions) {
         ret += function->compile();

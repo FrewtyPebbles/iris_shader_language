@@ -1,9 +1,10 @@
 import { compile, tokenize } from "iris";
 
-const code_element = document.getElementById("code");
+const iris_element = document.getElementById("iris");
+const glsl_element = document.getElementById("glsl");
 
 const test = `
-from folder.file import function_name
+# from folder.file import function_name
 
 # Macros
 def N_DIRECTIONAL_LIGHTS = 10
@@ -27,20 +28,20 @@ uniform u_model:mat4
 uniform u_view:mat4
 uniform u_projection:mat4
 
-func main() -> i32 {
-    v_frag_pos = u_model * vec4(a_position, 123.0022) # fake value
+func main() -> none {
+    v_frag_pos = u_model * vec4(a_position, 1.0)
     v_normal = normalize(mat3(transpose(inverse(u_model))) * a_normal)
-    function_name()
     v_uv = a_uv
 
-    gl.position = u_projection * u_view * v_frag_pos
+    gl.Position = u_projection * u_view * v_frag_pos
 }
 `;
 
 async function main() {
     // const out_tokens = await tokenize(test);
     // console.log(out_tokens.join(" "));
+    iris_element.innerHTML = test;
     const out_glsl = await compile('test', test);
-    code_element.innerHTML = out_glsl;
+    glsl_element.innerHTML = out_glsl;
 }
 main()

@@ -8,8 +8,8 @@ using std::vector;
 
 class Call : public Expression {
 public:
-    Call(std::shared_ptr<FunctionDefinition> function_definition, std::shared_ptr<Expression> function, vector<std::shared_ptr<Expression>> arguments);
-    std::shared_ptr<FunctionDefinition> function_definition;
+    Call(std::shared_ptr<Expression> function, vector<std::shared_ptr<Expression>> arguments, std::shared_ptr<FunctionDefinition> function_definition = nullptr);
+    std::shared_ptr<FunctionDefinition> function_definition; // can be null in case the function is a built in type
     std::shared_ptr<Expression> function;
     vector<std::shared_ptr<Expression>> arguments;
     string compile() override;

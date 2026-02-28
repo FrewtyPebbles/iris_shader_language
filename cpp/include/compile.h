@@ -1,16 +1,20 @@
 #pragma once
-#include "tree/module.h"
 #include <memory>
 #include "antlr4-runtime.h"
 #include "iris_grammarLexer.h"
 #include "iris_grammarParser.h"
 
+#include "tree/module.h"
 #include "tree/declaration.h"
 #include "tree/statement.h"
 #include "tree/function_definition.h"
 #include "tree/descriptor.h"
 #include "tree/_type.h"
 #include "tree/expression.h"
+#include "tree/primitive.h"
+#include "tree/call.h"
+#include "tree/binary_operator.h"
+#include "tree/getter.h"
 
 class ModuleCompiler {
 public:
@@ -25,4 +29,8 @@ private:
     std::shared_ptr<Type> compile_type(iris_grammarParser & parser, iris_grammarParser::TypeContext* node);
     std::shared_ptr<Descriptor> compile_descriptor(iris_grammarParser & parser, iris_grammarParser::DescriptorContext* node);
     std::shared_ptr<Expression> compile_expression(iris_grammarParser & parser, iris_grammarParser::ExprContext* node);
+    std::shared_ptr<Primitive> compile_primitive(iris_grammarParser & parser, iris_grammarParser::PrimitiveContext* node);
+    std::shared_ptr<Call> compile_call(iris_grammarParser & parser, iris_grammarParser::CallContext* node);
+    std::shared_ptr<BinaryOperator> compile_binary_operator(iris_grammarParser & parser, iris_grammarParser::BinaryOperatorContext* node);
+    std::shared_ptr<Getter> compile_getter(iris_grammarParser & parser, iris_grammarParser::GetterContext* node);
 };

@@ -1,7 +1,7 @@
 #include "tree/call.h"
 
-Call::Call(std::shared_ptr<FunctionDefinition> function_definition, std::shared_ptr<Expression> function, vector<std::shared_ptr<Expression>> arguments)
-: function_definition(function_definition), function(function), arguments(arguments) {}
+Call::Call(std::shared_ptr<Expression> function, vector<std::shared_ptr<Expression>> arguments, std::shared_ptr<FunctionDefinition> function_definition)
+: function(function), arguments(arguments), function_definition(function_definition) {}
 
 string Call::compile() {
     string ret = function->compile() + "(";

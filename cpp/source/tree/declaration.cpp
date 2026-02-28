@@ -7,12 +7,21 @@ Declaration::Declaration(std::vector<std::shared_ptr<Descriptor>> descriptors, s
 
 string Declaration::compile() {
     string ret;
+    bool use_eq_tok = true;
     for (const auto & descriptor : descriptors) {
         ret += descriptor->compile() + " ";
+        if (descriptor->name == "def")
+            use_eq_tok = false;
     }
-    ret += type->compile() + " " + label + type->compile_array_dimensions();
+    if (type)
+        ret += type->compile() + " ";
+    ret += label + type->compile_array_dimensions();
     if (assignment) {
-        ret += "=" + assignment->compile();
+        if (use_eq_tok)
+            ret += "=";
+        else
+            ret += " ";
+        ret += assignment->compile();
     }
     return ret;
 }

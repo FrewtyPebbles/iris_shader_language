@@ -28,6 +28,7 @@ target_link_options(wasm PRIVATE
     "-sEXPORT_ES6=1"
     "-sENVIRONMENT=web"
     "-sSINGLE_FILE=1"
+    "-g4"
 )
 
 set_target_properties(wasm PROPERTIES SUFFIX ".js")

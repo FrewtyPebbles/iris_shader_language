@@ -24,7 +24,7 @@ public:
         string name,
         vector<std::shared_ptr<Declaration>> arguments,
         std::shared_ptr<Type> return_type,
-        vector<std::shared_ptr<Statement>> body
+        vector<std::shared_ptr<Statement>> body = {}
     );
 
     std::shared_ptr<Module> module;

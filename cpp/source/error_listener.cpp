@@ -8,6 +8,14 @@ string create_syntax_error_message(uint32_t line, uint32_t char_pos, string mess
         "|" + message;
 }
 
+string create_definition_error_message(uint32_t line, uint32_t char_pos, string message) {
+    return "definition_error|" +
+        std::to_string(line) +
+        ":" +
+        std::to_string(char_pos) +
+        "|" + message;
+}
+
 void PreciseErrorListener::syntaxError(antlr4::Recognizer *recognizer, 
                      antlr4::Token *offendingSymbol,
                      size_t line, 

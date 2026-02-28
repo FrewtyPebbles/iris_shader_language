@@ -1,11 +1,11 @@
 #pragma once
-#include "tree/language_node.h"
+#include "tree/expression.h"
 #include <optional>
 #include <vector>
 
 using std::vector;
 
-class Type : public LanguageNode {
+class Type : public Expression {
 public:
     Type(string name, std::optional<string> precision = std::nullopt, vector<size_t> array_dimensions = {});
     string name;

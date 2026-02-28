@@ -5,5 +5,9 @@ Statement::Statement(std::shared_ptr<Expression> expression, std::shared_ptr<Fun
 : expression(expression), function(function) {}
 
 string Statement::compile() {
-    return expression->compile() + ";";
+    auto compiled_expr = expression->compile();
+    if (compiled_expr.starts_with("#"))
+        return compiled_expr + "\n";
+    else
+        return compiled_expr + ";";
 }
