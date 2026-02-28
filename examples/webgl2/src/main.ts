@@ -1,10 +1,12 @@
 import { compile, tokenize } from "iris";
 
+const code_element = document.getElementById("code");
+
 const test = `
-def N_DIRECTIONAL_LIGHTS = 10
 from folder.file import function_name
-            
+
 # Macros
+def N_DIRECTIONAL_LIGHTS = 10
 def N_POINT_LIGHTS = 10
 def N_SPOT_LIGHTS = 10
 
@@ -25,7 +27,7 @@ uniform u_model:mat4
 uniform u_view:mat4
 uniform u_projection:mat4
 
-func main() -> none {
+func main() -> i32 {
     v_frag_pos = u_model * vec4(a_position, 123.0022) # fake value
     v_normal = normalize(mat3(transpose(inverse(u_model))) * a_normal)
     function_name()
@@ -39,6 +41,6 @@ async function main() {
     // const out_tokens = await tokenize(test);
     // console.log(out_tokens.join(" "));
     const out_glsl = await compile('test', test);
-    console.log(out_glsl);
+    code_element.innerHTML = out_glsl;
 }
 main()

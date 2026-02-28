@@ -130,15 +130,15 @@ expr
     // Primary/Leaf nodes (The "base" cases that stop recursion)
     // Call (High precedence)
     : expr '=' expr # BinaryOperator
-    | expr ('[' expr ']')+ # IndexOperator
+    | expr ('[' expr ']')+ # IndexOp
     | expr '(' (expr (',' expr)*)? ')' # Call
-    | type '(' (expr (',' expr)*)? ')' # Call
+    | type '(' (expr (',' expr)*)? ')' # Construct
     |'(' expr ')' # Parentheses
     // magnitude
-    | '||' expr '||' # Magnitude
+    | '||' expr '||' # Mag
 
      // abs
-    | '|' expr '|' # AbsoluteValue
+    | '|' expr '|' # Abs
 
 
     | conditional # Ternary
@@ -231,7 +231,7 @@ type:( precision_qualifier )?
     ;
 
 declaration
-    : descriptor LABEL ('=' expr)
+    : descriptor LABEL ('=' expr)?
     | descriptor LABEL ':' type ('=' expr)?
     | LABEL ':' type ('=' expr)?
     ;
