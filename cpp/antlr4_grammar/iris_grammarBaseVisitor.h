@@ -19,11 +19,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitFunction_definition(iris_grammarParser::Function_definitionContext *ctx) override {
+  virtual std::any visitStatement(iris_grammarParser::StatementContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitConditional(iris_grammarParser::ConditionalContext *ctx) override {
+  virtual std::any visitImport_statement(iris_grammarParser::Import_statementContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitFunction_definition(iris_grammarParser::Function_definitionContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -31,11 +35,15 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitImport_label(iris_grammarParser::Import_labelContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitBlock(iris_grammarParser::BlockContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual std::any visitStatement(iris_grammarParser::StatementContext *ctx) override {
+  virtual std::any visitConditional(iris_grammarParser::ConditionalContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -51,7 +59,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitPrimitive(iris_grammarParser::PrimitiveContext *ctx) override {
+  virtual std::any visitTernary(iris_grammarParser::TernaryContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -71,6 +79,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitPrimitiveExpression(iris_grammarParser::PrimitiveExpressionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitParentheses(iris_grammarParser::ParenthesesContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -83,7 +95,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitDeclaration(iris_grammarParser::DeclarationContext *ctx) override {
+  virtual std::any visitPrecision_qualifier(iris_grammarParser::Precision_qualifierContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -91,7 +103,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual std::any visitPrecision_qualifier(iris_grammarParser::Precision_qualifierContext *ctx) override {
+  virtual std::any visitDeclaration(iris_grammarParser::DeclarationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitEos(iris_grammarParser::EosContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitPrimitive(iris_grammarParser::PrimitiveContext *ctx) override {
     return visitChildren(ctx);
   }
 

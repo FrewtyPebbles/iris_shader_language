@@ -10,6 +10,6 @@ string Declaration::compile() {
     for (const auto & descriptor : descriptors) {
         ret += descriptor->compile() + " ";
     }
-    ret += type->compile() + " " + label;
+    ret += type->compile() + " " + label + type->compile_array_dimensions();
     return ret;
 }

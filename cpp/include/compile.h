@@ -9,6 +9,7 @@
 #include "tree/statement.h"
 #include "tree/function_definition.h"
 #include "tree/descriptor.h"
+#include "tree/_type.h"
 
 class ModuleCompiler {
 public:

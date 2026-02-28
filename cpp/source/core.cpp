@@ -7,10 +7,11 @@
 #include "iris_grammarLexer.h"
 #include "iris_grammarParser.h"
 #include "error_listener.h"
+#include "compile.h"
 
 using namespace antlr4;
 
-emscripten::val tokenize(std::string source, size_t tab_size = 4) {
+emscripten::val tokenize(std::string source) {
     emscripten::val js_array = emscripten::val::array();
 
     ANTLRInputStream stream(source);
@@ -36,12 +37,18 @@ emscripten::val tokenize(std::string source, size_t tab_size = 4) {
             return error_obj; // Return the error object to JS immediately
         }
 
-        js_array.call<void>("push", token->getText());
+        js_array.call<void>("push", token->toString());
     }
 
     return js_array;
 }
 
+std::string compile(std::string module_name, std::string source) {
+    ModuleCompiler m = ModuleCompiler();
+    return m.compile(module_name, source)->compile();
+}
+
 EMSCRIPTEN_BINDINGS(tokenizer_module) {
     emscripten::function("tokenize", &tokenize);
+    emscripten::function("compile", &compile);
 }

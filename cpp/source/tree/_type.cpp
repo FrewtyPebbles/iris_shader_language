@@ -1,4 +1,5 @@
 #include "tree/_type.h"
+#include <iostream>
 
 Type::Type(string name, std::optional<string> precision, vector<size_t> array_dimensions)
 : name(name), precision(precision), array_dimensions(array_dimensions) {}

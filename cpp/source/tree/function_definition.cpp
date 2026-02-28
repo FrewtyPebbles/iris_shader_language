@@ -2,6 +2,7 @@
 #include "tree/_type.h"
 #include "tree/declaration.h"
 #include "tree/statement.h"
+#include <iostream>
 
 FunctionDefinition::FunctionDefinition(
     std::shared_ptr<Module> module,
