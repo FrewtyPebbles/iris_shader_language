@@ -105,9 +105,11 @@ statement
     | expr
     ;
 
+return_statement: 'return' expr;
+
 import_statement
-    : FROM ((file_path_part=LABEL) ('.' (file_path_part=LABEL))*) IMPORT ((import_label (',' import_label)*) | '*')
-    | IMPORT ((file_path_part=LABEL) ('.' (file_path_part=LABEL))*) (AS (module_alias=LABEL))?
+    : FROM (file_path_part ('.' file_path_part)*) IMPORT ((import_label (',' import_label)*) | '*')
+    | IMPORT (file_path_part ('.' file_path_part)*) (AS (module_alias=LABEL))?
     ;
 
 // missing type implies none for functions
@@ -115,6 +117,8 @@ function_definition: FUNC LABEL '(' (declaration (',' declaration)*)? ','? ')' (
 
 // if statement
 conditional_block: IF expr (block | statement) (ELIF expr (block | statement))* ( ELSE (block | statement))?;
+
+file_path_part: LABEL | '.';
 
 import_label: import_name=LABEL (AS import_alias=LABEL)?;
 
@@ -127,51 +131,92 @@ conditional: IF expr THEN expr ELSE expr;
 
 
 expr
-    // Primary/Leaf nodes (The "base" cases that stop recursion)
-    // Call (High precedence)
-    : expr op='=' expr # BinaryOperator
-    | expr ('[' expr ']')+ # IndexOperator
-    | expr '(' (expr (',' expr)*)? ')' # Call
-    | type '(' (expr (',' expr)*)? ')' # Call
-    |'(' expr ')' # Parentheses
-    // magnitude
-    | '||' expr '||' # Magnitude
+    // ---------------------------------------------------------
+    // LEVEL 1: Primaries & Grouping (Highest Precedence)
+    // ---------------------------------------------------------
+    : '(' expr ')'                      # Parentheses
+    | primitive                         # PrimitiveExpression
+    | return_statement                  # Return
+    | '||' expr '||'                    # Magnitude
+    | '|' expr '|'                      # AbsoluteValue
 
-     // abs
-    | '|' expr '|' # AbsoluteValue
+    // ---------------------------------------------------------
+    // LEVEL 2: Member Access & Calls (Postfix)
+    // ---------------------------------------------------------
+    | expr '(' (expr (',' expr)*)? ')'  # Call
+    | type '(' (expr (',' expr)*)? ')'  # ConstructorCall
+    | expr '[' expr ']'                 # IndexOperator
+    | expr '.' LABEL                    # Getter
 
-
-    | conditional # Ternary
-    
-    // getter
-    | expr '.' LABEL # Getter
-    
-    // Unary Operators
-    // ~ is normalize
+    // ---------------------------------------------------------
+    // LEVEL 3: Unary Operators & Casts
+    // ---------------------------------------------------------
+    // Unary binds tighter than multiplication
     | (NOT | BITS_NOT | '+' | '-' | NORM | INV | TRANS | DET | DEG | RAD ) expr # UnaryOperator
-    
+    | expr AS type                      # Cast
 
-    // Binary Operators (Ordered by Precedence)
-    // >< is cross product
-    // ' is dot product
-    // <-> is distance
-    // -> is reflect
-    // <- is also reflect
-    | expr op='^' expr # BinaryOperator
+    // ---------------------------------------------------------
+    // LEVEL 4: Exponentiation
+    // ---------------------------------------------------------
+    | <assoc=right> expr op='^' expr    # BinaryOperator
+
+    // ---------------------------------------------------------
+    // LEVEL 5: Multiplicative
+    // ---------------------------------------------------------
+    // Includes dot product ('), cross product (><), distance (<->)
     | expr op=('*' | '/' | '%' | '\'' | '><' | '<->' ) expr # BinaryOperator
-    | expr op=('+' | '-') expr # BinaryOperator
+
+    // ---------------------------------------------------------
+    // LEVEL 6: Additive
+    // ---------------------------------------------------------
+    | expr op=('+' | '-') expr          # BinaryOperator
+
+    // ---------------------------------------------------------
+    // LEVEL 7: Bitwise Shifts
+    // ---------------------------------------------------------
     | expr op=(BITS_LEFT | BITS_RIGHT) expr # BinaryOperator
-    | expr op=(BITS_AND | BITS_XOR | BITS_OR) expr # BinaryOperator
-    | expr op=(AND | OR) expr # BinaryOperator
-    | expr op=('<' | '>' | '>=' | '<=' | '==') expr # BinaryOperator
-    // cast
-    | expr AS type # Cast
-    | expr op=('^=' | '*=' | '/=' | '%=' | '\'=' | '><=' | '<->=' ) expr # BinaryOperator
-    | expr op=('+=' | '-=') expr # BinaryOperator
-    | expr op=(BITS_LEFT_EQ | BITS_RIGHT_EQ) expr # BinaryOperator
-    | expr op=(BITS_AND_EQ | BITS_XOR_EQ | BITS_OR_EQ) expr # BinaryOperator
-    | expr op=(AND_EQ | OR_EQ) expr # BinaryOperator
-    | primitive # PrimitiveExpression
+
+    // ---------------------------------------------------------
+    // LEVEL 8: Relational (Comparison)
+    // ---------------------------------------------------------
+    | expr op=('<' | '>' | '>=' | '<=') expr # BinaryOperator
+
+    // ---------------------------------------------------------
+    // LEVEL 9: Equality
+    // ---------------------------------------------------------
+    // Must be lower than Relational (e.g., x < 5 == true)
+    | expr op=('==' | '!=') expr        # BinaryOperator
+
+    // ---------------------------------------------------------
+    // LEVEL 10: Bitwise Logic (Sorted by Precedence)
+    // ---------------------------------------------------------
+    | expr op=BITS_AND expr             # BinaryOperator
+    | expr op=BITS_XOR expr             # BinaryOperator
+    | expr op=BITS_OR expr              # BinaryOperator
+
+    // ---------------------------------------------------------
+    // LEVEL 11: Logical Boolean
+    // ---------------------------------------------------------
+    | expr op=AND expr                  # BinaryOperator
+    | expr op=OR expr                   # BinaryOperator
+
+    // ---------------------------------------------------------
+    // LEVEL 12: Ternary
+    // ---------------------------------------------------------
+    | conditional                       # Ternary
+
+    // ---------------------------------------------------------
+    // LEVEL 13: Assignment (Lowest Precedence)
+    // ---------------------------------------------------------
+    // All assignments are grouped here to ensure they bind last.
+    // Right-associative: a = b = c  ->  a = (b = c)
+    | <assoc=right> expr op=(
+        '=' | '+=' | '-=' | '*=' | '/=' | '%=' | '^=' |
+        '\'=' | '><=' | '<->=' | 
+        BITS_LEFT_EQ | BITS_RIGHT_EQ | 
+        BITS_AND_EQ | BITS_XOR_EQ | BITS_OR_EQ | 
+        AND_EQ | OR_EQ
+      ) expr                            # BinaryOperator
     ;
 
 descriptor:

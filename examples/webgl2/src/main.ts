@@ -1,10 +1,10 @@
-import { compile, tokenize } from "iris";
+import { compile, tokenize, create_virtual_module_group, Module, VirtualModuleGroup } from "iris";
 
 const iris_element = document.getElementById("iris");
 const glsl_element = document.getElementById("glsl");
 
 const test = `
-# from folder.file import function_name
+from helper_file import utility as u
 
 # Macros
 def N_DIRECTIONAL_LIGHTS = 10
@@ -33,15 +33,30 @@ func main() -> none {
     v_normal = normalize(mat3(transpose(inverse(u_model))) * a_normal)
     v_uv = a_uv
 
+    u(1,1);
+
     gl.Position = u_projection * u_view * v_frag_pos
 }
 `;
 
+const helper_file = `
+func helper(arg:f32) -> f32 {
+    return 100.0 + 200.0 * arg - 300.00
+}
+func utility(a:i32, b:i32) -> i32 {
+    return helper(a, b) as i32
+}
+`;
+
 async function main() {
-    // const out_tokens = await tokenize(test);
-    // console.log(out_tokens.join(" "));
+    let pkg:VirtualModuleGroup = await create_virtual_module_group("package");
+    pkg.create_module('helper_file', helper_file);
+    pkg.create_module('test', test);
+    let module:Module = pkg.get("test") as Module;
     iris_element.innerHTML = test;
-    const out_glsl = await compile('test', test);
-    glsl_element.innerHTML = out_glsl;
+    glsl_element.innerHTML = (module.compile() as string)
+        .replace(/;/g, ";\n")
+        .replace(/{/g, " {\n")
+        .replace(/}/g, "}\n\n");
 }
 main()

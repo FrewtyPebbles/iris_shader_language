@@ -13,8 +13,9 @@ public:
     vector<size_t> array_dimensions;
 
     string compile() override;
+    string compile_type();
+    string compile_type_no_precision();
+    string compile_precision();
     string compile_array_dimensions();
 private:
-    string compile_type();
-    string compile_precision();
 };

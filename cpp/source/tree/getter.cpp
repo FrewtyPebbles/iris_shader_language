@@ -12,7 +12,7 @@ string Getter::compile() {
             string base_name = std::get<string>(primitive->value);
             if (base_name == "gl") {
                 auto compiled_name = base_name + "_" + child_label;
-                if (GL_BUILT_IN_VARIABLES.contains(compiled_name))
+                if (GLSL_BUILT_IN_VARIABLES.contains(compiled_name))
                     return compiled_name;
                 else
                     throw std::runtime_error(create_definition_error_message(line_number, column_number, "\"" + child_label + "\" is not defined in namespace \"" + base_name + "\""));

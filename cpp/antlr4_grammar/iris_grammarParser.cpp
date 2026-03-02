@@ -52,19 +52,20 @@ void iris_grammarParserInitialize() {
 #endif
   auto staticData = std::make_unique<Iris_grammarParserStaticData>(
     std::vector<std::string>{
-      "root", "statement", "import_statement", "function_definition", "conditional_block", 
-      "import_label", "block", "conditional", "expr", "descriptor", "precision_qualifier", 
-      "type", "declaration", "eos", "primitive"
+      "root", "statement", "return_statement", "import_statement", "function_definition", 
+      "conditional_block", "file_path_part", "import_label", "block", "conditional", 
+      "expr", "descriptor", "precision_qualifier", "type", "declaration", 
+      "eos", "primitive"
     },
     std::vector<std::string>{
-      "", "'.'", "','", "'*'", "'('", "')'", "'->'", "'{'", "'}'", "'='", 
-      "'['", "']'", "'||'", "'|'", "'+'", "'-'", "'^'", "'/'", "'%'", "'''", 
-      "'><'", "'<->'", "'<'", "'>'", "'>='", "'<='", "'=='", "'^='", "'*='", 
-      "'/='", "'%='", "''='", "'><='", "'<->='", "'+='", "'-='", "':'", 
-      "';'", "'func'", "'if'", "'elif'", "'else'", "'then'", "'import'", 
-      "'from'", "'def'", "'in'", "'out'", "'uniform'", "'mut'", "'vertex'", 
-      "'not'", "'bits_not'", "'norm'", "'inv'", "'trans'", "'det'", "'deg'", 
-      "'rad'", "'and'", "'or'", "'bits_and'", "'bits_xor'", "'bits_or'", 
+      "", "'return'", "'.'", "','", "'*'", "'('", "')'", "'->'", "'{'", 
+      "'}'", "'||'", "'|'", "'['", "']'", "'+'", "'-'", "'^'", "'/'", "'%'", 
+      "'''", "'><'", "'<->'", "'<'", "'>'", "'>='", "'<='", "'=='", "'!='", 
+      "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'^='", "''='", "'><='", 
+      "'<->='", "':'", "';'", "'func'", "'if'", "'elif'", "'else'", "'then'", 
+      "'import'", "'from'", "'def'", "'in'", "'out'", "'uniform'", "'mut'", 
+      "'vertex'", "'not'", "'bits_not'", "'norm'", "'inv'", "'trans'", "'det'", 
+      "'deg'", "'rad'", "'and'", "'or'", "'bits_and'", "'bits_xor'", "'bits_or'", 
       "'bits_left'", "'bits_right'", "'and='", "'or='", "'bits_and='", "'bits_xor='", 
       "'bits_or='", "'bits_left='", "'bits_right='", "'as'", "'none'", "'i8'", 
       "'i16'", "'i32'", "'u8'", "'u16'", "'u32'", "'f8'", "'f16'", "'f32'", 
@@ -77,8 +78,8 @@ void iris_grammarParserInitialize() {
     std::vector<std::string>{
       "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 
       "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 
-      "", "", "", "", "FUNC", "IF", "ELIF", "ELSE", "THEN", "IMPORT", "FROM", 
-      "DEF", "IN", "OUT", "UNIFORM", "MUT", "VERTEX", "NOT", "BITS_NOT", 
+      "", "", "", "", "", "", "FUNC", "IF", "ELIF", "ELSE", "THEN", "IMPORT", 
+      "FROM", "DEF", "IN", "OUT", "UNIFORM", "MUT", "VERTEX", "NOT", "BITS_NOT", 
       "NORM", "INV", "TRANS", "DET", "DEG", "RAD", "AND", "OR", "BITS_AND", 
       "BITS_XOR", "BITS_OR", "BITS_LEFT", "BITS_RIGHT", "AND_EQ", "OR_EQ", 
       "BITS_AND_EQ", "BITS_XOR_EQ", "BITS_OR_EQ", "BITS_LEFT_EQ", "BITS_RIGHT_EQ", 
@@ -91,116 +92,118 @@ void iris_grammarParserInitialize() {
     }
   );
   static const int32_t serializedATNSegment[] = {
-  	4,1,123,317,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
+  	4,1,125,320,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,
   	7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,
-  	14,1,0,1,0,3,0,33,8,0,1,0,1,0,3,0,37,8,0,5,0,39,8,0,10,0,12,0,42,9,0,
-  	1,0,1,0,1,1,1,1,1,1,3,1,49,8,1,1,2,1,2,1,2,1,2,5,2,55,8,2,10,2,12,2,58,
-  	9,2,1,2,1,2,1,2,1,2,5,2,64,8,2,10,2,12,2,67,9,2,1,2,3,2,70,8,2,1,2,1,
-  	2,1,2,1,2,5,2,76,8,2,10,2,12,2,79,9,2,1,2,1,2,3,2,83,8,2,3,2,85,8,2,1,
-  	3,1,3,1,3,1,3,1,3,1,3,5,3,93,8,3,10,3,12,3,96,9,3,3,3,98,8,3,1,3,3,3,
-  	101,8,3,1,3,1,3,1,3,3,3,106,8,3,1,3,5,3,109,8,3,10,3,12,3,112,9,3,1,3,
-  	1,3,1,4,1,4,1,4,1,4,3,4,120,8,4,1,4,1,4,1,4,1,4,3,4,126,8,4,5,4,128,8,
-  	4,10,4,12,4,131,9,4,1,4,1,4,1,4,3,4,136,8,4,3,4,138,8,4,1,5,1,5,1,5,3,
-  	5,143,8,5,1,6,1,6,1,6,3,6,148,8,6,5,6,150,8,6,10,6,12,6,153,9,6,1,6,1,
-  	6,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,5,8,170,8,8,10,
-  	8,12,8,173,9,8,3,8,175,8,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,
-  	8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,3,8,195,8,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,
-  	1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,
-  	8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,
-  	1,8,1,8,4,8,241,8,8,11,8,12,8,242,1,8,1,8,1,8,1,8,1,8,5,8,250,8,8,10,
-  	8,12,8,253,9,8,3,8,255,8,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,5,8,264,8,8,10,
-  	8,12,8,267,9,8,1,9,1,9,1,9,1,9,1,9,3,9,274,8,9,1,10,1,10,1,11,3,11,279,
-  	8,11,1,11,1,11,1,11,1,11,5,11,285,8,11,10,11,12,11,288,9,11,1,12,1,12,
-  	1,12,1,12,3,12,294,8,12,1,12,1,12,1,12,1,12,1,12,1,12,3,12,302,8,12,1,
-  	12,1,12,1,12,1,12,1,12,3,12,309,8,12,3,12,311,8,12,1,13,1,13,1,14,1,14,
-  	1,14,0,1,16,15,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,0,16,2,0,14,15,
-  	51,58,2,0,3,3,17,21,1,0,14,15,1,0,64,65,1,0,61,63,1,0,59,60,1,0,22,26,
-  	1,0,27,33,1,0,34,35,1,0,71,72,1,0,68,70,1,0,66,67,1,0,45,49,1,0,113,115,
-  	1,0,74,112,1,0,116,118,362,0,40,1,0,0,0,2,48,1,0,0,0,4,84,1,0,0,0,6,86,
-  	1,0,0,0,8,115,1,0,0,0,10,139,1,0,0,0,12,144,1,0,0,0,14,156,1,0,0,0,16,
-  	194,1,0,0,0,18,273,1,0,0,0,20,275,1,0,0,0,22,278,1,0,0,0,24,310,1,0,0,
-  	0,26,312,1,0,0,0,28,314,1,0,0,0,30,32,3,6,3,0,31,33,3,26,13,0,32,31,1,
-  	0,0,0,32,33,1,0,0,0,33,39,1,0,0,0,34,36,3,2,1,0,35,37,3,26,13,0,36,35,
-  	1,0,0,0,36,37,1,0,0,0,37,39,1,0,0,0,38,30,1,0,0,0,38,34,1,0,0,0,39,42,
-  	1,0,0,0,40,38,1,0,0,0,40,41,1,0,0,0,41,43,1,0,0,0,42,40,1,0,0,0,43,44,
-  	5,0,0,1,44,1,1,0,0,0,45,49,3,4,2,0,46,49,3,24,12,0,47,49,3,16,8,0,48,
-  	45,1,0,0,0,48,46,1,0,0,0,48,47,1,0,0,0,49,3,1,0,0,0,50,51,5,44,0,0,51,
-  	56,5,117,0,0,52,53,5,1,0,0,53,55,5,117,0,0,54,52,1,0,0,0,55,58,1,0,0,
-  	0,56,54,1,0,0,0,56,57,1,0,0,0,57,59,1,0,0,0,58,56,1,0,0,0,59,69,5,43,
-  	0,0,60,65,3,10,5,0,61,62,5,2,0,0,62,64,3,10,5,0,63,61,1,0,0,0,64,67,1,
-  	0,0,0,65,63,1,0,0,0,65,66,1,0,0,0,66,70,1,0,0,0,67,65,1,0,0,0,68,70,5,
-  	3,0,0,69,60,1,0,0,0,69,68,1,0,0,0,70,85,1,0,0,0,71,72,5,43,0,0,72,77,
-  	5,117,0,0,73,74,5,1,0,0,74,76,5,117,0,0,75,73,1,0,0,0,76,79,1,0,0,0,77,
-  	75,1,0,0,0,77,78,1,0,0,0,78,82,1,0,0,0,79,77,1,0,0,0,80,81,5,73,0,0,81,
-  	83,5,117,0,0,82,80,1,0,0,0,82,83,1,0,0,0,83,85,1,0,0,0,84,50,1,0,0,0,
-  	84,71,1,0,0,0,85,5,1,0,0,0,86,87,5,38,0,0,87,88,5,117,0,0,88,97,5,4,0,
-  	0,89,94,3,24,12,0,90,91,5,2,0,0,91,93,3,24,12,0,92,90,1,0,0,0,93,96,1,
-  	0,0,0,94,92,1,0,0,0,94,95,1,0,0,0,95,98,1,0,0,0,96,94,1,0,0,0,97,89,1,
-  	0,0,0,97,98,1,0,0,0,98,100,1,0,0,0,99,101,5,2,0,0,100,99,1,0,0,0,100,
-  	101,1,0,0,0,101,102,1,0,0,0,102,105,5,5,0,0,103,104,5,6,0,0,104,106,3,
-  	22,11,0,105,103,1,0,0,0,105,106,1,0,0,0,106,110,1,0,0,0,107,109,5,120,
-  	0,0,108,107,1,0,0,0,109,112,1,0,0,0,110,108,1,0,0,0,110,111,1,0,0,0,111,
-  	113,1,0,0,0,112,110,1,0,0,0,113,114,3,12,6,0,114,7,1,0,0,0,115,116,5,
-  	39,0,0,116,119,3,16,8,0,117,120,3,12,6,0,118,120,3,2,1,0,119,117,1,0,
-  	0,0,119,118,1,0,0,0,120,129,1,0,0,0,121,122,5,40,0,0,122,125,3,16,8,0,
-  	123,126,3,12,6,0,124,126,3,2,1,0,125,123,1,0,0,0,125,124,1,0,0,0,126,
-  	128,1,0,0,0,127,121,1,0,0,0,128,131,1,0,0,0,129,127,1,0,0,0,129,130,1,
-  	0,0,0,130,137,1,0,0,0,131,129,1,0,0,0,132,135,5,41,0,0,133,136,3,12,6,
-  	0,134,136,3,2,1,0,135,133,1,0,0,0,135,134,1,0,0,0,136,138,1,0,0,0,137,
-  	132,1,0,0,0,137,138,1,0,0,0,138,9,1,0,0,0,139,142,5,117,0,0,140,141,5,
-  	73,0,0,141,143,5,117,0,0,142,140,1,0,0,0,142,143,1,0,0,0,143,11,1,0,0,
-  	0,144,151,5,7,0,0,145,147,3,2,1,0,146,148,5,120,0,0,147,146,1,0,0,0,147,
-  	148,1,0,0,0,148,150,1,0,0,0,149,145,1,0,0,0,150,153,1,0,0,0,151,149,1,
-  	0,0,0,151,152,1,0,0,0,152,154,1,0,0,0,153,151,1,0,0,0,154,155,5,8,0,0,
-  	155,13,1,0,0,0,156,157,5,39,0,0,157,158,3,16,8,0,158,159,5,42,0,0,159,
-  	160,3,16,8,0,160,161,5,41,0,0,161,162,3,16,8,0,162,15,1,0,0,0,163,164,
-  	6,8,-1,0,164,165,3,22,11,0,165,174,5,4,0,0,166,171,3,16,8,0,167,168,5,
-  	2,0,0,168,170,3,16,8,0,169,167,1,0,0,0,170,173,1,0,0,0,171,169,1,0,0,
-  	0,171,172,1,0,0,0,172,175,1,0,0,0,173,171,1,0,0,0,174,166,1,0,0,0,174,
-  	175,1,0,0,0,175,176,1,0,0,0,176,177,5,5,0,0,177,195,1,0,0,0,178,179,5,
-  	4,0,0,179,180,3,16,8,0,180,181,5,5,0,0,181,195,1,0,0,0,182,183,5,12,0,
-  	0,183,184,3,16,8,0,184,185,5,12,0,0,185,195,1,0,0,0,186,187,5,13,0,0,
-  	187,188,3,16,8,0,188,189,5,13,0,0,189,195,1,0,0,0,190,195,3,14,7,0,191,
-  	192,7,0,0,0,192,195,3,16,8,15,193,195,3,28,14,0,194,163,1,0,0,0,194,178,
-  	1,0,0,0,194,182,1,0,0,0,194,186,1,0,0,0,194,190,1,0,0,0,194,191,1,0,0,
-  	0,194,193,1,0,0,0,195,265,1,0,0,0,196,197,10,24,0,0,197,198,5,9,0,0,198,
-  	264,3,16,8,25,199,200,10,14,0,0,200,201,5,16,0,0,201,264,3,16,8,15,202,
-  	203,10,13,0,0,203,204,7,1,0,0,204,264,3,16,8,14,205,206,10,12,0,0,206,
-  	207,7,2,0,0,207,264,3,16,8,13,208,209,10,11,0,0,209,210,7,3,0,0,210,264,
-  	3,16,8,12,211,212,10,10,0,0,212,213,7,4,0,0,213,264,3,16,8,11,214,215,
-  	10,9,0,0,215,216,7,5,0,0,216,264,3,16,8,10,217,218,10,8,0,0,218,219,7,
-  	6,0,0,219,264,3,16,8,9,220,221,10,6,0,0,221,222,7,7,0,0,222,264,3,16,
-  	8,7,223,224,10,5,0,0,224,225,7,8,0,0,225,264,3,16,8,6,226,227,10,4,0,
-  	0,227,228,7,9,0,0,228,264,3,16,8,5,229,230,10,3,0,0,230,231,7,10,0,0,
-  	231,264,3,16,8,4,232,233,10,2,0,0,233,234,7,11,0,0,234,264,3,16,8,3,235,
-  	240,10,23,0,0,236,237,5,10,0,0,237,238,3,16,8,0,238,239,5,11,0,0,239,
-  	241,1,0,0,0,240,236,1,0,0,0,241,242,1,0,0,0,242,240,1,0,0,0,242,243,1,
-  	0,0,0,243,264,1,0,0,0,244,245,10,22,0,0,245,254,5,4,0,0,246,251,3,16,
-  	8,0,247,248,5,2,0,0,248,250,3,16,8,0,249,247,1,0,0,0,250,253,1,0,0,0,
-  	251,249,1,0,0,0,251,252,1,0,0,0,252,255,1,0,0,0,253,251,1,0,0,0,254,246,
-  	1,0,0,0,254,255,1,0,0,0,255,256,1,0,0,0,256,264,5,5,0,0,257,258,10,16,
-  	0,0,258,259,5,1,0,0,259,264,5,117,0,0,260,261,10,7,0,0,261,262,5,73,0,
-  	0,262,264,3,22,11,0,263,196,1,0,0,0,263,199,1,0,0,0,263,202,1,0,0,0,263,
-  	205,1,0,0,0,263,208,1,0,0,0,263,211,1,0,0,0,263,214,1,0,0,0,263,217,1,
-  	0,0,0,263,220,1,0,0,0,263,223,1,0,0,0,263,226,1,0,0,0,263,229,1,0,0,0,
-  	263,232,1,0,0,0,263,235,1,0,0,0,263,244,1,0,0,0,263,257,1,0,0,0,263,260,
-  	1,0,0,0,264,267,1,0,0,0,265,263,1,0,0,0,265,266,1,0,0,0,266,17,1,0,0,
-  	0,267,265,1,0,0,0,268,274,7,12,0,0,269,270,5,50,0,0,270,271,5,10,0,0,
-  	271,272,5,118,0,0,272,274,5,11,0,0,273,268,1,0,0,0,273,269,1,0,0,0,274,
-  	19,1,0,0,0,275,276,7,13,0,0,276,21,1,0,0,0,277,279,3,20,10,0,278,277,
-  	1,0,0,0,278,279,1,0,0,0,279,280,1,0,0,0,280,286,7,14,0,0,281,282,5,10,
-  	0,0,282,283,5,118,0,0,283,285,5,11,0,0,284,281,1,0,0,0,285,288,1,0,0,
-  	0,286,284,1,0,0,0,286,287,1,0,0,0,287,23,1,0,0,0,288,286,1,0,0,0,289,
-  	290,3,18,9,0,290,293,5,117,0,0,291,292,5,9,0,0,292,294,3,16,8,0,293,291,
-  	1,0,0,0,293,294,1,0,0,0,294,311,1,0,0,0,295,296,3,18,9,0,296,297,5,117,
-  	0,0,297,298,5,36,0,0,298,301,3,22,11,0,299,300,5,9,0,0,300,302,3,16,8,
-  	0,301,299,1,0,0,0,301,302,1,0,0,0,302,311,1,0,0,0,303,304,5,117,0,0,304,
-  	305,5,36,0,0,305,308,3,22,11,0,306,307,5,9,0,0,307,309,3,16,8,0,308,306,
-  	1,0,0,0,308,309,1,0,0,0,309,311,1,0,0,0,310,289,1,0,0,0,310,295,1,0,0,
-  	0,310,303,1,0,0,0,311,25,1,0,0,0,312,313,5,37,0,0,313,27,1,0,0,0,314,
-  	315,7,15,0,0,315,29,1,0,0,0,39,32,36,38,40,48,56,65,69,77,82,84,94,97,
-  	100,105,110,119,125,129,135,137,142,147,151,171,174,194,242,251,254,263,
-  	265,273,278,286,293,301,308,310
+  	14,2,15,7,15,2,16,7,16,1,0,1,0,3,0,37,8,0,1,0,1,0,3,0,41,8,0,5,0,43,8,
+  	0,10,0,12,0,46,9,0,1,0,1,0,1,1,1,1,1,1,3,1,53,8,1,1,2,1,2,1,2,1,3,1,3,
+  	1,3,1,3,5,3,62,8,3,10,3,12,3,65,9,3,1,3,1,3,1,3,1,3,5,3,71,8,3,10,3,12,
+  	3,74,9,3,1,3,3,3,77,8,3,1,3,1,3,1,3,1,3,5,3,83,8,3,10,3,12,3,86,9,3,1,
+  	3,1,3,3,3,90,8,3,3,3,92,8,3,1,4,1,4,1,4,1,4,1,4,1,4,5,4,100,8,4,10,4,
+  	12,4,103,9,4,3,4,105,8,4,1,4,3,4,108,8,4,1,4,1,4,1,4,3,4,113,8,4,1,4,
+  	5,4,116,8,4,10,4,12,4,119,9,4,1,4,1,4,1,5,1,5,1,5,1,5,3,5,127,8,5,1,5,
+  	1,5,1,5,1,5,3,5,133,8,5,5,5,135,8,5,10,5,12,5,138,9,5,1,5,1,5,1,5,3,5,
+  	143,8,5,3,5,145,8,5,1,6,1,6,1,7,1,7,1,7,3,7,152,8,7,1,8,1,8,1,8,3,8,157,
+  	8,8,5,8,159,8,8,10,8,12,8,162,9,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,1,9,
+  	1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,
+  	1,10,1,10,1,10,1,10,1,10,1,10,5,10,193,8,10,10,10,12,10,196,9,10,3,10,
+  	198,8,10,1,10,1,10,1,10,1,10,1,10,3,10,205,8,10,1,10,1,10,1,10,1,10,1,
+  	10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,
+  	10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,
+  	10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,5,10,248,8,10,10,10,12,10,
+  	251,9,10,3,10,253,8,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,10,1,
+  	10,1,10,1,10,5,10,267,8,10,10,10,12,10,270,9,10,1,11,1,11,1,11,1,11,1,
+  	11,3,11,277,8,11,1,12,1,12,1,13,3,13,282,8,13,1,13,1,13,1,13,1,13,5,13,
+  	288,8,13,10,13,12,13,291,9,13,1,14,1,14,1,14,1,14,3,14,297,8,14,1,14,
+  	1,14,1,14,1,14,1,14,1,14,3,14,305,8,14,1,14,1,14,1,14,1,14,1,14,3,14,
+  	312,8,14,3,14,314,8,14,1,15,1,15,1,16,1,16,1,16,0,1,20,17,0,2,4,6,8,10,
+  	12,14,16,18,20,22,24,26,28,30,32,0,12,2,0,2,2,119,119,2,0,14,15,53,60,
+  	2,0,4,4,17,21,1,0,14,15,1,0,66,67,1,0,22,25,1,0,26,27,2,0,28,37,68,74,
+  	1,0,47,51,1,0,115,117,1,0,76,114,1,0,118,120,362,0,44,1,0,0,0,2,52,1,
+  	0,0,0,4,54,1,0,0,0,6,91,1,0,0,0,8,93,1,0,0,0,10,122,1,0,0,0,12,146,1,
+  	0,0,0,14,148,1,0,0,0,16,153,1,0,0,0,18,165,1,0,0,0,20,204,1,0,0,0,22,
+  	276,1,0,0,0,24,278,1,0,0,0,26,281,1,0,0,0,28,313,1,0,0,0,30,315,1,0,0,
+  	0,32,317,1,0,0,0,34,36,3,8,4,0,35,37,3,30,15,0,36,35,1,0,0,0,36,37,1,
+  	0,0,0,37,43,1,0,0,0,38,40,3,2,1,0,39,41,3,30,15,0,40,39,1,0,0,0,40,41,
+  	1,0,0,0,41,43,1,0,0,0,42,34,1,0,0,0,42,38,1,0,0,0,43,46,1,0,0,0,44,42,
+  	1,0,0,0,44,45,1,0,0,0,45,47,1,0,0,0,46,44,1,0,0,0,47,48,5,0,0,1,48,1,
+  	1,0,0,0,49,53,3,6,3,0,50,53,3,28,14,0,51,53,3,20,10,0,52,49,1,0,0,0,52,
+  	50,1,0,0,0,52,51,1,0,0,0,53,3,1,0,0,0,54,55,5,1,0,0,55,56,3,20,10,0,56,
+  	5,1,0,0,0,57,58,5,46,0,0,58,63,3,12,6,0,59,60,5,2,0,0,60,62,3,12,6,0,
+  	61,59,1,0,0,0,62,65,1,0,0,0,63,61,1,0,0,0,63,64,1,0,0,0,64,66,1,0,0,0,
+  	65,63,1,0,0,0,66,76,5,45,0,0,67,72,3,14,7,0,68,69,5,3,0,0,69,71,3,14,
+  	7,0,70,68,1,0,0,0,71,74,1,0,0,0,72,70,1,0,0,0,72,73,1,0,0,0,73,77,1,0,
+  	0,0,74,72,1,0,0,0,75,77,5,4,0,0,76,67,1,0,0,0,76,75,1,0,0,0,77,92,1,0,
+  	0,0,78,79,5,45,0,0,79,84,3,12,6,0,80,81,5,2,0,0,81,83,3,12,6,0,82,80,
+  	1,0,0,0,83,86,1,0,0,0,84,82,1,0,0,0,84,85,1,0,0,0,85,89,1,0,0,0,86,84,
+  	1,0,0,0,87,88,5,75,0,0,88,90,5,119,0,0,89,87,1,0,0,0,89,90,1,0,0,0,90,
+  	92,1,0,0,0,91,57,1,0,0,0,91,78,1,0,0,0,92,7,1,0,0,0,93,94,5,40,0,0,94,
+  	95,5,119,0,0,95,104,5,5,0,0,96,101,3,28,14,0,97,98,5,3,0,0,98,100,3,28,
+  	14,0,99,97,1,0,0,0,100,103,1,0,0,0,101,99,1,0,0,0,101,102,1,0,0,0,102,
+  	105,1,0,0,0,103,101,1,0,0,0,104,96,1,0,0,0,104,105,1,0,0,0,105,107,1,
+  	0,0,0,106,108,5,3,0,0,107,106,1,0,0,0,107,108,1,0,0,0,108,109,1,0,0,0,
+  	109,112,5,6,0,0,110,111,5,7,0,0,111,113,3,26,13,0,112,110,1,0,0,0,112,
+  	113,1,0,0,0,113,117,1,0,0,0,114,116,5,122,0,0,115,114,1,0,0,0,116,119,
+  	1,0,0,0,117,115,1,0,0,0,117,118,1,0,0,0,118,120,1,0,0,0,119,117,1,0,0,
+  	0,120,121,3,16,8,0,121,9,1,0,0,0,122,123,5,41,0,0,123,126,3,20,10,0,124,
+  	127,3,16,8,0,125,127,3,2,1,0,126,124,1,0,0,0,126,125,1,0,0,0,127,136,
+  	1,0,0,0,128,129,5,42,0,0,129,132,3,20,10,0,130,133,3,16,8,0,131,133,3,
+  	2,1,0,132,130,1,0,0,0,132,131,1,0,0,0,133,135,1,0,0,0,134,128,1,0,0,0,
+  	135,138,1,0,0,0,136,134,1,0,0,0,136,137,1,0,0,0,137,144,1,0,0,0,138,136,
+  	1,0,0,0,139,142,5,43,0,0,140,143,3,16,8,0,141,143,3,2,1,0,142,140,1,0,
+  	0,0,142,141,1,0,0,0,143,145,1,0,0,0,144,139,1,0,0,0,144,145,1,0,0,0,145,
+  	11,1,0,0,0,146,147,7,0,0,0,147,13,1,0,0,0,148,151,5,119,0,0,149,150,5,
+  	75,0,0,150,152,5,119,0,0,151,149,1,0,0,0,151,152,1,0,0,0,152,15,1,0,0,
+  	0,153,160,5,8,0,0,154,156,3,2,1,0,155,157,5,122,0,0,156,155,1,0,0,0,156,
+  	157,1,0,0,0,157,159,1,0,0,0,158,154,1,0,0,0,159,162,1,0,0,0,160,158,1,
+  	0,0,0,160,161,1,0,0,0,161,163,1,0,0,0,162,160,1,0,0,0,163,164,5,9,0,0,
+  	164,17,1,0,0,0,165,166,5,41,0,0,166,167,3,20,10,0,167,168,5,44,0,0,168,
+  	169,3,20,10,0,169,170,5,43,0,0,170,171,3,20,10,0,171,19,1,0,0,0,172,173,
+  	6,10,-1,0,173,174,5,5,0,0,174,175,3,20,10,0,175,176,5,6,0,0,176,205,1,
+  	0,0,0,177,205,3,32,16,0,178,205,3,4,2,0,179,180,5,10,0,0,180,181,3,20,
+  	10,0,181,182,5,10,0,0,182,205,1,0,0,0,183,184,5,11,0,0,184,185,3,20,10,
+  	0,185,186,5,11,0,0,186,205,1,0,0,0,187,188,3,26,13,0,188,197,5,5,0,0,
+  	189,194,3,20,10,0,190,191,5,3,0,0,191,193,3,20,10,0,192,190,1,0,0,0,193,
+  	196,1,0,0,0,194,192,1,0,0,0,194,195,1,0,0,0,195,198,1,0,0,0,196,194,1,
+  	0,0,0,197,189,1,0,0,0,197,198,1,0,0,0,198,199,1,0,0,0,199,200,5,6,0,0,
+  	200,205,1,0,0,0,201,202,7,1,0,0,202,205,3,20,10,15,203,205,3,18,9,0,204,
+  	172,1,0,0,0,204,177,1,0,0,0,204,178,1,0,0,0,204,179,1,0,0,0,204,183,1,
+  	0,0,0,204,187,1,0,0,0,204,201,1,0,0,0,204,203,1,0,0,0,205,268,1,0,0,0,
+  	206,207,10,13,0,0,207,208,5,16,0,0,208,267,3,20,10,13,209,210,10,12,0,
+  	0,210,211,7,2,0,0,211,267,3,20,10,13,212,213,10,11,0,0,213,214,7,3,0,
+  	0,214,267,3,20,10,12,215,216,10,10,0,0,216,217,7,4,0,0,217,267,3,20,10,
+  	11,218,219,10,9,0,0,219,220,7,5,0,0,220,267,3,20,10,10,221,222,10,8,0,
+  	0,222,223,7,6,0,0,223,267,3,20,10,9,224,225,10,7,0,0,225,226,5,63,0,0,
+  	226,267,3,20,10,8,227,228,10,6,0,0,228,229,5,64,0,0,229,267,3,20,10,7,
+  	230,231,10,5,0,0,231,232,5,65,0,0,232,267,3,20,10,6,233,234,10,4,0,0,
+  	234,235,5,61,0,0,235,267,3,20,10,5,236,237,10,3,0,0,237,238,5,62,0,0,
+  	238,267,3,20,10,4,239,240,10,1,0,0,240,241,7,7,0,0,241,267,3,20,10,1,
+  	242,243,10,19,0,0,243,252,5,5,0,0,244,249,3,20,10,0,245,246,5,3,0,0,246,
+  	248,3,20,10,0,247,245,1,0,0,0,248,251,1,0,0,0,249,247,1,0,0,0,249,250,
+  	1,0,0,0,250,253,1,0,0,0,251,249,1,0,0,0,252,244,1,0,0,0,252,253,1,0,0,
+  	0,253,254,1,0,0,0,254,267,5,6,0,0,255,256,10,17,0,0,256,257,5,12,0,0,
+  	257,258,3,20,10,0,258,259,5,13,0,0,259,267,1,0,0,0,260,261,10,16,0,0,
+  	261,262,5,2,0,0,262,267,5,119,0,0,263,264,10,14,0,0,264,265,5,75,0,0,
+  	265,267,3,26,13,0,266,206,1,0,0,0,266,209,1,0,0,0,266,212,1,0,0,0,266,
+  	215,1,0,0,0,266,218,1,0,0,0,266,221,1,0,0,0,266,224,1,0,0,0,266,227,1,
+  	0,0,0,266,230,1,0,0,0,266,233,1,0,0,0,266,236,1,0,0,0,266,239,1,0,0,0,
+  	266,242,1,0,0,0,266,255,1,0,0,0,266,260,1,0,0,0,266,263,1,0,0,0,267,270,
+  	1,0,0,0,268,266,1,0,0,0,268,269,1,0,0,0,269,21,1,0,0,0,270,268,1,0,0,
+  	0,271,277,7,8,0,0,272,273,5,52,0,0,273,274,5,12,0,0,274,275,5,120,0,0,
+  	275,277,5,13,0,0,276,271,1,0,0,0,276,272,1,0,0,0,277,23,1,0,0,0,278,279,
+  	7,9,0,0,279,25,1,0,0,0,280,282,3,24,12,0,281,280,1,0,0,0,281,282,1,0,
+  	0,0,282,283,1,0,0,0,283,289,7,10,0,0,284,285,5,12,0,0,285,286,5,120,0,
+  	0,286,288,5,13,0,0,287,284,1,0,0,0,288,291,1,0,0,0,289,287,1,0,0,0,289,
+  	290,1,0,0,0,290,27,1,0,0,0,291,289,1,0,0,0,292,293,3,22,11,0,293,296,
+  	5,119,0,0,294,295,5,28,0,0,295,297,3,20,10,0,296,294,1,0,0,0,296,297,
+  	1,0,0,0,297,314,1,0,0,0,298,299,3,22,11,0,299,300,5,119,0,0,300,301,5,
+  	38,0,0,301,304,3,26,13,0,302,303,5,28,0,0,303,305,3,20,10,0,304,302,1,
+  	0,0,0,304,305,1,0,0,0,305,314,1,0,0,0,306,307,5,119,0,0,307,308,5,38,
+  	0,0,308,311,3,26,13,0,309,310,5,28,0,0,310,312,3,20,10,0,311,309,1,0,
+  	0,0,311,312,1,0,0,0,312,314,1,0,0,0,313,292,1,0,0,0,313,298,1,0,0,0,313,
+  	306,1,0,0,0,314,29,1,0,0,0,315,316,5,39,0,0,316,31,1,0,0,0,317,318,7,
+  	11,0,0,318,33,1,0,0,0,38,36,40,42,44,52,63,72,76,84,89,91,101,104,107,
+  	112,117,126,132,136,142,144,151,156,160,194,197,204,249,252,266,268,276,
+  	281,289,296,304,311,313
   };
   staticData->serializedATN = antlr4::atn::SerializedATNView(serializedATNSegment, sizeof(serializedATNSegment) / sizeof(serializedATNSegment[0]));
 
@@ -310,32 +313,33 @@ iris_grammarParser::RootContext* iris_grammarParser::root() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(40);
+    setState(44);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 576452780844183568) != 0) || ((((_la - 74) & ~ 0x3fULL) == 0) &&
-      ((1ULL << (_la - 74)) & 35184372088831) != 0)) {
-      setState(38);
+      ((1ULL << _la) & 2305811123376540706) != 0) || ((((_la - 76) & ~ 0x3fULL) == 0) &&
+      ((1ULL << (_la - 76)) & 35184372088831) != 0)) {
+      setState(42);
       _errHandler->sync(this);
       switch (_input->LA(1)) {
         case iris_grammarParser::FUNC: {
-          setState(30);
+          setState(34);
           function_definition();
-          setState(32);
+          setState(36);
           _errHandler->sync(this);
 
           _la = _input->LA(1);
-          if (_la == iris_grammarParser::T__36) {
-            setState(31);
+          if (_la == iris_grammarParser::T__38) {
+            setState(35);
             eos();
           }
           break;
         }
 
-        case iris_grammarParser::T__3:
-        case iris_grammarParser::T__11:
-        case iris_grammarParser::T__12:
+        case iris_grammarParser::T__0:
+        case iris_grammarParser::T__4:
+        case iris_grammarParser::T__9:
+        case iris_grammarParser::T__10:
         case iris_grammarParser::T__13:
         case iris_grammarParser::T__14:
         case iris_grammarParser::IF:
@@ -400,14 +404,14 @@ iris_grammarParser::RootContext* iris_grammarParser::root() {
         case iris_grammarParser::FLOAT:
         case iris_grammarParser::LABEL:
         case iris_grammarParser::INT: {
-          setState(34);
+          setState(38);
           statement();
-          setState(36);
+          setState(40);
           _errHandler->sync(this);
 
           _la = _input->LA(1);
-          if (_la == iris_grammarParser::T__36) {
-            setState(35);
+          if (_la == iris_grammarParser::T__38) {
+            setState(39);
             eos();
           }
           break;
@@ -416,11 +420,11 @@ iris_grammarParser::RootContext* iris_grammarParser::root() {
       default:
         throw NoViableAltException(this);
       }
-      setState(42);
+      setState(46);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(43);
+    setState(47);
     match(iris_grammarParser::EOF);
    
   }
@@ -476,26 +480,26 @@ iris_grammarParser::StatementContext* iris_grammarParser::statement() {
     exitRule();
   });
   try {
-    setState(48);
+    setState(52);
     _errHandler->sync(this);
     switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 4, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
-      setState(45);
+      setState(49);
       import_statement();
       break;
     }
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(46);
+      setState(50);
       declaration();
       break;
     }
 
     case 3: {
       enterOuterAlt(_localctx, 3);
-      setState(47);
+      setState(51);
       expr(0);
       break;
     }
@@ -503,6 +507,57 @@ iris_grammarParser::StatementContext* iris_grammarParser::statement() {
     default:
       break;
     }
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- Return_statementContext ------------------------------------------------------------------
+
+iris_grammarParser::Return_statementContext::Return_statementContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+iris_grammarParser::ExprContext* iris_grammarParser::Return_statementContext::expr() {
+  return getRuleContext<iris_grammarParser::ExprContext>(0);
+}
+
+
+size_t iris_grammarParser::Return_statementContext::getRuleIndex() const {
+  return iris_grammarParser::RuleReturn_statement;
+}
+
+
+std::any iris_grammarParser::Return_statementContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<iris_grammarVisitor*>(visitor))
+    return parserVisitor->visitReturn_statement(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+iris_grammarParser::Return_statementContext* iris_grammarParser::return_statement() {
+  Return_statementContext *_localctx = _tracker.createInstance<Return_statementContext>(_ctx, getState());
+  enterRule(_localctx, 4, iris_grammarParser::RuleReturn_statement);
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(54);
+    match(iris_grammarParser::T__0);
+    setState(55);
+    expr(0);
    
   }
   catch (RecognitionException &e) {
@@ -528,6 +583,14 @@ tree::TerminalNode* iris_grammarParser::Import_statementContext::IMPORT() {
   return getToken(iris_grammarParser::IMPORT, 0);
 }
 
+std::vector<iris_grammarParser::File_path_partContext *> iris_grammarParser::Import_statementContext::file_path_part() {
+  return getRuleContexts<iris_grammarParser::File_path_partContext>();
+}
+
+iris_grammarParser::File_path_partContext* iris_grammarParser::Import_statementContext::file_path_part(size_t i) {
+  return getRuleContext<iris_grammarParser::File_path_partContext>(i);
+}
+
 std::vector<iris_grammarParser::Import_labelContext *> iris_grammarParser::Import_statementContext::import_label() {
   return getRuleContexts<iris_grammarParser::Import_labelContext>();
 }
@@ -536,16 +599,12 @@ iris_grammarParser::Import_labelContext* iris_grammarParser::Import_statementCon
   return getRuleContext<iris_grammarParser::Import_labelContext>(i);
 }
 
-std::vector<tree::TerminalNode *> iris_grammarParser::Import_statementContext::LABEL() {
-  return getTokens(iris_grammarParser::LABEL);
-}
-
-tree::TerminalNode* iris_grammarParser::Import_statementContext::LABEL(size_t i) {
-  return getToken(iris_grammarParser::LABEL, i);
-}
-
 tree::TerminalNode* iris_grammarParser::Import_statementContext::AS() {
   return getToken(iris_grammarParser::AS, 0);
+}
+
+tree::TerminalNode* iris_grammarParser::Import_statementContext::LABEL() {
+  return getToken(iris_grammarParser::LABEL, 0);
 }
 
 
@@ -563,7 +622,7 @@ std::any iris_grammarParser::Import_statementContext::accept(tree::ParseTreeVisi
 
 iris_grammarParser::Import_statementContext* iris_grammarParser::import_statement() {
   Import_statementContext *_localctx = _tracker.createInstance<Import_statementContext>(_ctx, getState());
-  enterRule(_localctx, 4, iris_grammarParser::RuleImport_statement);
+  enterRule(_localctx, 6, iris_grammarParser::RuleImport_statement);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -574,55 +633,54 @@ iris_grammarParser::Import_statementContext* iris_grammarParser::import_statemen
     exitRule();
   });
   try {
-    setState(84);
+    setState(91);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case iris_grammarParser::FROM: {
         enterOuterAlt(_localctx, 1);
-        setState(50);
+        setState(57);
         match(iris_grammarParser::FROM);
 
-        setState(51);
-        antlrcpp::downCast<Import_statementContext *>(_localctx)->file_path_part = match(iris_grammarParser::LABEL);
-        setState(56);
+        setState(58);
+        file_path_part();
+        setState(63);
         _errHandler->sync(this);
         _la = _input->LA(1);
-        while (_la == iris_grammarParser::T__0) {
-          setState(52);
-          match(iris_grammarParser::T__0);
-
-          setState(53);
-          antlrcpp::downCast<Import_statementContext *>(_localctx)->file_path_part = match(iris_grammarParser::LABEL);
-          setState(58);
+        while (_la == iris_grammarParser::T__1) {
+          setState(59);
+          match(iris_grammarParser::T__1);
+          setState(60);
+          file_path_part();
+          setState(65);
           _errHandler->sync(this);
           _la = _input->LA(1);
         }
-        setState(59);
+        setState(66);
         match(iris_grammarParser::IMPORT);
-        setState(69);
+        setState(76);
         _errHandler->sync(this);
         switch (_input->LA(1)) {
           case iris_grammarParser::LABEL: {
-            setState(60);
+            setState(67);
             import_label();
-            setState(65);
+            setState(72);
             _errHandler->sync(this);
             _la = _input->LA(1);
-            while (_la == iris_grammarParser::T__1) {
-              setState(61);
-              match(iris_grammarParser::T__1);
-              setState(62);
+            while (_la == iris_grammarParser::T__2) {
+              setState(68);
+              match(iris_grammarParser::T__2);
+              setState(69);
               import_label();
-              setState(67);
+              setState(74);
               _errHandler->sync(this);
               _la = _input->LA(1);
             }
             break;
           }
 
-          case iris_grammarParser::T__2: {
-            setState(68);
-            match(iris_grammarParser::T__2);
+          case iris_grammarParser::T__3: {
+            setState(75);
+            match(iris_grammarParser::T__3);
             break;
           }
 
@@ -634,33 +692,32 @@ iris_grammarParser::Import_statementContext* iris_grammarParser::import_statemen
 
       case iris_grammarParser::IMPORT: {
         enterOuterAlt(_localctx, 2);
-        setState(71);
+        setState(78);
         match(iris_grammarParser::IMPORT);
 
-        setState(72);
-        antlrcpp::downCast<Import_statementContext *>(_localctx)->file_path_part = match(iris_grammarParser::LABEL);
-        setState(77);
+        setState(79);
+        file_path_part();
+        setState(84);
         _errHandler->sync(this);
         _la = _input->LA(1);
-        while (_la == iris_grammarParser::T__0) {
-          setState(73);
-          match(iris_grammarParser::T__0);
-
-          setState(74);
-          antlrcpp::downCast<Import_statementContext *>(_localctx)->file_path_part = match(iris_grammarParser::LABEL);
-          setState(79);
+        while (_la == iris_grammarParser::T__1) {
+          setState(80);
+          match(iris_grammarParser::T__1);
+          setState(81);
+          file_path_part();
+          setState(86);
           _errHandler->sync(this);
           _la = _input->LA(1);
         }
-        setState(82);
+        setState(89);
         _errHandler->sync(this);
 
         _la = _input->LA(1);
         if (_la == iris_grammarParser::AS) {
-          setState(80);
+          setState(87);
           match(iris_grammarParser::AS);
 
-          setState(81);
+          setState(88);
           antlrcpp::downCast<Import_statementContext *>(_localctx)->module_alias = match(iris_grammarParser::LABEL);
         }
         break;
@@ -733,7 +790,7 @@ std::any iris_grammarParser::Function_definitionContext::accept(tree::ParseTreeV
 
 iris_grammarParser::Function_definitionContext* iris_grammarParser::function_definition() {
   Function_definitionContext *_localctx = _tracker.createInstance<Function_definitionContext>(_ctx, getState());
-  enterRule(_localctx, 6, iris_grammarParser::RuleFunction_definition);
+  enterRule(_localctx, 8, iris_grammarParser::RuleFunction_definition);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -746,66 +803,66 @@ iris_grammarParser::Function_definitionContext* iris_grammarParser::function_def
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(86);
+    setState(93);
     match(iris_grammarParser::FUNC);
-    setState(87);
+    setState(94);
     match(iris_grammarParser::LABEL);
-    setState(88);
-    match(iris_grammarParser::T__3);
-    setState(97);
+    setState(95);
+    match(iris_grammarParser::T__4);
+    setState(104);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 2216615441596416) != 0) || _la == iris_grammarParser::LABEL) {
-      setState(89);
+      ((1ULL << _la) & 8866461766385664) != 0) || _la == iris_grammarParser::LABEL) {
+      setState(96);
       declaration();
-      setState(94);
+      setState(101);
       _errHandler->sync(this);
       alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 11, _ctx);
       while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
         if (alt == 1) {
-          setState(90);
-          match(iris_grammarParser::T__1);
-          setState(91);
+          setState(97);
+          match(iris_grammarParser::T__2);
+          setState(98);
           declaration(); 
         }
-        setState(96);
+        setState(103);
         _errHandler->sync(this);
         alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 11, _ctx);
       }
     }
-    setState(100);
+    setState(107);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == iris_grammarParser::T__1) {
-      setState(99);
-      match(iris_grammarParser::T__1);
+    if (_la == iris_grammarParser::T__2) {
+      setState(106);
+      match(iris_grammarParser::T__2);
     }
-    setState(102);
-    match(iris_grammarParser::T__4);
-    setState(105);
+    setState(109);
+    match(iris_grammarParser::T__5);
+    setState(112);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (_la == iris_grammarParser::T__5) {
-      setState(103);
-      match(iris_grammarParser::T__5);
-      setState(104);
+    if (_la == iris_grammarParser::T__6) {
+      setState(110);
+      match(iris_grammarParser::T__6);
+      setState(111);
       type();
     }
-    setState(110);
+    setState(117);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == iris_grammarParser::NEWLINE) {
-      setState(107);
+      setState(114);
       match(iris_grammarParser::NEWLINE);
-      setState(112);
+      setState(119);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(113);
+    setState(120);
     block();
    
   }
@@ -879,7 +936,7 @@ std::any iris_grammarParser::Conditional_blockContext::accept(tree::ParseTreeVis
 
 iris_grammarParser::Conditional_blockContext* iris_grammarParser::conditional_block() {
   Conditional_blockContext *_localctx = _tracker.createInstance<Conditional_blockContext>(_ctx, getState());
-  enterRule(_localctx, 8, iris_grammarParser::RuleConditional_block);
+  enterRule(_localctx, 10, iris_grammarParser::RuleConditional_block);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -891,22 +948,23 @@ iris_grammarParser::Conditional_blockContext* iris_grammarParser::conditional_bl
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(115);
+    setState(122);
     match(iris_grammarParser::IF);
-    setState(116);
+    setState(123);
     expr(0);
-    setState(119);
+    setState(126);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
-      case iris_grammarParser::T__6: {
-        setState(117);
+      case iris_grammarParser::T__7: {
+        setState(124);
         block();
         break;
       }
 
-      case iris_grammarParser::T__3:
-      case iris_grammarParser::T__11:
-      case iris_grammarParser::T__12:
+      case iris_grammarParser::T__0:
+      case iris_grammarParser::T__4:
+      case iris_grammarParser::T__9:
+      case iris_grammarParser::T__10:
       case iris_grammarParser::T__13:
       case iris_grammarParser::T__14:
       case iris_grammarParser::IF:
@@ -971,7 +1029,7 @@ iris_grammarParser::Conditional_blockContext* iris_grammarParser::conditional_bl
       case iris_grammarParser::FLOAT:
       case iris_grammarParser::LABEL:
       case iris_grammarParser::INT: {
-        setState(118);
+        setState(125);
         statement();
         break;
       }
@@ -979,26 +1037,27 @@ iris_grammarParser::Conditional_blockContext* iris_grammarParser::conditional_bl
     default:
       throw NoViableAltException(this);
     }
-    setState(129);
+    setState(136);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while (_la == iris_grammarParser::ELIF) {
-      setState(121);
+      setState(128);
       match(iris_grammarParser::ELIF);
-      setState(122);
+      setState(129);
       expr(0);
-      setState(125);
+      setState(132);
       _errHandler->sync(this);
       switch (_input->LA(1)) {
-        case iris_grammarParser::T__6: {
-          setState(123);
+        case iris_grammarParser::T__7: {
+          setState(130);
           block();
           break;
         }
 
-        case iris_grammarParser::T__3:
-        case iris_grammarParser::T__11:
-        case iris_grammarParser::T__12:
+        case iris_grammarParser::T__0:
+        case iris_grammarParser::T__4:
+        case iris_grammarParser::T__9:
+        case iris_grammarParser::T__10:
         case iris_grammarParser::T__13:
         case iris_grammarParser::T__14:
         case iris_grammarParser::IF:
@@ -1063,7 +1122,7 @@ iris_grammarParser::Conditional_blockContext* iris_grammarParser::conditional_bl
         case iris_grammarParser::FLOAT:
         case iris_grammarParser::LABEL:
         case iris_grammarParser::INT: {
-          setState(124);
+          setState(131);
           statement();
           break;
         }
@@ -1071,29 +1130,30 @@ iris_grammarParser::Conditional_blockContext* iris_grammarParser::conditional_bl
       default:
         throw NoViableAltException(this);
       }
-      setState(131);
+      setState(138);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(137);
+    setState(144);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if (_la == iris_grammarParser::ELSE) {
-      setState(132);
+      setState(139);
       match(iris_grammarParser::ELSE);
-      setState(135);
+      setState(142);
       _errHandler->sync(this);
       switch (_input->LA(1)) {
-        case iris_grammarParser::T__6: {
-          setState(133);
+        case iris_grammarParser::T__7: {
+          setState(140);
           block();
           break;
         }
 
-        case iris_grammarParser::T__3:
-        case iris_grammarParser::T__11:
-        case iris_grammarParser::T__12:
+        case iris_grammarParser::T__0:
+        case iris_grammarParser::T__4:
+        case iris_grammarParser::T__9:
+        case iris_grammarParser::T__10:
         case iris_grammarParser::T__13:
         case iris_grammarParser::T__14:
         case iris_grammarParser::IF:
@@ -1158,7 +1218,7 @@ iris_grammarParser::Conditional_blockContext* iris_grammarParser::conditional_bl
         case iris_grammarParser::FLOAT:
         case iris_grammarParser::LABEL:
         case iris_grammarParser::INT: {
-          setState(134);
+          setState(141);
           statement();
           break;
         }
@@ -1166,6 +1226,63 @@ iris_grammarParser::Conditional_blockContext* iris_grammarParser::conditional_bl
       default:
         throw NoViableAltException(this);
       }
+    }
+   
+  }
+  catch (RecognitionException &e) {
+    _errHandler->reportError(this, e);
+    _localctx->exception = std::current_exception();
+    _errHandler->recover(this, _localctx->exception);
+  }
+
+  return _localctx;
+}
+
+//----------------- File_path_partContext ------------------------------------------------------------------
+
+iris_grammarParser::File_path_partContext::File_path_partContext(ParserRuleContext *parent, size_t invokingState)
+  : ParserRuleContext(parent, invokingState) {
+}
+
+tree::TerminalNode* iris_grammarParser::File_path_partContext::LABEL() {
+  return getToken(iris_grammarParser::LABEL, 0);
+}
+
+
+size_t iris_grammarParser::File_path_partContext::getRuleIndex() const {
+  return iris_grammarParser::RuleFile_path_part;
+}
+
+
+std::any iris_grammarParser::File_path_partContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<iris_grammarVisitor*>(visitor))
+    return parserVisitor->visitFile_path_part(this);
+  else
+    return visitor->visitChildren(this);
+}
+
+iris_grammarParser::File_path_partContext* iris_grammarParser::file_path_part() {
+  File_path_partContext *_localctx = _tracker.createInstance<File_path_partContext>(_ctx, getState());
+  enterRule(_localctx, 12, iris_grammarParser::RuleFile_path_part);
+  size_t _la = 0;
+
+#if __cplusplus > 201703L
+  auto onExit = finally([=, this] {
+#else
+  auto onExit = finally([=] {
+#endif
+    exitRule();
+  });
+  try {
+    enterOuterAlt(_localctx, 1);
+    setState(146);
+    _la = _input->LA(1);
+    if (!(_la == iris_grammarParser::T__1 || _la == iris_grammarParser::LABEL)) {
+    _errHandler->recoverInline(this);
+    }
+    else {
+      _errHandler->reportMatch(this);
+      consume();
     }
    
   }
@@ -1211,7 +1328,7 @@ std::any iris_grammarParser::Import_labelContext::accept(tree::ParseTreeVisitor 
 
 iris_grammarParser::Import_labelContext* iris_grammarParser::import_label() {
   Import_labelContext *_localctx = _tracker.createInstance<Import_labelContext>(_ctx, getState());
-  enterRule(_localctx, 10, iris_grammarParser::RuleImport_label);
+  enterRule(_localctx, 14, iris_grammarParser::RuleImport_label);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1223,16 +1340,16 @@ iris_grammarParser::Import_labelContext* iris_grammarParser::import_label() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(139);
+    setState(148);
     antlrcpp::downCast<Import_labelContext *>(_localctx)->import_name = match(iris_grammarParser::LABEL);
-    setState(142);
+    setState(151);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
     if (_la == iris_grammarParser::AS) {
-      setState(140);
+      setState(149);
       match(iris_grammarParser::AS);
-      setState(141);
+      setState(150);
       antlrcpp::downCast<Import_labelContext *>(_localctx)->import_alias = match(iris_grammarParser::LABEL);
     }
    
@@ -1283,7 +1400,7 @@ std::any iris_grammarParser::BlockContext::accept(tree::ParseTreeVisitor *visito
 
 iris_grammarParser::BlockContext* iris_grammarParser::block() {
   BlockContext *_localctx = _tracker.createInstance<BlockContext>(_ctx, getState());
-  enterRule(_localctx, 12, iris_grammarParser::RuleBlock);
+  enterRule(_localctx, 16, iris_grammarParser::RuleBlock);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -1295,30 +1412,30 @@ iris_grammarParser::BlockContext* iris_grammarParser::block() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(144);
-    match(iris_grammarParser::T__6);
-    setState(151);
+    setState(153);
+    match(iris_grammarParser::T__7);
+    setState(160);
     _errHandler->sync(this);
     _la = _input->LA(1);
     while ((((_la & ~ 0x3fULL) == 0) &&
-      ((1ULL << _la) & 576452505966276624) != 0) || ((((_la - 74) & ~ 0x3fULL) == 0) &&
-      ((1ULL << (_la - 74)) & 35184372088831) != 0)) {
-      setState(145);
+      ((1ULL << _la) & 2305810023864912930) != 0) || ((((_la - 76) & ~ 0x3fULL) == 0) &&
+      ((1ULL << (_la - 76)) & 35184372088831) != 0)) {
+      setState(154);
       statement();
-      setState(147);
+      setState(156);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
       if (_la == iris_grammarParser::NEWLINE) {
-        setState(146);
+        setState(155);
         match(iris_grammarParser::NEWLINE);
       }
-      setState(153);
+      setState(162);
       _errHandler->sync(this);
       _la = _input->LA(1);
     }
-    setState(154);
-    match(iris_grammarParser::T__7);
+    setState(163);
+    match(iris_grammarParser::T__8);
    
   }
   catch (RecognitionException &e) {
@@ -1371,7 +1488,7 @@ std::any iris_grammarParser::ConditionalContext::accept(tree::ParseTreeVisitor *
 
 iris_grammarParser::ConditionalContext* iris_grammarParser::conditional() {
   ConditionalContext *_localctx = _tracker.createInstance<ConditionalContext>(_ctx, getState());
-  enterRule(_localctx, 14, iris_grammarParser::RuleConditional);
+  enterRule(_localctx, 18, iris_grammarParser::RuleConditional);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -1382,17 +1499,17 @@ iris_grammarParser::ConditionalContext* iris_grammarParser::conditional() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(156);
+    setState(165);
     match(iris_grammarParser::IF);
-    setState(157);
+    setState(166);
     expr(0);
-    setState(158);
+    setState(167);
     match(iris_grammarParser::THEN);
-    setState(159);
+    setState(168);
     expr(0);
-    setState(160);
+    setState(169);
     match(iris_grammarParser::ELSE);
-    setState(161);
+    setState(170);
     expr(0);
    
   }
@@ -1445,10 +1562,6 @@ std::any iris_grammarParser::CastContext::accept(tree::ParseTreeVisitor *visitor
 }
 //----------------- CallContext ------------------------------------------------------------------
 
-iris_grammarParser::TypeContext* iris_grammarParser::CallContext::type() {
-  return getRuleContext<iris_grammarParser::TypeContext>(0);
-}
-
 std::vector<iris_grammarParser::ExprContext *> iris_grammarParser::CallContext::expr() {
   return getRuleContexts<iris_grammarParser::ExprContext>();
 }
@@ -1478,6 +1591,21 @@ iris_grammarParser::AbsoluteValueContext::AbsoluteValueContext(ExprContext *ctx)
 std::any iris_grammarParser::AbsoluteValueContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<iris_grammarVisitor*>(visitor))
     return parserVisitor->visitAbsoluteValue(this);
+  else
+    return visitor->visitChildren(this);
+}
+//----------------- ReturnContext ------------------------------------------------------------------
+
+iris_grammarParser::Return_statementContext* iris_grammarParser::ReturnContext::return_statement() {
+  return getRuleContext<iris_grammarParser::Return_statementContext>(0);
+}
+
+iris_grammarParser::ReturnContext::ReturnContext(ExprContext *ctx) { copyFrom(ctx); }
+
+
+std::any iris_grammarParser::ReturnContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<iris_grammarVisitor*>(visitor))
+    return parserVisitor->visitReturn(this);
   else
     return visitor->visitChildren(this);
 }
@@ -1527,6 +1655,48 @@ iris_grammarParser::MagnitudeContext::MagnitudeContext(ExprContext *ctx) { copyF
 std::any iris_grammarParser::MagnitudeContext::accept(tree::ParseTreeVisitor *visitor) {
   if (auto parserVisitor = dynamic_cast<iris_grammarVisitor*>(visitor))
     return parserVisitor->visitMagnitude(this);
+  else
+    return visitor->visitChildren(this);
+}
+//----------------- IndexOperatorContext ------------------------------------------------------------------
+
+std::vector<iris_grammarParser::ExprContext *> iris_grammarParser::IndexOperatorContext::expr() {
+  return getRuleContexts<iris_grammarParser::ExprContext>();
+}
+
+iris_grammarParser::ExprContext* iris_grammarParser::IndexOperatorContext::expr(size_t i) {
+  return getRuleContext<iris_grammarParser::ExprContext>(i);
+}
+
+iris_grammarParser::IndexOperatorContext::IndexOperatorContext(ExprContext *ctx) { copyFrom(ctx); }
+
+
+std::any iris_grammarParser::IndexOperatorContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<iris_grammarVisitor*>(visitor))
+    return parserVisitor->visitIndexOperator(this);
+  else
+    return visitor->visitChildren(this);
+}
+//----------------- ConstructorCallContext ------------------------------------------------------------------
+
+iris_grammarParser::TypeContext* iris_grammarParser::ConstructorCallContext::type() {
+  return getRuleContext<iris_grammarParser::TypeContext>(0);
+}
+
+std::vector<iris_grammarParser::ExprContext *> iris_grammarParser::ConstructorCallContext::expr() {
+  return getRuleContexts<iris_grammarParser::ExprContext>();
+}
+
+iris_grammarParser::ExprContext* iris_grammarParser::ConstructorCallContext::expr(size_t i) {
+  return getRuleContext<iris_grammarParser::ExprContext>(i);
+}
+
+iris_grammarParser::ConstructorCallContext::ConstructorCallContext(ExprContext *ctx) { copyFrom(ctx); }
+
+
+std::any iris_grammarParser::ConstructorCallContext::accept(tree::ParseTreeVisitor *visitor) {
+  if (auto parserVisitor = dynamic_cast<iris_grammarVisitor*>(visitor))
+    return parserVisitor->visitConstructorCall(this);
   else
     return visitor->visitChildren(this);
 }
@@ -1682,25 +1852,6 @@ std::any iris_grammarParser::ParenthesesContext::accept(tree::ParseTreeVisitor *
   else
     return visitor->visitChildren(this);
 }
-//----------------- IndexOperatorContext ------------------------------------------------------------------
-
-std::vector<iris_grammarParser::ExprContext *> iris_grammarParser::IndexOperatorContext::expr() {
-  return getRuleContexts<iris_grammarParser::ExprContext>();
-}
-
-iris_grammarParser::ExprContext* iris_grammarParser::IndexOperatorContext::expr(size_t i) {
-  return getRuleContext<iris_grammarParser::ExprContext>(i);
-}
-
-iris_grammarParser::IndexOperatorContext::IndexOperatorContext(ExprContext *ctx) { copyFrom(ctx); }
-
-
-std::any iris_grammarParser::IndexOperatorContext::accept(tree::ParseTreeVisitor *visitor) {
-  if (auto parserVisitor = dynamic_cast<iris_grammarVisitor*>(visitor))
-    return parserVisitor->visitIndexOperator(this);
-  else
-    return visitor->visitChildren(this);
-}
 
 iris_grammarParser::ExprContext* iris_grammarParser::expr() {
    return expr(0);
@@ -1712,8 +1863,8 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
   iris_grammarParser::ExprContext *_localctx = _tracker.createInstance<ExprContext>(_ctx, parentState);
   iris_grammarParser::ExprContext *previousContext = _localctx;
   (void)previousContext; // Silence compiler, in case the context is not used by generated code.
-  size_t startState = 16;
-  enterRecursionRule(_localctx, 16, iris_grammarParser::RuleExpr, precedence);
+  size_t startState = 20;
+  enterRecursionRule(_localctx, 20, iris_grammarParser::RuleExpr, precedence);
 
     size_t _la = 0;
 
@@ -1727,9 +1878,69 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(194);
+    setState(204);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
+      case iris_grammarParser::T__4: {
+        _localctx = _tracker.createInstance<ParenthesesContext>(_localctx);
+        _ctx = _localctx;
+        previousContext = _localctx;
+
+        setState(173);
+        match(iris_grammarParser::T__4);
+        setState(174);
+        expr(0);
+        setState(175);
+        match(iris_grammarParser::T__5);
+        break;
+      }
+
+      case iris_grammarParser::FLOAT:
+      case iris_grammarParser::LABEL:
+      case iris_grammarParser::INT: {
+        _localctx = _tracker.createInstance<PrimitiveExpressionContext>(_localctx);
+        _ctx = _localctx;
+        previousContext = _localctx;
+        setState(177);
+        primitive();
+        break;
+      }
+
+      case iris_grammarParser::T__0: {
+        _localctx = _tracker.createInstance<ReturnContext>(_localctx);
+        _ctx = _localctx;
+        previousContext = _localctx;
+        setState(178);
+        return_statement();
+        break;
+      }
+
+      case iris_grammarParser::T__9: {
+        _localctx = _tracker.createInstance<MagnitudeContext>(_localctx);
+        _ctx = _localctx;
+        previousContext = _localctx;
+        setState(179);
+        match(iris_grammarParser::T__9);
+        setState(180);
+        expr(0);
+        setState(181);
+        match(iris_grammarParser::T__9);
+        break;
+      }
+
+      case iris_grammarParser::T__10: {
+        _localctx = _tracker.createInstance<AbsoluteValueContext>(_localctx);
+        _ctx = _localctx;
+        previousContext = _localctx;
+        setState(183);
+        match(iris_grammarParser::T__10);
+        setState(184);
+        expr(0);
+        setState(185);
+        match(iris_grammarParser::T__10);
+        break;
+      }
+
       case iris_grammarParser::NONE:
       case iris_grammarParser::I8:
       case iris_grammarParser::I16:
@@ -1772,86 +1983,37 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
       case iris_grammarParser::LP:
       case iris_grammarParser::MP:
       case iris_grammarParser::HP: {
-        _localctx = _tracker.createInstance<CallContext>(_localctx);
+        _localctx = _tracker.createInstance<ConstructorCallContext>(_localctx);
         _ctx = _localctx;
         previousContext = _localctx;
-
-        setState(164);
+        setState(187);
         type();
-        setState(165);
-        match(iris_grammarParser::T__3);
-        setState(174);
+        setState(188);
+        match(iris_grammarParser::T__4);
+        setState(197);
         _errHandler->sync(this);
 
         _la = _input->LA(1);
         if ((((_la & ~ 0x3fULL) == 0) &&
-          ((1ULL << _la) & 574209502245613584) != 0) || ((((_la - 74) & ~ 0x3fULL) == 0) &&
-          ((1ULL << (_la - 74)) & 35184372088831) != 0)) {
-          setState(166);
+          ((1ULL << _la) & 2296838008982260770) != 0) || ((((_la - 76) & ~ 0x3fULL) == 0) &&
+          ((1ULL << (_la - 76)) & 35184372088831) != 0)) {
+          setState(189);
           expr(0);
-          setState(171);
+          setState(194);
           _errHandler->sync(this);
           _la = _input->LA(1);
-          while (_la == iris_grammarParser::T__1) {
-            setState(167);
-            match(iris_grammarParser::T__1);
-            setState(168);
+          while (_la == iris_grammarParser::T__2) {
+            setState(190);
+            match(iris_grammarParser::T__2);
+            setState(191);
             expr(0);
-            setState(173);
+            setState(196);
             _errHandler->sync(this);
             _la = _input->LA(1);
           }
         }
-        setState(176);
-        match(iris_grammarParser::T__4);
-        break;
-      }
-
-      case iris_grammarParser::T__3: {
-        _localctx = _tracker.createInstance<ParenthesesContext>(_localctx);
-        _ctx = _localctx;
-        previousContext = _localctx;
-        setState(178);
-        match(iris_grammarParser::T__3);
-        setState(179);
-        expr(0);
-        setState(180);
-        match(iris_grammarParser::T__4);
-        break;
-      }
-
-      case iris_grammarParser::T__11: {
-        _localctx = _tracker.createInstance<MagnitudeContext>(_localctx);
-        _ctx = _localctx;
-        previousContext = _localctx;
-        setState(182);
-        match(iris_grammarParser::T__11);
-        setState(183);
-        expr(0);
-        setState(184);
-        match(iris_grammarParser::T__11);
-        break;
-      }
-
-      case iris_grammarParser::T__12: {
-        _localctx = _tracker.createInstance<AbsoluteValueContext>(_localctx);
-        _ctx = _localctx;
-        previousContext = _localctx;
-        setState(186);
-        match(iris_grammarParser::T__12);
-        setState(187);
-        expr(0);
-        setState(188);
-        match(iris_grammarParser::T__12);
-        break;
-      }
-
-      case iris_grammarParser::IF: {
-        _localctx = _tracker.createInstance<TernaryContext>(_localctx);
-        _ctx = _localctx;
-        previousContext = _localctx;
-        setState(190);
-        conditional();
+        setState(199);
+        match(iris_grammarParser::T__5);
         break;
       }
 
@@ -1868,29 +2030,27 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
         _localctx = _tracker.createInstance<UnaryOperatorContext>(_localctx);
         _ctx = _localctx;
         previousContext = _localctx;
-        setState(191);
+        setState(201);
         _la = _input->LA(1);
         if (!((((_la & ~ 0x3fULL) == 0) &&
-          ((1ULL << _la) & 574208952489787392) != 0))) {
+          ((1ULL << _la) & 2296835809959002112) != 0))) {
         _errHandler->recoverInline(this);
         }
         else {
           _errHandler->reportMatch(this);
           consume();
         }
-        setState(192);
+        setState(202);
         expr(15);
         break;
       }
 
-      case iris_grammarParser::FLOAT:
-      case iris_grammarParser::LABEL:
-      case iris_grammarParser::INT: {
-        _localctx = _tracker.createInstance<PrimitiveExpressionContext>(_localctx);
+      case iris_grammarParser::IF: {
+        _localctx = _tracker.createInstance<TernaryContext>(_localctx);
         _ctx = _localctx;
         previousContext = _localctx;
-        setState(193);
-        primitive();
+        setState(203);
+        conditional();
         break;
       }
 
@@ -1898,28 +2058,28 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
       throw NoViableAltException(this);
     }
     _ctx->stop = _input->LT(-1);
-    setState(265);
+    setState(268);
     _errHandler->sync(this);
-    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 31, _ctx);
+    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 30, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
         if (!_parseListeners.empty())
           triggerExitRuleEvent();
         previousContext = _localctx;
-        setState(263);
+        setState(266);
         _errHandler->sync(this);
-        switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 30, _ctx)) {
+        switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 29, _ctx)) {
         case 1: {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(196);
+          setState(206);
 
-          if (!(precpred(_ctx, 24))) throw FailedPredicateException(this, "precpred(_ctx, 24)");
-          setState(197);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::T__8);
-          setState(198);
-          expr(25);
+          if (!(precpred(_ctx, 13))) throw FailedPredicateException(this, "precpred(_ctx, 13)");
+          setState(207);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::T__15);
+          setState(208);
+          expr(13);
           break;
         }
 
@@ -1927,13 +2087,22 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(199);
+          setState(209);
 
-          if (!(precpred(_ctx, 14))) throw FailedPredicateException(this, "precpred(_ctx, 14)");
-          setState(200);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::T__15);
-          setState(201);
-          expr(15);
+          if (!(precpred(_ctx, 12))) throw FailedPredicateException(this, "precpred(_ctx, 12)");
+          setState(210);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
+          _la = _input->LA(1);
+          if (!((((_la & ~ 0x3fULL) == 0) &&
+            ((1ULL << _la) & 4063248) != 0))) {
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
+          }
+          else {
+            _errHandler->reportMatch(this);
+            consume();
+          }
+          setState(211);
+          expr(13);
           break;
         }
 
@@ -1941,33 +2110,10 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(202);
+          setState(212);
 
-          if (!(precpred(_ctx, 13))) throw FailedPredicateException(this, "precpred(_ctx, 13)");
-          setState(203);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
-          _la = _input->LA(1);
-          if (!((((_la & ~ 0x3fULL) == 0) &&
-            ((1ULL << _la) & 4063240) != 0))) {
-            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
-          }
-          else {
-            _errHandler->reportMatch(this);
-            consume();
-          }
-          setState(204);
-          expr(14);
-          break;
-        }
-
-        case 4: {
-          auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
-          _localctx = newContext;
-          pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(205);
-
-          if (!(precpred(_ctx, 12))) throw FailedPredicateException(this, "precpred(_ctx, 12)");
-          setState(206);
+          if (!(precpred(_ctx, 11))) throw FailedPredicateException(this, "precpred(_ctx, 11)");
+          setState(213);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == iris_grammarParser::T__13
@@ -1979,19 +2125,19 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(207);
-          expr(13);
+          setState(214);
+          expr(12);
           break;
         }
 
-        case 5: {
+        case 4: {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(208);
+          setState(215);
 
-          if (!(precpred(_ctx, 11))) throw FailedPredicateException(this, "precpred(_ctx, 11)");
-          setState(209);
+          if (!(precpred(_ctx, 10))) throw FailedPredicateException(this, "precpred(_ctx, 10)");
+          setState(216);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
           if (!(_la == iris_grammarParser::BITS_LEFT
@@ -2003,8 +2149,31 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(210);
-          expr(12);
+          setState(217);
+          expr(11);
+          break;
+        }
+
+        case 5: {
+          auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
+          _localctx = newContext;
+          pushNewRecursionContext(newContext, startState, RuleExpr);
+          setState(218);
+
+          if (!(precpred(_ctx, 9))) throw FailedPredicateException(this, "precpred(_ctx, 9)");
+          setState(219);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
+          _la = _input->LA(1);
+          if (!((((_la & ~ 0x3fULL) == 0) &&
+            ((1ULL << _la) & 62914560) != 0))) {
+            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
+          }
+          else {
+            _errHandler->reportMatch(this);
+            consume();
+          }
+          setState(220);
+          expr(10);
           break;
         }
 
@@ -2012,22 +2181,23 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(211);
+          setState(221);
 
-          if (!(precpred(_ctx, 10))) throw FailedPredicateException(this, "precpred(_ctx, 10)");
-          setState(212);
+          if (!(precpred(_ctx, 8))) throw FailedPredicateException(this, "precpred(_ctx, 8)");
+          setState(222);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
-          if (!((((_la & ~ 0x3fULL) == 0) &&
-            ((1ULL << _la) & -2305843009213693952) != 0))) {
+          if (!(_la == iris_grammarParser::T__25
+
+          || _la == iris_grammarParser::T__26)) {
             antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(213);
-          expr(11);
+          setState(223);
+          expr(9);
           break;
         }
 
@@ -2035,23 +2205,13 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(214);
+          setState(224);
 
-          if (!(precpred(_ctx, 9))) throw FailedPredicateException(this, "precpred(_ctx, 9)");
-          setState(215);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
-          _la = _input->LA(1);
-          if (!(_la == iris_grammarParser::AND
-
-          || _la == iris_grammarParser::OR)) {
-            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
-          }
-          else {
-            _errHandler->reportMatch(this);
-            consume();
-          }
-          setState(216);
-          expr(10);
+          if (!(precpred(_ctx, 7))) throw FailedPredicateException(this, "precpred(_ctx, 7)");
+          setState(225);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::BITS_AND);
+          setState(226);
+          expr(8);
           break;
         }
 
@@ -2059,22 +2219,13 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(217);
+          setState(227);
 
-          if (!(precpred(_ctx, 8))) throw FailedPredicateException(this, "precpred(_ctx, 8)");
-          setState(218);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
-          _la = _input->LA(1);
-          if (!((((_la & ~ 0x3fULL) == 0) &&
-            ((1ULL << _la) & 130023424) != 0))) {
-            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
-          }
-          else {
-            _errHandler->reportMatch(this);
-            consume();
-          }
-          setState(219);
-          expr(9);
+          if (!(precpred(_ctx, 6))) throw FailedPredicateException(this, "precpred(_ctx, 6)");
+          setState(228);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::BITS_XOR);
+          setState(229);
+          expr(7);
           break;
         }
 
@@ -2082,22 +2233,13 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(220);
+          setState(230);
 
-          if (!(precpred(_ctx, 6))) throw FailedPredicateException(this, "precpred(_ctx, 6)");
-          setState(221);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
-          _la = _input->LA(1);
-          if (!((((_la & ~ 0x3fULL) == 0) &&
-            ((1ULL << _la) & 17045651456) != 0))) {
-            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
-          }
-          else {
-            _errHandler->reportMatch(this);
-            consume();
-          }
-          setState(222);
-          expr(7);
+          if (!(precpred(_ctx, 5))) throw FailedPredicateException(this, "precpred(_ctx, 5)");
+          setState(231);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::BITS_OR);
+          setState(232);
+          expr(6);
           break;
         }
 
@@ -2105,23 +2247,13 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(223);
+          setState(233);
 
-          if (!(precpred(_ctx, 5))) throw FailedPredicateException(this, "precpred(_ctx, 5)");
-          setState(224);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
-          _la = _input->LA(1);
-          if (!(_la == iris_grammarParser::T__33
-
-          || _la == iris_grammarParser::T__34)) {
-            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
-          }
-          else {
-            _errHandler->reportMatch(this);
-            consume();
-          }
-          setState(225);
-          expr(6);
+          if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
+          setState(234);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::AND);
+          setState(235);
+          expr(5);
           break;
         }
 
@@ -2129,23 +2261,13 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(226);
+          setState(236);
 
-          if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
-          setState(227);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
-          _la = _input->LA(1);
-          if (!(_la == iris_grammarParser::BITS_LEFT_EQ
-
-          || _la == iris_grammarParser::BITS_RIGHT_EQ)) {
-            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
-          }
-          else {
-            _errHandler->reportMatch(this);
-            consume();
-          }
-          setState(228);
-          expr(5);
+          if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
+          setState(237);
+          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::OR);
+          setState(238);
+          expr(4);
           break;
         }
 
@@ -2153,46 +2275,58 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(229);
+          setState(239);
 
-          if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
-          setState(230);
+          if (!(precpred(_ctx, 1))) throw FailedPredicateException(this, "precpred(_ctx, 1)");
+          setState(240);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
-          if (!(((((_la - 68) & ~ 0x3fULL) == 0) &&
-            ((1ULL << (_la - 68)) & 7) != 0))) {
+          if (!(((((_la - 28) & ~ 0x3fULL) == 0) &&
+            ((1ULL << (_la - 28)) & 139637976728575) != 0))) {
             antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
           }
           else {
             _errHandler->reportMatch(this);
             consume();
           }
-          setState(231);
-          expr(4);
+          setState(241);
+          expr(1);
           break;
         }
 
         case 13: {
-          auto newContext = _tracker.createInstance<BinaryOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
+          auto newContext = _tracker.createInstance<CallContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(232);
+          setState(242);
 
-          if (!(precpred(_ctx, 2))) throw FailedPredicateException(this, "precpred(_ctx, 2)");
-          setState(233);
-          antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
+          if (!(precpred(_ctx, 19))) throw FailedPredicateException(this, "precpred(_ctx, 19)");
+          setState(243);
+          match(iris_grammarParser::T__4);
+          setState(252);
+          _errHandler->sync(this);
+
           _la = _input->LA(1);
-          if (!(_la == iris_grammarParser::AND_EQ
-
-          || _la == iris_grammarParser::OR_EQ)) {
-            antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _errHandler->recoverInline(this);
+          if ((((_la & ~ 0x3fULL) == 0) &&
+            ((1ULL << _la) & 2296838008982260770) != 0) || ((((_la - 76) & ~ 0x3fULL) == 0) &&
+            ((1ULL << (_la - 76)) & 35184372088831) != 0)) {
+            setState(244);
+            expr(0);
+            setState(249);
+            _errHandler->sync(this);
+            _la = _input->LA(1);
+            while (_la == iris_grammarParser::T__2) {
+              setState(245);
+              match(iris_grammarParser::T__2);
+              setState(246);
+              expr(0);
+              setState(251);
+              _errHandler->sync(this);
+              _la = _input->LA(1);
+            }
           }
-          else {
-            _errHandler->reportMatch(this);
-            consume();
-          }
-          setState(234);
-          expr(3);
+          setState(254);
+          match(iris_grammarParser::T__5);
           break;
         }
 
@@ -2200,94 +2334,42 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           auto newContext = _tracker.createInstance<IndexOperatorContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(235);
+          setState(255);
 
-          if (!(precpred(_ctx, 23))) throw FailedPredicateException(this, "precpred(_ctx, 23)");
-          setState(240); 
-          _errHandler->sync(this);
-          alt = 1;
-          do {
-            switch (alt) {
-              case 1: {
-                    setState(236);
-                    match(iris_grammarParser::T__9);
-                    setState(237);
-                    expr(0);
-                    setState(238);
-                    match(iris_grammarParser::T__10);
-                    break;
-                  }
-
-            default:
-              throw NoViableAltException(this);
-            }
-            setState(242); 
-            _errHandler->sync(this);
-            alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 27, _ctx);
-          } while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER);
+          if (!(precpred(_ctx, 17))) throw FailedPredicateException(this, "precpred(_ctx, 17)");
+          setState(256);
+          match(iris_grammarParser::T__11);
+          setState(257);
+          expr(0);
+          setState(258);
+          match(iris_grammarParser::T__12);
           break;
         }
 
         case 15: {
-          auto newContext = _tracker.createInstance<CallContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
-          _localctx = newContext;
-          pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(244);
-
-          if (!(precpred(_ctx, 22))) throw FailedPredicateException(this, "precpred(_ctx, 22)");
-          setState(245);
-          match(iris_grammarParser::T__3);
-          setState(254);
-          _errHandler->sync(this);
-
-          _la = _input->LA(1);
-          if ((((_la & ~ 0x3fULL) == 0) &&
-            ((1ULL << _la) & 574209502245613584) != 0) || ((((_la - 74) & ~ 0x3fULL) == 0) &&
-            ((1ULL << (_la - 74)) & 35184372088831) != 0)) {
-            setState(246);
-            expr(0);
-            setState(251);
-            _errHandler->sync(this);
-            _la = _input->LA(1);
-            while (_la == iris_grammarParser::T__1) {
-              setState(247);
-              match(iris_grammarParser::T__1);
-              setState(248);
-              expr(0);
-              setState(253);
-              _errHandler->sync(this);
-              _la = _input->LA(1);
-            }
-          }
-          setState(256);
-          match(iris_grammarParser::T__4);
-          break;
-        }
-
-        case 16: {
           auto newContext = _tracker.createInstance<GetterContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
-          _localctx = newContext;
-          pushNewRecursionContext(newContext, startState, RuleExpr);
-          setState(257);
-
-          if (!(precpred(_ctx, 16))) throw FailedPredicateException(this, "precpred(_ctx, 16)");
-          setState(258);
-          match(iris_grammarParser::T__0);
-          setState(259);
-          match(iris_grammarParser::LABEL);
-          break;
-        }
-
-        case 17: {
-          auto newContext = _tracker.createInstance<CastContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
           _localctx = newContext;
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(260);
 
-          if (!(precpred(_ctx, 7))) throw FailedPredicateException(this, "precpred(_ctx, 7)");
+          if (!(precpred(_ctx, 16))) throw FailedPredicateException(this, "precpred(_ctx, 16)");
           setState(261);
-          match(iris_grammarParser::AS);
+          match(iris_grammarParser::T__1);
           setState(262);
+          match(iris_grammarParser::LABEL);
+          break;
+        }
+
+        case 16: {
+          auto newContext = _tracker.createInstance<CastContext>(_tracker.createInstance<ExprContext>(parentContext, parentState));
+          _localctx = newContext;
+          pushNewRecursionContext(newContext, startState, RuleExpr);
+          setState(263);
+
+          if (!(precpred(_ctx, 14))) throw FailedPredicateException(this, "precpred(_ctx, 14)");
+          setState(264);
+          match(iris_grammarParser::AS);
+          setState(265);
           type();
           break;
         }
@@ -2296,9 +2378,9 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           break;
         } 
       }
-      setState(267);
+      setState(270);
       _errHandler->sync(this);
-      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 31, _ctx);
+      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 30, _ctx);
     }
   }
   catch (RecognitionException &e) {
@@ -2358,7 +2440,7 @@ std::any iris_grammarParser::DescriptorContext::accept(tree::ParseTreeVisitor *v
 
 iris_grammarParser::DescriptorContext* iris_grammarParser::descriptor() {
   DescriptorContext *_localctx = _tracker.createInstance<DescriptorContext>(_ctx, getState());
-  enterRule(_localctx, 18, iris_grammarParser::RuleDescriptor);
+  enterRule(_localctx, 22, iris_grammarParser::RuleDescriptor);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2369,7 +2451,7 @@ iris_grammarParser::DescriptorContext* iris_grammarParser::descriptor() {
     exitRule();
   });
   try {
-    setState(273);
+    setState(276);
     _errHandler->sync(this);
     switch (_input->LA(1)) {
       case iris_grammarParser::DEF:
@@ -2378,11 +2460,11 @@ iris_grammarParser::DescriptorContext* iris_grammarParser::descriptor() {
       case iris_grammarParser::UNIFORM:
       case iris_grammarParser::MUT: {
         enterOuterAlt(_localctx, 1);
-        setState(268);
+        setState(271);
         antlrcpp::downCast<DescriptorContext *>(_localctx)->descriptor_name = _input->LT(1);
         _la = _input->LA(1);
         if (!((((_la & ~ 0x3fULL) == 0) &&
-          ((1ULL << _la) & 1090715534753792) != 0))) {
+          ((1ULL << _la) & 4362862139015168) != 0))) {
           antlrcpp::downCast<DescriptorContext *>(_localctx)->descriptor_name = _errHandler->recoverInline(this);
         }
         else {
@@ -2394,14 +2476,14 @@ iris_grammarParser::DescriptorContext* iris_grammarParser::descriptor() {
 
       case iris_grammarParser::VERTEX: {
         enterOuterAlt(_localctx, 2);
-        setState(269);
-        antlrcpp::downCast<DescriptorContext *>(_localctx)->descriptor_name = match(iris_grammarParser::VERTEX);
-        setState(270);
-        match(iris_grammarParser::T__9);
-        setState(271);
-        match(iris_grammarParser::INT);
         setState(272);
-        match(iris_grammarParser::T__10);
+        antlrcpp::downCast<DescriptorContext *>(_localctx)->descriptor_name = match(iris_grammarParser::VERTEX);
+        setState(273);
+        match(iris_grammarParser::T__11);
+        setState(274);
+        match(iris_grammarParser::INT);
+        setState(275);
+        match(iris_grammarParser::T__12);
         break;
       }
 
@@ -2452,7 +2534,7 @@ std::any iris_grammarParser::Precision_qualifierContext::accept(tree::ParseTreeV
 
 iris_grammarParser::Precision_qualifierContext* iris_grammarParser::precision_qualifier() {
   Precision_qualifierContext *_localctx = _tracker.createInstance<Precision_qualifierContext>(_ctx, getState());
-  enterRule(_localctx, 20, iris_grammarParser::RulePrecision_qualifier);
+  enterRule(_localctx, 24, iris_grammarParser::RulePrecision_qualifier);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2464,10 +2546,10 @@ iris_grammarParser::Precision_qualifierContext* iris_grammarParser::precision_qu
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(275);
+    setState(278);
     _la = _input->LA(1);
-    if (!(((((_la - 113) & ~ 0x3fULL) == 0) &&
-      ((1ULL << (_la - 113)) & 7) != 0))) {
+    if (!(((((_la - 115) & ~ 0x3fULL) == 0) &&
+      ((1ULL << (_la - 115)) & 7) != 0))) {
     _errHandler->recoverInline(this);
     }
     else {
@@ -2674,7 +2756,7 @@ std::any iris_grammarParser::TypeContext::accept(tree::ParseTreeVisitor *visitor
 
 iris_grammarParser::TypeContext* iris_grammarParser::type() {
   TypeContext *_localctx = _tracker.createInstance<TypeContext>(_ctx, getState());
-  enterRule(_localctx, 22, iris_grammarParser::RuleType);
+  enterRule(_localctx, 26, iris_grammarParser::RuleType);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2687,42 +2769,42 @@ iris_grammarParser::TypeContext* iris_grammarParser::type() {
   try {
     size_t alt;
     enterOuterAlt(_localctx, 1);
-    setState(278);
+    setState(281);
     _errHandler->sync(this);
 
     _la = _input->LA(1);
-    if (((((_la - 113) & ~ 0x3fULL) == 0) &&
-      ((1ULL << (_la - 113)) & 7) != 0)) {
-      setState(277);
+    if (((((_la - 115) & ~ 0x3fULL) == 0) &&
+      ((1ULL << (_la - 115)) & 7) != 0)) {
+      setState(280);
       precision_qualifier();
     }
 
-    setState(280);
+    setState(283);
     antlrcpp::downCast<TypeContext *>(_localctx)->type_name = _input->LT(1);
     _la = _input->LA(1);
-    if (!(((((_la - 74) & ~ 0x3fULL) == 0) &&
-      ((1ULL << (_la - 74)) & 549755813887) != 0))) {
+    if (!(((((_la - 76) & ~ 0x3fULL) == 0) &&
+      ((1ULL << (_la - 76)) & 549755813887) != 0))) {
       antlrcpp::downCast<TypeContext *>(_localctx)->type_name = _errHandler->recoverInline(this);
     }
     else {
       _errHandler->reportMatch(this);
       consume();
     }
-    setState(286);
+    setState(289);
     _errHandler->sync(this);
-    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 34, _ctx);
+    alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 33, _ctx);
     while (alt != 2 && alt != atn::ATN::INVALID_ALT_NUMBER) {
       if (alt == 1) {
-        setState(281);
-        match(iris_grammarParser::T__9);
-        setState(282);
+        setState(284);
+        match(iris_grammarParser::T__11);
+        setState(285);
         match(iris_grammarParser::INT);
-        setState(283);
-        match(iris_grammarParser::T__10); 
+        setState(286);
+        match(iris_grammarParser::T__12); 
       }
-      setState(288);
+      setState(291);
       _errHandler->sync(this);
-      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 34, _ctx);
+      alt = getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 33, _ctx);
     }
    
   }
@@ -2772,7 +2854,7 @@ std::any iris_grammarParser::DeclarationContext::accept(tree::ParseTreeVisitor *
 
 iris_grammarParser::DeclarationContext* iris_grammarParser::declaration() {
   DeclarationContext *_localctx = _tracker.createInstance<DeclarationContext>(_ctx, getState());
-  enterRule(_localctx, 24, iris_grammarParser::RuleDeclaration);
+  enterRule(_localctx, 28, iris_grammarParser::RuleDeclaration);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2783,23 +2865,23 @@ iris_grammarParser::DeclarationContext* iris_grammarParser::declaration() {
     exitRule();
   });
   try {
-    setState(310);
+    setState(313);
     _errHandler->sync(this);
-    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 38, _ctx)) {
+    switch (getInterpreter<atn::ParserATNSimulator>()->adaptivePredict(_input, 37, _ctx)) {
     case 1: {
       enterOuterAlt(_localctx, 1);
-      setState(289);
+      setState(292);
       descriptor();
-      setState(290);
-      match(iris_grammarParser::LABEL);
       setState(293);
+      match(iris_grammarParser::LABEL);
+      setState(296);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
-      if (_la == iris_grammarParser::T__8) {
-        setState(291);
-        match(iris_grammarParser::T__8);
-        setState(292);
+      if (_la == iris_grammarParser::T__27) {
+        setState(294);
+        match(iris_grammarParser::T__27);
+        setState(295);
         expr(0);
       }
       break;
@@ -2807,22 +2889,22 @@ iris_grammarParser::DeclarationContext* iris_grammarParser::declaration() {
 
     case 2: {
       enterOuterAlt(_localctx, 2);
-      setState(295);
-      descriptor();
-      setState(296);
-      match(iris_grammarParser::LABEL);
-      setState(297);
-      match(iris_grammarParser::T__35);
       setState(298);
-      type();
+      descriptor();
+      setState(299);
+      match(iris_grammarParser::LABEL);
+      setState(300);
+      match(iris_grammarParser::T__37);
       setState(301);
+      type();
+      setState(304);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
-      if (_la == iris_grammarParser::T__8) {
-        setState(299);
-        match(iris_grammarParser::T__8);
-        setState(300);
+      if (_la == iris_grammarParser::T__27) {
+        setState(302);
+        match(iris_grammarParser::T__27);
+        setState(303);
         expr(0);
       }
       break;
@@ -2830,20 +2912,20 @@ iris_grammarParser::DeclarationContext* iris_grammarParser::declaration() {
 
     case 3: {
       enterOuterAlt(_localctx, 3);
-      setState(303);
+      setState(306);
       match(iris_grammarParser::LABEL);
-      setState(304);
-      match(iris_grammarParser::T__35);
-      setState(305);
-      type();
+      setState(307);
+      match(iris_grammarParser::T__37);
       setState(308);
+      type();
+      setState(311);
       _errHandler->sync(this);
 
       _la = _input->LA(1);
-      if (_la == iris_grammarParser::T__8) {
-        setState(306);
-        match(iris_grammarParser::T__8);
-        setState(307);
+      if (_la == iris_grammarParser::T__27) {
+        setState(309);
+        match(iris_grammarParser::T__27);
+        setState(310);
         expr(0);
       }
       break;
@@ -2884,7 +2966,7 @@ std::any iris_grammarParser::EosContext::accept(tree::ParseTreeVisitor *visitor)
 
 iris_grammarParser::EosContext* iris_grammarParser::eos() {
   EosContext *_localctx = _tracker.createInstance<EosContext>(_ctx, getState());
-  enterRule(_localctx, 26, iris_grammarParser::RuleEos);
+  enterRule(_localctx, 30, iris_grammarParser::RuleEos);
 
 #if __cplusplus > 201703L
   auto onExit = finally([=, this] {
@@ -2895,8 +2977,8 @@ iris_grammarParser::EosContext* iris_grammarParser::eos() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(312);
-    match(iris_grammarParser::T__36);
+    setState(315);
+    match(iris_grammarParser::T__38);
    
   }
   catch (RecognitionException &e) {
@@ -2941,7 +3023,7 @@ std::any iris_grammarParser::PrimitiveContext::accept(tree::ParseTreeVisitor *vi
 
 iris_grammarParser::PrimitiveContext* iris_grammarParser::primitive() {
   PrimitiveContext *_localctx = _tracker.createInstance<PrimitiveContext>(_ctx, getState());
-  enterRule(_localctx, 28, iris_grammarParser::RulePrimitive);
+  enterRule(_localctx, 32, iris_grammarParser::RulePrimitive);
   size_t _la = 0;
 
 #if __cplusplus > 201703L
@@ -2953,10 +3035,10 @@ iris_grammarParser::PrimitiveContext* iris_grammarParser::primitive() {
   });
   try {
     enterOuterAlt(_localctx, 1);
-    setState(314);
+    setState(317);
     _la = _input->LA(1);
-    if (!(((((_la - 116) & ~ 0x3fULL) == 0) &&
-      ((1ULL << (_la - 116)) & 7) != 0))) {
+    if (!(((((_la - 118) & ~ 0x3fULL) == 0) &&
+      ((1ULL << (_la - 118)) & 7) != 0))) {
     _errHandler->recoverInline(this);
     }
     else {
@@ -2976,7 +3058,7 @@ iris_grammarParser::PrimitiveContext* iris_grammarParser::primitive() {
 
 bool iris_grammarParser::sempred(RuleContext *context, size_t ruleIndex, size_t predicateIndex) {
   switch (ruleIndex) {
-    case 8: return exprSempred(antlrcpp::downCast<ExprContext *>(context), predicateIndex);
+    case 10: return exprSempred(antlrcpp::downCast<ExprContext *>(context), predicateIndex);
 
   default:
     break;
@@ -2986,23 +3068,22 @@ bool iris_grammarParser::sempred(RuleContext *context, size_t ruleIndex, size_t 
 
 bool iris_grammarParser::exprSempred(ExprContext *_localctx, size_t predicateIndex) {
   switch (predicateIndex) {
-    case 0: return precpred(_ctx, 24);
-    case 1: return precpred(_ctx, 14);
-    case 2: return precpred(_ctx, 13);
-    case 3: return precpred(_ctx, 12);
-    case 4: return precpred(_ctx, 11);
-    case 5: return precpred(_ctx, 10);
-    case 6: return precpred(_ctx, 9);
-    case 7: return precpred(_ctx, 8);
-    case 8: return precpred(_ctx, 6);
-    case 9: return precpred(_ctx, 5);
-    case 10: return precpred(_ctx, 4);
-    case 11: return precpred(_ctx, 3);
-    case 12: return precpred(_ctx, 2);
-    case 13: return precpred(_ctx, 23);
-    case 14: return precpred(_ctx, 22);
-    case 15: return precpred(_ctx, 16);
-    case 16: return precpred(_ctx, 7);
+    case 0: return precpred(_ctx, 13);
+    case 1: return precpred(_ctx, 12);
+    case 2: return precpred(_ctx, 11);
+    case 3: return precpred(_ctx, 10);
+    case 4: return precpred(_ctx, 9);
+    case 5: return precpred(_ctx, 8);
+    case 6: return precpred(_ctx, 7);
+    case 7: return precpred(_ctx, 6);
+    case 8: return precpred(_ctx, 5);
+    case 9: return precpred(_ctx, 4);
+    case 10: return precpred(_ctx, 3);
+    case 11: return precpred(_ctx, 1);
+    case 12: return precpred(_ctx, 19);
+    case 13: return precpred(_ctx, 17);
+    case 14: return precpred(_ctx, 16);
+    case 15: return precpred(_ctx, 14);
 
   default:
     break;

@@ -23,6 +23,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitReturn_statement(iris_grammarParser::Return_statementContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitImport_statement(iris_grammarParser::Import_statementContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -32,6 +36,10 @@ public:
   }
 
   virtual std::any visitConditional_block(iris_grammarParser::Conditional_blockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitFile_path_part(iris_grammarParser::File_path_partContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -59,6 +67,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitReturn(iris_grammarParser::ReturnContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitTernary(iris_grammarParser::TernaryContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -68,6 +80,14 @@ public:
   }
 
   virtual std::any visitMagnitude(iris_grammarParser::MagnitudeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitIndexOperator(iris_grammarParser::IndexOperatorContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitConstructorCall(iris_grammarParser::ConstructorCallContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -84,10 +104,6 @@ public:
   }
 
   virtual std::any visitParentheses(iris_grammarParser::ParenthesesContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual std::any visitIndexOperator(iris_grammarParser::IndexOperatorContext *ctx) override {
     return visitChildren(ctx);
   }
 

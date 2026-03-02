@@ -27,11 +27,17 @@ public:
         vector<std::shared_ptr<Statement>> body = {}
     );
 
+    FunctionDefinition(const FunctionDefinition & src);
+
+    std::shared_ptr<FunctionDefinition> create_alias(string alias_name);
+
     std::shared_ptr<Module> module;
     string name;
     vector<std::shared_ptr<Declaration>> arguments;
     std::shared_ptr<Type> return_type;
     vector<std::shared_ptr<Statement>> body;
+
+    unordered_set<std::shared_ptr<FunctionDefinition>> function_dependencies;
     
     string compile() override;
     string compile_prototype();

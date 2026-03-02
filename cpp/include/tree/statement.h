@@ -8,6 +8,7 @@ class Expression;
 
 class Statement : public LanguageNode {
 public:
+    Statement();
     Statement(std::shared_ptr<Expression> expression, std::shared_ptr<FunctionDefinition> function = nullptr);
     std::shared_ptr<Expression> expression;
     std::shared_ptr<FunctionDefinition> function;

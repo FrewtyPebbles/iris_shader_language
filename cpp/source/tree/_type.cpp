@@ -76,3 +76,52 @@ string Type::compile_type() {
     else if (name == "m4x2" || name == "mat4x2")
         return "mat4x2";
 }
+
+string Type::compile_type_no_precision() {
+    if (name == "none")
+        return "void";
+    else if (name == "i8")
+        return "int";
+    else if (name == "i16")
+        return "int";
+    else if (name == "i32")
+        return "int";
+    else if (name == "u8")
+        return "uint";
+    else if (name == "u16")
+        return "uint";
+    else if (name == "u32")
+        return "uint";
+    else if (name == "f8")
+        return "float";
+    else if (name == "f16")
+        return "float";
+    else if (name == "f32")
+        return "float";
+    else if (name == "bool")
+        return "bool";
+    else if (name == "vec2" || name == "v2")
+        return "vec2";
+    else if (name == "vec3" || name == "v3")
+        return "vec3";
+    else if (name == "vec4" || name == "v4")
+        return "vec4";
+    else if (name == "m2" || name == "m2x2" || name == "mat2" || name == "mat2x2")
+        return "mat2";
+    else if (name == "m3" || name == "m3x3" || name == "mat3" || name == "mat3x3")
+        return "mat3";
+    else if (name == "m4" || name == "m4x4" || name == "mat4" || name == "mat4x4")
+        return "mat4";
+    else if (name == "m2x3" || name == "mat2x3")
+        return "mat2x3";
+    else if (name == "m3x2" || name == "mat3x2")
+        return "mat3x2";
+    else if (name == "m4x3" || name == "mat4x3")
+        return "mat4x3";
+    else if (name == "m3x4" || name == "mat3x4")
+        return "mat3x4";
+    else if (name == "m2x4" || name == "mat2x4")
+        return "mat2x4";
+    else if (name == "m4x2" || name == "mat4x2")
+        return "mat4x2";
+}

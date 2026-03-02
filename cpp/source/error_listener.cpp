@@ -16,6 +16,22 @@ string create_definition_error_message(uint32_t line, uint32_t char_pos, string 
         "|" + message;
 }
 
+string create_configuration_error_message(uint32_t line, uint32_t char_pos, string message) {
+    return "configuration_error|" +
+        std::to_string(line) +
+        ":" +
+        std::to_string(char_pos) +
+        "|" + message;
+}
+
+string create_import_error_message(uint32_t line, uint32_t char_pos, string message) {
+    return "import_error|" +
+        std::to_string(line) +
+        ":" +
+        std::to_string(char_pos) +
+        "|" + message;
+}
+
 void PreciseErrorListener::syntaxError(antlr4::Recognizer *recognizer, 
                      antlr4::Token *offendingSymbol,
                      size_t line, 

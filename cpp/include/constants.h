@@ -5,7 +5,7 @@
 using std::unordered_set;
 using std::string;
 
-const unordered_set<string> BUILT_IN_FUNCTION_NAMES = {
+const unordered_set<string> GLSL_BUILT_IN_FUNCTION_NAMES = {
     "radians","degrees","sin","cos","tan","asin","acos","atan","sinh","cosh","tanh","asinh","acosh","atanh",
     "pow","exp","log","exp2","log2","sqrt","inversesqrt",
     "abs","sign","floor","trunc","round","roundEven","ceil","fract","mod","modf",
@@ -29,10 +29,51 @@ const unordered_set<string> BUILT_IN_FUNCTION_NAMES = {
     "dFdx","dFdy","fwidth","dFdxFine","dFdyFine","fwidthFine","dFdxCoarse","dFdyCoarse","fwidthCoarse",
     "atomicCounterIncrement","atomicCounterDecrement","atomicCounter","atomicAdd","atomicMin","atomicMax","atomicAnd","atomicOr","atomicXor","atomicExchange","atomicCompSwap",
     "barrier","memoryBarrier","memoryBarrierAtomicCounter","memoryBarrierBuffer",
-    "memoryBarrierShared","memoryBarrierImage","groupMemoryBarrier"
+    "memoryBarrierShared","memoryBarrierImage","groupMemoryBarrier", "void","bool","int","uint","float","double",
+    "bvec2","bvec3","bvec4",
+    "ivec2","ivec3","ivec4",
+    "uvec2","uvec3","uvec4",
+    "vec2","vec3","vec4",
+    "dvec2","dvec3","dvec4",
+    "mat2","mat3","mat4",
+    "mat2x2","mat2x3","mat2x4",
+    "mat3x2","mat3x3","mat3x4",
+    "mat4x2","mat4x3","mat4x4",
+    "dmat2","dmat3","dmat4",
+    "dmat2x2","dmat2x3","dmat2x4",
+    "dmat3x2","dmat3x3","dmat3x4",
+    "dmat4x2","dmat4x3","dmat4x4",
+    "sampler1D","sampler2D","sampler3D","samplerCube",
+    "sampler1DShadow","sampler2DShadow","samplerCubeShadow",
+    "sampler1DArray","sampler2DArray",
+    "sampler1DArrayShadow","sampler2DArrayShadow",
+    "sampler2DMS","sampler2DMSArray",
+    "samplerCubeArray","samplerCubeArrayShadow",
+    "samplerBuffer","sampler2DRect","sampler2DRectShadow",
+    "isampler1D","isampler2D","isampler3D","isamplerCube",
+    "isampler1DArray","isampler2DArray",
+    "isampler2DMS","isampler2DMSArray",
+    "isamplerCubeArray","isamplerBuffer","isampler2DRect",
+    "usampler1D","usampler2D","usampler3D","usamplerCube",
+    "usampler1DArray","usampler2DArray",
+    "usampler2DMS","usampler2DMSArray",
+    "usamplerCubeArray","usamplerBuffer","usampler2DRect",
+    "image1D","image2D","image3D","imageCube",
+    "image1DArray","image2DArray",
+    "image2DMS","image2DMSArray",
+    "imageCubeArray","imageBuffer","image2DRect",
+    "iimage1D","iimage2D","iimage3D","iimageCube",
+    "iimage1DArray","iimage2DArray",
+    "iimage2DMS","iimage2DMSArray",
+    "iimageCubeArray","iimageBuffer","iimage2DRect",
+    "uimage1D","uimage2D","uimage3D","uimageCube",
+    "uimage1DArray","uimage2DArray",
+    "uimage2DMS","uimage2DMSArray",
+    "uimageCubeArray","uimageBuffer","uimage2DRect",
+    "atomic_uint"
 };
 
-const unordered_set<string> GL_BUILT_IN_VARIABLES = {
+const unordered_set<string> GLSL_BUILT_IN_VARIABLES = {
     "gl_Position",
     "gl_PointSize",
     "gl_ClipDistance",

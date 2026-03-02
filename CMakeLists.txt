@@ -29,6 +29,7 @@ target_link_options(wasm PRIVATE
     "-sENVIRONMENT=web"
     "-sSINGLE_FILE=1"
     "-g4"
+    "-sEXPORT_NAME=\"WasmModule\""
 )
 
 set_target_properties(wasm PROPERTIES SUFFIX ".js")

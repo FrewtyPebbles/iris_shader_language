@@ -23,11 +23,15 @@ public:
 
     virtual std::any visitStatement(iris_grammarParser::StatementContext *context) = 0;
 
+    virtual std::any visitReturn_statement(iris_grammarParser::Return_statementContext *context) = 0;
+
     virtual std::any visitImport_statement(iris_grammarParser::Import_statementContext *context) = 0;
 
     virtual std::any visitFunction_definition(iris_grammarParser::Function_definitionContext *context) = 0;
 
     virtual std::any visitConditional_block(iris_grammarParser::Conditional_blockContext *context) = 0;
+
+    virtual std::any visitFile_path_part(iris_grammarParser::File_path_partContext *context) = 0;
 
     virtual std::any visitImport_label(iris_grammarParser::Import_labelContext *context) = 0;
 
@@ -41,11 +45,17 @@ public:
 
     virtual std::any visitAbsoluteValue(iris_grammarParser::AbsoluteValueContext *context) = 0;
 
+    virtual std::any visitReturn(iris_grammarParser::ReturnContext *context) = 0;
+
     virtual std::any visitTernary(iris_grammarParser::TernaryContext *context) = 0;
 
     virtual std::any visitGetter(iris_grammarParser::GetterContext *context) = 0;
 
     virtual std::any visitMagnitude(iris_grammarParser::MagnitudeContext *context) = 0;
+
+    virtual std::any visitIndexOperator(iris_grammarParser::IndexOperatorContext *context) = 0;
+
+    virtual std::any visitConstructorCall(iris_grammarParser::ConstructorCallContext *context) = 0;
 
     virtual std::any visitUnaryOperator(iris_grammarParser::UnaryOperatorContext *context) = 0;
 
@@ -54,8 +64,6 @@ public:
     virtual std::any visitPrimitiveExpression(iris_grammarParser::PrimitiveExpressionContext *context) = 0;
 
     virtual std::any visitParentheses(iris_grammarParser::ParenthesesContext *context) = 0;
-
-    virtual std::any visitIndexOperator(iris_grammarParser::IndexOperatorContext *context) = 0;
 
     virtual std::any visitDescriptor(iris_grammarParser::DescriptorContext *context) = 0;
 

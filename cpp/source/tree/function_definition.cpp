@@ -13,6 +13,15 @@ FunctionDefinition::FunctionDefinition(
 )
 : module(module), name(name), arguments(arguments), return_type(return_type), body(body) {}
 
+FunctionDefinition::FunctionDefinition(const FunctionDefinition & src)
+: module(src.module), name(src.name), arguments(src.arguments), return_type(src.return_type), body(src.body) {}
+
+std::shared_ptr<FunctionDefinition> FunctionDefinition::create_alias(string alias_name) {
+    auto alias_function = std::make_shared<FunctionDefinition>(*this);
+    alias_function->name = alias_name;
+    return alias_function;
+}
+
 string FunctionDefinition::compile() {
     string ret = return_type->compile() + " " + name + "(";
     if (arguments.size()) {

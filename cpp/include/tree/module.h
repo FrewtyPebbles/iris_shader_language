@@ -12,13 +12,18 @@ using std::vector;
 class FunctionDefinition;
 class ClassDefinition;
 class Statement;
+class VirtualModuleGroup;
 
 class Module : public LanguageNode {
 public:
-    Module(string name);
+    Module(string name, std::shared_ptr<VirtualModuleGroup> parent = nullptr);
+    static std::shared_ptr<Module> create_shared(string name, std::shared_ptr<VirtualModuleGroup> parent = nullptr);
     string name;
+    std::shared_ptr<VirtualModuleGroup> parent;
     vector<std::shared_ptr<Statement>> statements;
     unordered_map<string, std::shared_ptr<FunctionDefinition>> functions;
     unordered_map<string, std::shared_ptr<ClassDefinition>> classes;
     string compile() override;
+
+    string mangle_name(string label_name);
 };

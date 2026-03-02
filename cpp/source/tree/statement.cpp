@@ -4,6 +4,9 @@
 Statement::Statement(std::shared_ptr<Expression> expression, std::shared_ptr<FunctionDefinition> function)
 : expression(expression), function(function) {}
 
+Statement::Statement()
+: expression(nullptr), function(nullptr) {}
+
 string Statement::compile() {
     auto compiled_expr = expression->compile();
     if (compiled_expr.starts_with("#"))
