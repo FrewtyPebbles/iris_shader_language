@@ -168,22 +168,22 @@ void iris_grammarParserInitialize() {
   	200,205,1,0,0,0,201,202,7,1,0,0,202,205,3,20,10,15,203,205,3,18,9,0,204,
   	172,1,0,0,0,204,177,1,0,0,0,204,178,1,0,0,0,204,179,1,0,0,0,204,183,1,
   	0,0,0,204,187,1,0,0,0,204,201,1,0,0,0,204,203,1,0,0,0,205,268,1,0,0,0,
-  	206,207,10,13,0,0,207,208,5,16,0,0,208,267,3,20,10,13,209,210,10,12,0,
-  	0,210,211,7,2,0,0,211,267,3,20,10,13,212,213,10,11,0,0,213,214,7,3,0,
-  	0,214,267,3,20,10,12,215,216,10,10,0,0,216,217,7,4,0,0,217,267,3,20,10,
-  	11,218,219,10,9,0,0,219,220,7,5,0,0,220,267,3,20,10,10,221,222,10,8,0,
-  	0,222,223,7,6,0,0,223,267,3,20,10,9,224,225,10,7,0,0,225,226,5,63,0,0,
-  	226,267,3,20,10,8,227,228,10,6,0,0,228,229,5,64,0,0,229,267,3,20,10,7,
-  	230,231,10,5,0,0,231,232,5,65,0,0,232,267,3,20,10,6,233,234,10,4,0,0,
-  	234,235,5,61,0,0,235,267,3,20,10,5,236,237,10,3,0,0,237,238,5,62,0,0,
-  	238,267,3,20,10,4,239,240,10,1,0,0,240,241,7,7,0,0,241,267,3,20,10,1,
-  	242,243,10,19,0,0,243,252,5,5,0,0,244,249,3,20,10,0,245,246,5,3,0,0,246,
-  	248,3,20,10,0,247,245,1,0,0,0,248,251,1,0,0,0,249,247,1,0,0,0,249,250,
-  	1,0,0,0,250,253,1,0,0,0,251,249,1,0,0,0,252,244,1,0,0,0,252,253,1,0,0,
-  	0,253,254,1,0,0,0,254,267,5,6,0,0,255,256,10,17,0,0,256,257,5,12,0,0,
-  	257,258,3,20,10,0,258,259,5,13,0,0,259,267,1,0,0,0,260,261,10,16,0,0,
-  	261,262,5,2,0,0,262,267,5,119,0,0,263,264,10,14,0,0,264,265,5,75,0,0,
-  	265,267,3,26,13,0,266,206,1,0,0,0,266,209,1,0,0,0,266,212,1,0,0,0,266,
+  	206,207,10,14,0,0,207,208,5,16,0,0,208,267,3,20,10,14,209,210,10,13,0,
+  	0,210,211,7,2,0,0,211,267,3,20,10,14,212,213,10,12,0,0,213,214,7,3,0,
+  	0,214,267,3,20,10,13,215,216,10,11,0,0,216,217,7,4,0,0,217,267,3,20,10,
+  	12,218,219,10,10,0,0,219,220,7,5,0,0,220,267,3,20,10,11,221,222,10,9,
+  	0,0,222,223,7,6,0,0,223,267,3,20,10,10,224,225,10,8,0,0,225,226,5,63,
+  	0,0,226,267,3,20,10,9,227,228,10,7,0,0,228,229,5,64,0,0,229,267,3,20,
+  	10,8,230,231,10,6,0,0,231,232,5,65,0,0,232,267,3,20,10,7,233,234,10,5,
+  	0,0,234,235,5,61,0,0,235,267,3,20,10,6,236,237,10,4,0,0,237,238,5,62,
+  	0,0,238,267,3,20,10,5,239,240,10,1,0,0,240,241,7,7,0,0,241,267,3,20,10,
+  	1,242,243,10,19,0,0,243,252,5,5,0,0,244,249,3,20,10,0,245,246,5,3,0,0,
+  	246,248,3,20,10,0,247,245,1,0,0,0,248,251,1,0,0,0,249,247,1,0,0,0,249,
+  	250,1,0,0,0,250,253,1,0,0,0,251,249,1,0,0,0,252,244,1,0,0,0,252,253,1,
+  	0,0,0,253,254,1,0,0,0,254,267,5,6,0,0,255,256,10,17,0,0,256,257,5,12,
+  	0,0,257,258,3,20,10,0,258,259,5,13,0,0,259,267,1,0,0,0,260,261,10,16,
+  	0,0,261,262,5,2,0,0,262,267,5,119,0,0,263,264,10,3,0,0,264,265,5,75,0,
+  	0,265,267,3,26,13,0,266,206,1,0,0,0,266,209,1,0,0,0,266,212,1,0,0,0,266,
   	215,1,0,0,0,266,218,1,0,0,0,266,221,1,0,0,0,266,224,1,0,0,0,266,227,1,
   	0,0,0,266,230,1,0,0,0,266,233,1,0,0,0,266,236,1,0,0,0,266,239,1,0,0,0,
   	266,242,1,0,0,0,266,255,1,0,0,0,266,260,1,0,0,0,266,263,1,0,0,0,267,270,
@@ -2075,11 +2075,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(206);
 
-          if (!(precpred(_ctx, 13))) throw FailedPredicateException(this, "precpred(_ctx, 13)");
+          if (!(precpred(_ctx, 14))) throw FailedPredicateException(this, "precpred(_ctx, 14)");
           setState(207);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::T__15);
           setState(208);
-          expr(13);
+          expr(14);
           break;
         }
 
@@ -2089,7 +2089,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(209);
 
-          if (!(precpred(_ctx, 12))) throw FailedPredicateException(this, "precpred(_ctx, 12)");
+          if (!(precpred(_ctx, 13))) throw FailedPredicateException(this, "precpred(_ctx, 13)");
           setState(210);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
@@ -2102,7 +2102,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
             consume();
           }
           setState(211);
-          expr(13);
+          expr(14);
           break;
         }
 
@@ -2112,7 +2112,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(212);
 
-          if (!(precpred(_ctx, 11))) throw FailedPredicateException(this, "precpred(_ctx, 11)");
+          if (!(precpred(_ctx, 12))) throw FailedPredicateException(this, "precpred(_ctx, 12)");
           setState(213);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
@@ -2126,7 +2126,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
             consume();
           }
           setState(214);
-          expr(12);
+          expr(13);
           break;
         }
 
@@ -2136,7 +2136,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(215);
 
-          if (!(precpred(_ctx, 10))) throw FailedPredicateException(this, "precpred(_ctx, 10)");
+          if (!(precpred(_ctx, 11))) throw FailedPredicateException(this, "precpred(_ctx, 11)");
           setState(216);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
@@ -2150,7 +2150,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
             consume();
           }
           setState(217);
-          expr(11);
+          expr(12);
           break;
         }
 
@@ -2160,7 +2160,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(218);
 
-          if (!(precpred(_ctx, 9))) throw FailedPredicateException(this, "precpred(_ctx, 9)");
+          if (!(precpred(_ctx, 10))) throw FailedPredicateException(this, "precpred(_ctx, 10)");
           setState(219);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
@@ -2173,7 +2173,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
             consume();
           }
           setState(220);
-          expr(10);
+          expr(11);
           break;
         }
 
@@ -2183,7 +2183,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(221);
 
-          if (!(precpred(_ctx, 8))) throw FailedPredicateException(this, "precpred(_ctx, 8)");
+          if (!(precpred(_ctx, 9))) throw FailedPredicateException(this, "precpred(_ctx, 9)");
           setState(222);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = _input->LT(1);
           _la = _input->LA(1);
@@ -2197,7 +2197,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
             consume();
           }
           setState(223);
-          expr(9);
+          expr(10);
           break;
         }
 
@@ -2207,11 +2207,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(224);
 
-          if (!(precpred(_ctx, 7))) throw FailedPredicateException(this, "precpred(_ctx, 7)");
+          if (!(precpred(_ctx, 8))) throw FailedPredicateException(this, "precpred(_ctx, 8)");
           setState(225);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::BITS_AND);
           setState(226);
-          expr(8);
+          expr(9);
           break;
         }
 
@@ -2221,11 +2221,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(227);
 
-          if (!(precpred(_ctx, 6))) throw FailedPredicateException(this, "precpred(_ctx, 6)");
+          if (!(precpred(_ctx, 7))) throw FailedPredicateException(this, "precpred(_ctx, 7)");
           setState(228);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::BITS_XOR);
           setState(229);
-          expr(7);
+          expr(8);
           break;
         }
 
@@ -2235,11 +2235,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(230);
 
-          if (!(precpred(_ctx, 5))) throw FailedPredicateException(this, "precpred(_ctx, 5)");
+          if (!(precpred(_ctx, 6))) throw FailedPredicateException(this, "precpred(_ctx, 6)");
           setState(231);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::BITS_OR);
           setState(232);
-          expr(6);
+          expr(7);
           break;
         }
 
@@ -2249,11 +2249,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(233);
 
-          if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
+          if (!(precpred(_ctx, 5))) throw FailedPredicateException(this, "precpred(_ctx, 5)");
           setState(234);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::AND);
           setState(235);
-          expr(5);
+          expr(6);
           break;
         }
 
@@ -2263,11 +2263,11 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(236);
 
-          if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
+          if (!(precpred(_ctx, 4))) throw FailedPredicateException(this, "precpred(_ctx, 4)");
           setState(237);
           antlrcpp::downCast<BinaryOperatorContext *>(_localctx)->op = match(iris_grammarParser::OR);
           setState(238);
-          expr(4);
+          expr(5);
           break;
         }
 
@@ -2366,7 +2366,7 @@ iris_grammarParser::ExprContext* iris_grammarParser::expr(int precedence) {
           pushNewRecursionContext(newContext, startState, RuleExpr);
           setState(263);
 
-          if (!(precpred(_ctx, 14))) throw FailedPredicateException(this, "precpred(_ctx, 14)");
+          if (!(precpred(_ctx, 3))) throw FailedPredicateException(this, "precpred(_ctx, 3)");
           setState(264);
           match(iris_grammarParser::AS);
           setState(265);
@@ -3068,22 +3068,22 @@ bool iris_grammarParser::sempred(RuleContext *context, size_t ruleIndex, size_t 
 
 bool iris_grammarParser::exprSempred(ExprContext *_localctx, size_t predicateIndex) {
   switch (predicateIndex) {
-    case 0: return precpred(_ctx, 13);
-    case 1: return precpred(_ctx, 12);
-    case 2: return precpred(_ctx, 11);
-    case 3: return precpred(_ctx, 10);
-    case 4: return precpred(_ctx, 9);
-    case 5: return precpred(_ctx, 8);
-    case 6: return precpred(_ctx, 7);
-    case 7: return precpred(_ctx, 6);
-    case 8: return precpred(_ctx, 5);
-    case 9: return precpred(_ctx, 4);
-    case 10: return precpred(_ctx, 3);
+    case 0: return precpred(_ctx, 14);
+    case 1: return precpred(_ctx, 13);
+    case 2: return precpred(_ctx, 12);
+    case 3: return precpred(_ctx, 11);
+    case 4: return precpred(_ctx, 10);
+    case 5: return precpred(_ctx, 9);
+    case 6: return precpred(_ctx, 8);
+    case 7: return precpred(_ctx, 7);
+    case 8: return precpred(_ctx, 6);
+    case 9: return precpred(_ctx, 5);
+    case 10: return precpred(_ctx, 4);
     case 11: return precpred(_ctx, 1);
     case 12: return precpred(_ctx, 19);
     case 13: return precpred(_ctx, 17);
     case 14: return precpred(_ctx, 16);
-    case 15: return precpred(_ctx, 14);
+    case 15: return precpred(_ctx, 3);
 
   default:
     break;

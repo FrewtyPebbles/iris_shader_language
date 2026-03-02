@@ -43,9 +43,41 @@ std::shared_ptr<Module> ModuleCompiler::compile(string name, string source, std:
 void ModuleCompiler::read_signatures(iris_grammarParser & parser, iris_grammarParser::RootContext* node) {
     // This method is where we will compile all of the signatures internal and external so we can know what exists globally
     for (auto statement : node->statement()) {
-        // auto stmt = read_statement(parser, statement);
-        // if (stmt)
-        //     module->statements.push_back(stmt);
+        read_statement(parser, statement);
+    }
+
+    for (auto function_definition : node->function_definition()) {
+        read_function_definition(parser, function_definition);
+    }
+}
+
+void ModuleCompiler::read_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node) {
+    string name;
+    vector<std::shared_ptr<Declaration>> arguments;
+    std::shared_ptr<Type> return_type;
+
+    // Compile signature
+    name = node->LABEL()->getText();
+    for (auto argument : node->declaration()) {
+        arguments.push_back(compile_declaration(parser, argument));
+    }
+
+    auto type_node = node->type();
+    if (type_node) {
+        return_type = compile_type(parser, type_node);
+    } else {
+        return_type = std::make_shared<Type>("none");
+    }
+
+    auto function = std::make_shared<FunctionDefinition>(module, name, arguments, return_type);
+    module->functions.insert_or_assign(function->name, function);
+}
+
+void ModuleCompiler::read_statement(iris_grammarParser & parser, iris_grammarParser::StatementContext* node) {
+    auto declaration_node = node->declaration();
+    if (declaration_node) {
+        std::shared_ptr<Declaration> declaration = compile_declaration(parser, declaration_node);
+        module->global_declarations.insert_or_assign(declaration->label, declaration);
     }
 }
 
@@ -201,6 +233,10 @@ std::shared_ptr<Call> ModuleCompiler::compile_call(iris_grammarParser & parser, 
     vector<std::shared_ptr<Expression>> args;
     auto expr_nodes = node->expr();
     auto expression = compile_expression(parser, expr_nodes[0]);
+    if (module->functions.contains(expr_nodes[0]->getText())) {
+        // add function as a function dependency
+        current_function->function_dependencies.insert(module->functions.at(expr_nodes[0]->getText()));
+    }
     for (size_t i = 1; i < expr_nodes.size(); ++i) {
         args.push_back(compile_expression(parser, expr_nodes[i]));
     }
@@ -232,23 +268,9 @@ std::shared_ptr<Primitive> ModuleCompiler::compile_primitive(iris_grammarParser 
 
 std::shared_ptr<FunctionDefinition> ModuleCompiler::compile_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node) {
     string name;
-    vector<std::shared_ptr<Declaration>> arguments;
-    std::shared_ptr<Type> return_type;
-
-    // Compile signature
     name = node->LABEL()->getText();
-    for (auto argument : node->declaration()) {
-        arguments.push_back(compile_declaration(parser, argument));
-    }
 
-    auto type_node = node->type();
-    if (type_node) {
-        return_type = compile_type(parser, type_node);
-    } else {
-        return_type = std::make_shared<Type>("none");
-    }
-
-    auto function = std::make_shared<FunctionDefinition>(module, name, arguments, return_type);
+    auto function = module->functions.at(name);
 
     current_function = function;
 

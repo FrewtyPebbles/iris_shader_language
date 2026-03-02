@@ -33,7 +33,7 @@ func main() -> none {
     v_normal = normalize(mat3(transpose(inverse(u_model))) * a_normal)
     v_uv = a_uv
 
-    u(1,1);
+    u(1,1)
 
     gl.Position = u_projection * u_view * v_frag_pos
 }
@@ -41,10 +41,11 @@ func main() -> none {
 
 const helper_file = `
 func helper(arg:f32) -> f32 {
-    return 100.0 + 200.0 * arg - 300.00
+    return 200.0 * arg - 300.00
 }
+
 func utility(a:i32, b:i32) -> i32 {
-    return helper(a, b) as i32
+    return helper(a) / b as i32
 }
 `;
 

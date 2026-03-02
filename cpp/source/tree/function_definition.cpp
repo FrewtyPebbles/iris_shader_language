@@ -11,10 +11,12 @@ FunctionDefinition::FunctionDefinition(
     std::shared_ptr<Type> return_type,
     vector<std::shared_ptr<Statement>> body
 )
-: module(module), name(name), arguments(arguments), return_type(return_type), body(body) {}
+: module(module), name(name), arguments(arguments),
+return_type(return_type), body(body) {}
 
 FunctionDefinition::FunctionDefinition(const FunctionDefinition & src)
-: module(src.module), name(src.name), arguments(src.arguments), return_type(src.return_type), body(src.body) {}
+: module(src.module), name(src.name), arguments(src.arguments),
+return_type(src.return_type), body(src.body), function_dependencies(src.function_dependencies) {}
 
 std::shared_ptr<FunctionDefinition> FunctionDefinition::create_alias(string alias_name) {
     auto alias_function = std::make_shared<FunctionDefinition>(*this);

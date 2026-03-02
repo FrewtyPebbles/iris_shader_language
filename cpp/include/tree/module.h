@@ -13,6 +13,7 @@ class FunctionDefinition;
 class ClassDefinition;
 class Statement;
 class VirtualModuleGroup;
+class Declaration;
 
 class Module : public LanguageNode {
 public:
@@ -21,6 +22,7 @@ public:
     string name;
     std::shared_ptr<VirtualModuleGroup> parent;
     vector<std::shared_ptr<Statement>> statements;
+    unordered_map<string, std::shared_ptr<Declaration>> global_declarations;
     unordered_map<string, std::shared_ptr<FunctionDefinition>> functions;
     unordered_map<string, std::shared_ptr<ClassDefinition>> classes;
     string compile() override;

@@ -153,7 +153,6 @@ expr
     // ---------------------------------------------------------
     // Unary binds tighter than multiplication
     | (NOT | BITS_NOT | '+' | '-' | NORM | INV | TRANS | DET | DEG | RAD ) expr # UnaryOperator
-    | expr AS type                      # Cast
 
     // ---------------------------------------------------------
     // LEVEL 4: Exponentiation
@@ -199,6 +198,7 @@ expr
     // ---------------------------------------------------------
     | expr op=AND expr                  # BinaryOperator
     | expr op=OR expr                   # BinaryOperator
+    | expr AS type                      # Cast
 
     // ---------------------------------------------------------
     // LEVEL 12: Ternary

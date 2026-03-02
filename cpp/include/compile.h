@@ -27,8 +27,6 @@ public:
 private:
     // COMPILER BRANCHES
     void compile_root(iris_grammarParser & parser, iris_grammarParser::RootContext* node);
-    // This method compiles all the signatures VVVV
-    void read_signatures(iris_grammarParser & parser, iris_grammarParser::RootContext* node);
     std::shared_ptr<Statement> compile_statement(iris_grammarParser & parser, iris_grammarParser::StatementContext* node, std::shared_ptr<FunctionDefinition> function = nullptr);
     std::shared_ptr<FunctionDefinition> compile_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node);
     std::shared_ptr<Declaration> compile_declaration(iris_grammarParser & parser, iris_grammarParser::DeclarationContext* node);
@@ -42,6 +40,12 @@ private:
     std::shared_ptr<Getter> compile_getter(iris_grammarParser & parser, iris_grammarParser::GetterContext* node);
     std::shared_ptr<Import> compile_import(iris_grammarParser & parser, iris_grammarParser::Import_statementContext* node);
     std::shared_ptr<Cast> compile_cast(iris_grammarParser & parser, iris_grammarParser::CastContext* node);
+    
+
+    // This method compiles all the signatures VVVV
+    void read_signatures(iris_grammarParser & parser, iris_grammarParser::RootContext* node);
+    void read_statement(iris_grammarParser & parser, iris_grammarParser::StatementContext* node);
+    void read_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node);
 
     // Helpers
     string mangle_name(string name);
