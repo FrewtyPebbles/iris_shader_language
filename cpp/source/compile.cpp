@@ -1,10 +1,10 @@
 #include "compile.h"
 #include "antlr4-runtime.h"
 #include <optional>
-#include "error_listener.h"
+#include "errors.h"
 #include <iostream>
 #include "tree/braces.h"
-#include "error_listener.h"
+#include "errors.h"
 #include "constants.h"
 #include "virtual_module_group.h"
 #include "tree/return.h"
@@ -32,7 +32,7 @@ std::shared_ptr<Module> ModuleCompiler::compile(string name, string source, std:
     iris_grammarParser parser(&tokens);
     PreciseErrorListener el;
     parser.addErrorListener(&el);
-    parser.setTrace(true);
+    // parser.setTrace(true);
     read_signatures(parser, parser.root());
     parser.reset();
     compile_root(parser, parser.root());
@@ -57,19 +57,31 @@ void ModuleCompiler::read_function_definition(iris_grammarParser & parser, iris_
     std::shared_ptr<BaseType> return_type;
 
     // Compile signature
-    name = std::make_shared<Label>(module, node->LABEL()->getText());
+    auto func_name_token = node->LABEL();
+    name = std::make_shared<Label>(module, func_name_token->getText());
     for (auto argument : node->declaration()) {
         arguments.push_back(compile_declaration(parser, argument));
     }
+
+    auto func_name_symbol = func_name_token->getSymbol();
+    name->line_number = func_name_symbol->getLine();
+    name->column_number = func_name_symbol->getCharPositionInLine();
 
     auto type_node = node->type();
     if (type_node) {
         return_type = compile_type(parser, type_node);
     } else {
-        return_type = std::make_shared<Type>(module, "none");
+        auto void_ret = std::make_shared<Label>(module, "none");
+        void_ret->line_number = name->line_number;
+        void_ret->column_number = name->column_number;
+        return_type = std::make_shared<Type>(module, void_ret);
+        return_type->line_number = name->line_number;
+        return_type->column_number = name->column_number;
     }
 
     auto function = std::make_shared<FunctionDefinition>(module, name, arguments, return_type);
+    function->line_number = name->line_number;
+    function->column_number = name->column_number;
     module->functions.insert_or_assign(function->name->value, function);
 }
 
@@ -116,13 +128,13 @@ std::shared_ptr<Statement> ModuleCompiler::compile_statement(iris_grammarParser 
 std::shared_ptr<Import> ModuleCompiler::compile_import(iris_grammarParser & parser, iris_grammarParser::Import_statementContext* node) {
     std::shared_ptr<VirtualModuleGroup> current_group = module->parent;
     if (!current_group) {
-        throw std::runtime_error(create_configuration_error_message(node->start->getLine(), node->start->getCharPositionInLine(), "Cannot import into module \"" + module->name + "\" which does not have a parent namespace."));
+        throw_error(ErrorType::IMPORT_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Cannot import into module \"" + module->name + "\" which does not have a parent namespace.");
     }
     std::shared_ptr<Module> destination_module = nullptr;
     for (const auto file_path_part_node : node->file_path_part()) {
         auto file_path_part = file_path_part_node->getText();
         if (destination_module) {
-            throw std::runtime_error(create_import_error_message(file_path_part_node->start->getLine(), file_path_part_node->start->getCharPositionInLine(), "In module \"" + module->name + "\" an attempt was made to import a namespace or module \"" + file_path_part + "\" from an existing module named \"" + destination_module->name + "\"."));
+            throw_error(ErrorType::IMPORT_ERROR, module, file_path_part_node->start->getLine(), file_path_part_node->start->getCharPositionInLine(), "In module \"" + module->name + "\" an attempt was made to import a namespace or module \"" + file_path_part + "\" from an existing module named \"" + destination_module->name + "\".");
         }
         if (file_path_part == ".") {
             // go up
@@ -141,7 +153,7 @@ std::shared_ptr<Import> ModuleCompiler::compile_import(iris_grammarParser & pars
     }
 
     if (!destination_module) {
-        throw std::runtime_error(create_import_error_message(node->start->getLine(), node->start->getCharPositionInLine(), "Module not found \"" + node->getText() + "\"."));
+        throw_error(ErrorType::IMPORT_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Module not found \"" + node->getText() + "\".");
     }
     vector<ImportName> import_names;
 
@@ -282,10 +294,15 @@ std::shared_ptr<Primitive> ModuleCompiler::compile_primitive(iris_grammarParser 
 }
 
 std::shared_ptr<FunctionDefinition> ModuleCompiler::compile_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node) {
-    string name;
-    name = node->LABEL()->getText();
+    std::shared_ptr<Label> name;
+    auto name_token = node->LABEL();
+    name = std::make_shared<Label>(module, name_token->getText());
+    auto name_symbol = name_token->getSymbol();
 
-    auto function = module->functions.at(name);
+    name->line_number = name_symbol->getLine();
+    name->column_number = name_symbol->getCharPositionInLine();
+
+    auto function = module->functions.at(name->value);
 
     current_function = function;
 
@@ -330,6 +347,9 @@ std::shared_ptr<BaseType> ModuleCompiler::compile_type(iris_grammarParser & pars
         dimensions.push_back(std::stoi(dimension->getText()));
     }
     name = std::make_shared<Label>(module, node->type_name->getText());
+
+    name->line_number = node->type_name->getLine();
+    name->column_number = node->type_name->getCharPositionInLine();
     
     auto precision_node = node->precision_qualifier();
 
@@ -337,7 +357,7 @@ std::shared_ptr<BaseType> ModuleCompiler::compile_type(iris_grammarParser & pars
         precision = precision_node->getText();
     }
 
-    return std::make_shared<Type>(module, name->value, precision, dimensions);
+    return std::make_shared<Type>(module, name, precision, dimensions);
 }
 
 std::shared_ptr<Descriptor> ModuleCompiler::compile_descriptor(iris_grammarParser & parser, iris_grammarParser::DescriptorContext* node) {
@@ -348,6 +368,8 @@ std::shared_ptr<Descriptor> ModuleCompiler::compile_descriptor(iris_grammarParse
     if (index_node) {
         index = std::stoi(index_node->getText());
     }
-
-    return std::make_shared<Descriptor>(node->descriptor_name->getText(), index);
+    auto descriptor = std::make_shared<Descriptor>(node->descriptor_name->getText(), index);
+    descriptor->line_number = node->descriptor_name->getLine();
+    descriptor->column_number = node->descriptor_name->getCharPositionInLine();
+    return descriptor;
 }

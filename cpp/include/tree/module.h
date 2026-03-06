@@ -26,7 +26,7 @@ public:
     unordered_map<string, std::shared_ptr<Declaration>> global_declarations;
     unordered_map<string, std::shared_ptr<FunctionDefinition>> functions;
     unordered_map<string, std::shared_ptr<ClassDefinition>> classes;
-    std::unique_ptr<MemoryStack> memory_stack;
+    MemoryStack memory_stack;
     string compile() override;
 
     string mangle_name(string label_name);

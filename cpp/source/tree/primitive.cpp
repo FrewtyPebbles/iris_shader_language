@@ -7,19 +7,28 @@ Label::Label(std::shared_ptr<Module> module, string value)
 : Primitive(module), value(value) {}
 
 string Label::compile() {
-    return module->memory_stack->compile_label(value);
+    return module->memory_stack.compile_label(shared_from_this());
 }
 
 void Label::define(std::shared_ptr<BaseType> type, std::function<string()> compile_function) {
-    module->memory_stack->define(value, type, compile_function);
+    module->memory_stack.define(shared_from_this(), type, compile_function);
 }
 
 std::shared_ptr<LabelDefinition> Label::lookup() {
-    return module->memory_stack->get(value);
+    return module->memory_stack.get(shared_from_this());
 }
 
 std::shared_ptr<BaseType> Label::type() {
     return lookup()->type();
+}
+
+bool operator==(const std::shared_ptr<Label>& lhs, const std::string& rhs) {
+    return lhs->value == rhs; // Compare the internal string
+}
+
+// 2. Overload for: std::string == MyClass
+bool operator==(const std::string& lhs, const std::shared_ptr<Label>& rhs) {
+    return lhs == rhs->value; // Compare the internal string
 }
 
 Integer::Integer(std::shared_ptr<Module> module, int64_t value)
@@ -30,7 +39,7 @@ string Integer::compile() {
 }
 
 std::shared_ptr<BaseType> Integer::type() {
-    return module->memory_stack->get_type("i32");
+    return module->memory_stack.get_type("i32");
 }
 
 string remove_trailing_zeros(string str) {
@@ -55,5 +64,5 @@ string Float::compile() {
 }
 
 std::shared_ptr<BaseType> Float::type() {
-    return module->memory_stack->get_type("f32");
+    return module->memory_stack.get_type("f32");
 }

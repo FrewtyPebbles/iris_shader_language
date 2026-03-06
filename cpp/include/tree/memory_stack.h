@@ -19,9 +19,9 @@ class Module;
 
 class LabelDefinition {
 public:
-    LabelDefinition(MemoryStack* memory_stack, string label, string type_name, std::function<string()> compile_function = nullptr);
+    LabelDefinition(MemoryStack* memory_stack, std::shared_ptr<Label> label, string type_name, std::function<string()> compile_function = nullptr);
     MemoryStack* memory_stack;
-    string label;
+    std::shared_ptr<Label> label;
     std::function<string()> compile_function;
 
     std::shared_ptr<BaseType> type();
@@ -34,7 +34,8 @@ private:
 
 class MemoryStack {
 public:
-    MemoryStack(std::shared_ptr<Module> module);
+    MemoryStack() = default;
+    void init(std::shared_ptr<Module> module_);
     std::shared_ptr<Module> module;
     vector<unordered_map<string, std::shared_ptr<LabelDefinition>>> label_stack;
     unordered_map<string, std::shared_ptr<BaseType>> type_lookup;
@@ -43,11 +44,13 @@ public:
 
     void stack_push();
     void stack_pop();
-    void define(string label, std::shared_ptr<BaseType> type, std::function<string()> compile_function = nullptr);
-    bool is_defined(string label);
-    std::shared_ptr<LabelDefinition> get(string label);
+    void define(std::shared_ptr<Label> label, std::shared_ptr<BaseType> type, std::function<string()> compile_function = nullptr);
+    bool is_defined(std::shared_ptr<Label> label);
+    std::shared_ptr<LabelDefinition> get(std::shared_ptr<Label> label);
     void define_type(std::shared_ptr<BaseType> type);
+    bool type_is_defined(std::shared_ptr<Label> label);
     bool type_is_defined(string label);
+    std::shared_ptr<BaseType> get_type(std::shared_ptr<Label> label);
     std::shared_ptr<BaseType> get_type(string label);
-    string compile_label(string label);
+    string compile_label(std::shared_ptr<Label> label);
 };

@@ -33,11 +33,11 @@ string FunctionDefinition::compile() {
         }
     }
     ret += "){";
-    module->memory_stack->stack_push();
+    module->memory_stack.stack_push();
     for (const auto & statement : body) {
         ret += statement->compile();
     }
-    module->memory_stack->stack_pop();
+    module->memory_stack.stack_pop();
     ret += "}";
     return ret;
 }

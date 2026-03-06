@@ -15,8 +15,9 @@ string Module::mangle_name(string label_name) {
 }
 
 std::shared_ptr<Module> Module::create_shared(string name, std::shared_ptr<VirtualModuleGroup> parent) {
+    std::cout << name << "\n";
     auto mod = std::make_shared<Module>(name, parent);
-    mod->memory_stack = std::make_unique<MemoryStack>(mod);
+    mod->memory_stack.init(mod);
     return mod;
 }
 

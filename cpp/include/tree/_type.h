@@ -7,10 +7,12 @@
 using std::vector;
 using std::unordered_map;
 
+class Label;
+
 class BaseType : public Expression, public std::enable_shared_from_this<BaseType> {
 public:
-    BaseType(std::shared_ptr<Module> module, string name, vector<size_t> array_dimensions);
-    string name;
+    BaseType(std::shared_ptr<Module> module, std::shared_ptr<Label> name, vector<size_t> array_dimensions);
+    std::shared_ptr<Label> name;
     vector<size_t> array_dimensions;
     unordered_map<string, std::shared_ptr<BaseType>> members;
     void set_member(string key, std::shared_ptr<BaseType> member_type);
@@ -24,7 +26,7 @@ public:
 
 class Type : public BaseType {
 public:
-    Type(std::shared_ptr<Module> module, string name, std::optional<string> precision = std::nullopt, vector<size_t> array_dimensions = {});
+    Type(std::shared_ptr<Module> module, std::shared_ptr<Label> name, std::optional<string> precision = std::nullopt, vector<size_t> array_dimensions = {});
     
     std::optional<string> precision;
     string compile() override;

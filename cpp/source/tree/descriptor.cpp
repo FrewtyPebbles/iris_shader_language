@@ -1,5 +1,6 @@
 #include "tree/descriptor.h"
 #include <iostream>
+#include "errors.h"
 
 Descriptor::Descriptor(string name, std::optional<uint32_t> index)
 : name(name), index(index) {}
@@ -18,5 +19,5 @@ string Descriptor::compile() {
     } else if (name == "def") {
         return "#define";
     }
-    return "[ERROR BAD DESCRIPTOR]";
+    throw_error(ErrorType::SYNTAX_ERROR, nullptr, line_number, column_number, "Cannot cast expression to tuple.");
 }

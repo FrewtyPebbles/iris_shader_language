@@ -12,11 +12,11 @@ expression(expression), body(body) {}
 
 string ForCLoop::compile() {
     string ret = "for(" + declaration->compile() + ";" + condition->compile() + ";" + expression->compile() + "){";
-    module->memory_stack->stack_push();
+    module->memory_stack.stack_push();
     for (auto statement : body) {
         ret += statement->compile();
     }
-    module->memory_stack->stack_pop();
+    module->memory_stack.stack_pop();
     ret += "}";
     return ret;
 }
@@ -30,12 +30,12 @@ ForInLoop::ForInLoop(
 
 string ForInLoop::compile() {
     string ret = unpacking_list->compile_declarations() + "for([NOT YET IMPLEMENTED]){";
-    module->memory_stack->stack_push();
+    module->memory_stack.stack_push();
     unpacking_list->compile();
     for (auto statement : body) {
         ret += statement->compile();
     }
-    module->memory_stack->stack_pop();
+    module->memory_stack.stack_pop();
     ret += "}";
     return ret;
 }

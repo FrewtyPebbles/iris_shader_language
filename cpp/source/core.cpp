@@ -6,7 +6,7 @@
 #include "antlr4-runtime.h"
 #include "iris_grammarLexer.h"
 #include "iris_grammarParser.h"
-#include "error_listener.h"
+#include "errors.h"
 #include "compile.h"
 #include "virtual_module_group.h"
 

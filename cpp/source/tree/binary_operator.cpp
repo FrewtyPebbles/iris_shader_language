@@ -1,6 +1,7 @@
 #include "tree/binary_operator.h"
 #include "constants.h"
 #include "tree/_type.h"
+#include "tree/primitive.h"
 
 BinaryOperator::BinaryOperator(std::shared_ptr<Module> module, std::shared_ptr<Expression> lhs, string op, std::shared_ptr<Expression> rhs)
 : Expression(module), lhs(lhs), op(op), rhs(rhs) {}

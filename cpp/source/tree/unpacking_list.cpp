@@ -30,7 +30,7 @@ std::shared_ptr<BaseType> UnpackingList::type() {
     for (auto unpacking_item : unpacking_items) {
         types.push_back(unpacking_item->type());
     }
-    return module->memory_stack->get_type(TypeTuple::get_mangled_name(types));
+    return module->memory_stack.get_type(TypeTuple::get_mangled_name(types));
 }
 
 UnpackingLabel::UnpackingLabel(std::shared_ptr<Module> module, std::shared_ptr<Label> label, std::shared_ptr<Expression> assignment)
