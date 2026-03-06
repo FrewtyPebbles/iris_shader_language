@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_set>
 #include "tree/language_node.h"
+#include "tree/primitive.h"
 #include <vector>
 #include <unordered_set>
 
@@ -21,9 +22,9 @@ public:
 
     FunctionDefinition(
         std::shared_ptr<Module> module,
-        string name,
+        std::shared_ptr<Label> name,
         vector<std::shared_ptr<Declaration>> arguments,
-        std::shared_ptr<Type> return_type,
+        std::shared_ptr<BaseType> return_type,
         vector<std::shared_ptr<Statement>> body = {}
     );
 
@@ -32,9 +33,9 @@ public:
     std::shared_ptr<FunctionDefinition> create_alias(string alias_name);
 
     std::shared_ptr<Module> module;
-    string name;
+    std::shared_ptr<Label> name;
     vector<std::shared_ptr<Declaration>> arguments;
-    std::shared_ptr<Type> return_type;
+    std::shared_ptr<BaseType> return_type;
     vector<std::shared_ptr<Statement>> body;
 
     unordered_set<std::shared_ptr<FunctionDefinition>> function_dependencies;

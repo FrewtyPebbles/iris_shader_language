@@ -1,0 +1,24 @@
+#pragma once
+#include <string>
+#include <memory>
+#include "tree/language_node.h"
+#include "tree/expression.h"
+#include <vector>
+
+using std::string;
+using std::vector;
+
+class Statement;
+
+class WhileLoop : public LanguageNode {
+public:
+    WhileLoop(
+        std::shared_ptr<Expression> expression,
+        vector<std::shared_ptr<Statement>> body = {}
+    );
+
+    std::shared_ptr<Expression> expression;
+    vector<std::shared_ptr<Statement>> body;
+    
+    string compile() override;
+};

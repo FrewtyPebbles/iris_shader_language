@@ -39,6 +39,34 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitFor_block(iris_grammarParser::For_blockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitUnpacking_list(iris_grammarParser::Unpacking_listContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitUnpacking_item(iris_grammarParser::Unpacking_itemContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitWhile_block(iris_grammarParser::While_blockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitDo_while_block(iris_grammarParser::Do_while_blockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitMatch_block(iris_grammarParser::Match_blockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitCase_block(iris_grammarParser::Case_blockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitFile_path_part(iris_grammarParser::File_path_partContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -80,6 +108,10 @@ public:
   }
 
   virtual std::any visitMagnitude(iris_grammarParser::MagnitudeContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitMatch(iris_grammarParser::MatchContext *ctx) override {
     return visitChildren(ctx);
   }
 

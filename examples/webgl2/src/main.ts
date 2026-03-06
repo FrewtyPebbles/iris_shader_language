@@ -29,8 +29,9 @@ uniform u_view:mat4
 uniform u_projection:mat4
 
 func main() -> none {
+    thing:vec3 = vec3(1.0) @ vec3(2.0)
     v_frag_pos = u_model * vec4(a_position, 1.0)
-    v_normal = normalize(mat3(transpose(inverse(u_model))) * a_normal)
+    v_normal = norm:mat3(trans:inv:u_model) * a_normal
     v_uv = a_uv
 
     u(1,1)
@@ -45,7 +46,11 @@ func helper(arg:f32) -> f32 {
 }
 
 func utility(a:i32, b:i32) -> i32 {
-    return helper(a) / b as i32
+    return (
+        if helper(a) > 2
+            then 70.0
+            else 30.0
+    ) / b as i32
 }
 `;
 

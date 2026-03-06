@@ -3,11 +3,12 @@
 
 class BinaryOperator : public Expression {
 public:
-    BinaryOperator(std::shared_ptr<Expression> lhs, string op, std::shared_ptr<Expression> rhs);
+    BinaryOperator(std::shared_ptr<Module> module, std::shared_ptr<Expression> lhs, string op, std::shared_ptr<Expression> rhs);
 
     std::shared_ptr<Expression> lhs;
     string op;
     std::shared_ptr<Expression> rhs;
 
     string compile() override;
+    std::shared_ptr<BaseType> type() override;
 };

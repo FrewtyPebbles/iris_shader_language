@@ -31,6 +31,20 @@ public:
 
     virtual std::any visitConditional_block(iris_grammarParser::Conditional_blockContext *context) = 0;
 
+    virtual std::any visitFor_block(iris_grammarParser::For_blockContext *context) = 0;
+
+    virtual std::any visitUnpacking_list(iris_grammarParser::Unpacking_listContext *context) = 0;
+
+    virtual std::any visitUnpacking_item(iris_grammarParser::Unpacking_itemContext *context) = 0;
+
+    virtual std::any visitWhile_block(iris_grammarParser::While_blockContext *context) = 0;
+
+    virtual std::any visitDo_while_block(iris_grammarParser::Do_while_blockContext *context) = 0;
+
+    virtual std::any visitMatch_block(iris_grammarParser::Match_blockContext *context) = 0;
+
+    virtual std::any visitCase_block(iris_grammarParser::Case_blockContext *context) = 0;
+
     virtual std::any visitFile_path_part(iris_grammarParser::File_path_partContext *context) = 0;
 
     virtual std::any visitImport_label(iris_grammarParser::Import_labelContext *context) = 0;
@@ -52,6 +66,8 @@ public:
     virtual std::any visitGetter(iris_grammarParser::GetterContext *context) = 0;
 
     virtual std::any visitMagnitude(iris_grammarParser::MagnitudeContext *context) = 0;
+
+    virtual std::any visitMatch(iris_grammarParser::MatchContext *context) = 0;
 
     virtual std::any visitIndexOperator(iris_grammarParser::IndexOperatorContext *context) = 0;
 

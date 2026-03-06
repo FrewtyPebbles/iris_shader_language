@@ -3,8 +3,8 @@
 #include "error_listener.h"
 #include "constants.h"
 
-Call::Call(std::shared_ptr<Expression> function, vector<std::shared_ptr<Expression>> arguments, std::shared_ptr<FunctionDefinition> calling_function)
-: function(function), arguments(arguments), calling_function(calling_function) {}
+Call::Call(std::shared_ptr<Module> module, std::shared_ptr<Expression> function, vector<std::shared_ptr<Expression>> arguments, std::shared_ptr<FunctionDefinition> calling_function)
+: Expression(module), function(function), arguments(arguments), calling_function(calling_function) {}
 
 string Call::compile() {
     auto func_name = function->compile();
@@ -21,4 +21,8 @@ string Call::compile() {
     }
     ret += ")";
     return ret;
+}
+
+std::shared_ptr<BaseType> Call::type() {
+    return function->type();
 }

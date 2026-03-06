@@ -9,9 +9,9 @@ using std::vector;
 
 class ImportName {
 public:
-    ImportName(string name, std::optional<string> alias = std::nullopt);
-    string name;
-    std::optional<string> alias;
+    ImportName(std::shared_ptr<Label> name, std::shared_ptr<Label> alias = nullptr);
+    std::shared_ptr<Label> name;
+    std::shared_ptr<Label> alias;
 };
 
 class Import : public Statement {

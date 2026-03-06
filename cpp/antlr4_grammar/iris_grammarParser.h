@@ -18,29 +18,31 @@ public:
     T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
     T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, T__30 = 31, T__31 = 32, 
     T__32 = 33, T__33 = 34, T__34 = 35, T__35 = 36, T__36 = 37, T__37 = 38, 
-    T__38 = 39, FUNC = 40, IF = 41, ELIF = 42, ELSE = 43, THEN = 44, IMPORT = 45, 
-    FROM = 46, DEF = 47, IN = 48, OUT = 49, UNIFORM = 50, MUT = 51, VERTEX = 52, 
-    NOT = 53, BITS_NOT = 54, NORM = 55, INV = 56, TRANS = 57, DET = 58, 
-    DEG = 59, RAD = 60, AND = 61, OR = 62, BITS_AND = 63, BITS_XOR = 64, 
-    BITS_OR = 65, BITS_LEFT = 66, BITS_RIGHT = 67, AND_EQ = 68, OR_EQ = 69, 
-    BITS_AND_EQ = 70, BITS_XOR_EQ = 71, BITS_OR_EQ = 72, BITS_LEFT_EQ = 73, 
-    BITS_RIGHT_EQ = 74, AS = 75, NONE = 76, I8 = 77, I16 = 78, I32 = 79, 
-    U8 = 80, U16 = 81, U32 = 82, F8 = 83, F16 = 84, F32 = 85, F64 = 86, 
-    BOOL = 87, VEC2 = 88, VEC3 = 89, VEC4 = 90, V2 = 91, V3 = 92, V4 = 93, 
-    M2 = 94, M3 = 95, M4 = 96, M2X2 = 97, M3X3 = 98, M4X4 = 99, M2X3 = 100, 
-    M3X2 = 101, M3X4 = 102, M4X3 = 103, M2X4 = 104, M4X2 = 105, MAT2 = 106, 
-    MAT3 = 107, MAT4 = 108, MAT2X3 = 109, MAT2X4 = 110, MAT3X2 = 111, MAT3X4 = 112, 
-    MAT4X2 = 113, MAT4X3 = 114, LP = 115, MP = 116, HP = 117, FLOAT = 118, 
-    LABEL = 119, INT = 120, WS = 121, NEWLINE = 122, LINE_COMMENT = 123, 
-    BLOCK_COMMENT = 124, ERROR_TOKEN = 125
+    T__38 = 39, T__39 = 40, T__40 = 41, T__41 = 42, T__42 = 43, FUNC = 44, 
+    IF = 45, ELIF = 46, ELSE = 47, THEN = 48, IMPORT = 49, FROM = 50, DEF = 51, 
+    IN = 52, OUT = 53, UNIFORM = 54, MUT = 55, VERTEX = 56, NOT = 57, BITS_NOT = 58, 
+    NORM = 59, INV = 60, TRANS = 61, DET = 62, DEG = 63, RAD = 64, AND = 65, 
+    OR = 66, BITS_AND = 67, BITS_XOR = 68, BITS_OR = 69, BITS_LEFT = 70, 
+    BITS_RIGHT = 71, AND_EQ = 72, OR_EQ = 73, BITS_AND_EQ = 74, BITS_XOR_EQ = 75, 
+    BITS_OR_EQ = 76, BITS_LEFT_EQ = 77, BITS_RIGHT_EQ = 78, AS = 79, NONE = 80, 
+    I8 = 81, I16 = 82, I32 = 83, U8 = 84, U16 = 85, U32 = 86, F8 = 87, F16 = 88, 
+    F32 = 89, F64 = 90, BOOL = 91, VEC2 = 92, VEC3 = 93, VEC4 = 94, V2 = 95, 
+    V3 = 96, V4 = 97, M2 = 98, M3 = 99, M4 = 100, M2X2 = 101, M3X3 = 102, 
+    M4X4 = 103, M2X3 = 104, M3X2 = 105, M3X4 = 106, M4X3 = 107, M2X4 = 108, 
+    M4X2 = 109, MAT2 = 110, MAT3 = 111, MAT4 = 112, MAT2X3 = 113, MAT2X4 = 114, 
+    MAT3X2 = 115, MAT3X4 = 116, MAT4X2 = 117, MAT4X3 = 118, LP = 119, MP = 120, 
+    HP = 121, FLOAT = 122, LABEL = 123, INT = 124, WS = 125, NEWLINE = 126, 
+    LINE_COMMENT = 127, BLOCK_COMMENT = 128, ERROR_TOKEN = 129
   };
 
   enum {
     RuleRoot = 0, RuleStatement = 1, RuleReturn_statement = 2, RuleImport_statement = 3, 
-    RuleFunction_definition = 4, RuleConditional_block = 5, RuleFile_path_part = 6, 
-    RuleImport_label = 7, RuleBlock = 8, RuleConditional = 9, RuleExpr = 10, 
-    RuleDescriptor = 11, RulePrecision_qualifier = 12, RuleType = 13, RuleDeclaration = 14, 
-    RuleEos = 15, RulePrimitive = 16
+    RuleFunction_definition = 4, RuleConditional_block = 5, RuleFor_block = 6, 
+    RuleUnpacking_list = 7, RuleUnpacking_item = 8, RuleWhile_block = 9, 
+    RuleDo_while_block = 10, RuleMatch_block = 11, RuleCase_block = 12, 
+    RuleFile_path_part = 13, RuleImport_label = 14, RuleBlock = 15, RuleConditional = 16, 
+    RuleExpr = 17, RuleDescriptor = 18, RulePrecision_qualifier = 19, RuleType = 20, 
+    RuleDeclaration = 21, RuleEos = 22, RulePrimitive = 23
   };
 
   explicit iris_grammarParser(antlr4::TokenStream *input);
@@ -66,6 +68,13 @@ public:
   class Import_statementContext;
   class Function_definitionContext;
   class Conditional_blockContext;
+  class For_blockContext;
+  class Unpacking_listContext;
+  class Unpacking_itemContext;
+  class While_blockContext;
+  class Do_while_blockContext;
+  class Match_blockContext;
+  class Case_blockContext;
   class File_path_partContext;
   class Import_labelContext;
   class BlockContext;
@@ -187,6 +196,113 @@ public:
   };
 
   Conditional_blockContext* conditional_block();
+
+  class  For_blockContext : public antlr4::ParserRuleContext {
+  public:
+    iris_grammarParser::DeclarationContext *iterator = nullptr;
+    For_blockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    Unpacking_listContext *unpacking_list();
+    antlr4::tree::TerminalNode *IN();
+    std::vector<ExprContext *> expr();
+    ExprContext* expr(size_t i);
+    BlockContext *block();
+    DeclarationContext *declaration();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  For_blockContext* for_block();
+
+  class  Unpacking_listContext : public antlr4::ParserRuleContext {
+  public:
+    Unpacking_listContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<Unpacking_itemContext *> unpacking_item();
+    Unpacking_itemContext* unpacking_item(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Unpacking_listContext* unpacking_list();
+
+  class  Unpacking_itemContext : public antlr4::ParserRuleContext {
+  public:
+    Unpacking_itemContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *LABEL();
+    DeclarationContext *declaration();
+    Unpacking_listContext *unpacking_list();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Unpacking_itemContext* unpacking_item();
+
+  class  While_blockContext : public antlr4::ParserRuleContext {
+  public:
+    While_blockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    ExprContext *expr();
+    BlockContext *block();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  While_blockContext* while_block();
+
+  class  Do_while_blockContext : public antlr4::ParserRuleContext {
+  public:
+    Do_while_blockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    BlockContext *block();
+    ExprContext *expr();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Do_while_blockContext* do_while_block();
+
+  class  Match_blockContext : public antlr4::ParserRuleContext {
+  public:
+    Match_blockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    ExprContext *expr();
+    std::vector<Case_blockContext *> case_block();
+    Case_blockContext* case_block(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> NEWLINE();
+    antlr4::tree::TerminalNode* NEWLINE(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Match_blockContext* match_block();
+
+  class  Case_blockContext : public antlr4::ParserRuleContext {
+  public:
+    Case_blockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    BlockContext *block();
+    ExprContext *expr();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Case_blockContext* case_block();
 
   class  File_path_partContext : public antlr4::ParserRuleContext {
   public:
@@ -317,7 +433,7 @@ public:
     GetterContext(ExprContext *ctx);
 
     ExprContext *expr();
-    antlr4::tree::TerminalNode *LABEL();
+    PrimitiveContext *primitive();
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -327,6 +443,15 @@ public:
     MagnitudeContext(ExprContext *ctx);
 
     ExprContext *expr();
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  MatchContext : public ExprContext {
+  public:
+    MatchContext(ExprContext *ctx);
+
+    Match_blockContext *match_block();
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -356,6 +481,7 @@ public:
   public:
     UnaryOperatorContext(ExprContext *ctx);
 
+    antlr4::Token *op = nullptr;
     ExprContext *expr();
     antlr4::tree::TerminalNode *NOT();
     antlr4::tree::TerminalNode *BITS_NOT();

@@ -4,7 +4,9 @@
 #include <iostream>
 
 Module::Module(string name, std::shared_ptr<VirtualModuleGroup> parent)
-: name(name), parent(parent) {}
+: name(name), parent(parent) {
+    
+}
 
 string Module::mangle_name(string label_name) {
     if (label_name == "main")
@@ -13,7 +15,9 @@ string Module::mangle_name(string label_name) {
 }
 
 std::shared_ptr<Module> Module::create_shared(string name, std::shared_ptr<VirtualModuleGroup> parent) {
-    return std::make_shared<Module>(name, parent);
+    auto mod = std::make_shared<Module>(name, parent);
+    mod->memory_stack = std::make_unique<MemoryStack>(mod);
+    return mod;
 }
 
 string Module::compile() {
@@ -22,8 +26,10 @@ string Module::compile() {
         ret += statement->compile();
     }
     for (const auto& [key, function] : functions) {
-        if (key == "main")
+        if (key == "main") {
+            function->name->define(function->return_type);
             continue;
+        }
         ret += function->compile_prototype();
     }
     for (const auto& [key, function] : functions) {

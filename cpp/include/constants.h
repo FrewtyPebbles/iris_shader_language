@@ -1,8 +1,10 @@
 #pragma once
 #include <unordered_set>
+#include <vector>
 #include <string>
 
 using std::unordered_set;
+using std::vector;
 using std::string;
 
 const unordered_set<string> GLSL_BUILT_IN_FUNCTION_NAMES = {
@@ -71,6 +73,18 @@ const unordered_set<string> GLSL_BUILT_IN_FUNCTION_NAMES = {
     "uimage2DMS","uimage2DMSArray",
     "uimageCubeArray","uimageBuffer","uimage2DRect",
     "atomic_uint"
+};
+
+const vector<string> TYPES_BY_SIZE_ASCENDING = {
+    "u8",
+    "u16",
+    "u32",
+    "i8",
+    "i16",
+    "i32",
+    "f8",
+    "f16",
+    "f32",
 };
 
 const unordered_set<string> GLSL_BUILT_IN_VARIABLES = {

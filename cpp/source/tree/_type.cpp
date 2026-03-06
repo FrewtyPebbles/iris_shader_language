@@ -1,22 +1,33 @@
 #include "tree/_type.h"
 #include <iostream>
 
-Type::Type(string name, std::optional<string> precision, vector<size_t> array_dimensions)
-: name(name), precision(precision), array_dimensions(array_dimensions) {}
+BaseType::BaseType(std::shared_ptr<Module> module, string name, vector<size_t> array_dimensions)
+: Expression(module), name(name), array_dimensions(array_dimensions) {}
+
+void BaseType::set_member(string key, std::shared_ptr<BaseType> member_type) {
+    members.insert_or_assign(key, member_type);
+}
+
+string BaseType::compile_array_dimensions() {
+    string ret = "";
+    for (const int & dim : array_dimensions) {
+        ret += "[" + std::to_string(dim) + "]";
+    }
+    return ret;
+}
+
+std::shared_ptr<BaseType> BaseType::type() {
+    return shared_from_this();
+}
+
+Type::Type(std::shared_ptr<Module> module, string name, std::optional<string> precision, vector<size_t> array_dimensions)
+: BaseType(module, name, array_dimensions), precision(precision) {}
 
 string Type::compile() {
     if (precision)
         return compile_precision() + " " + compile_type();
     else
         return compile_type();
-}
-
-string Type::compile_array_dimensions() {
-    string ret = "";
-    for (const int & dim : array_dimensions) {
-        ret += "[" + std::to_string(dim) + "]";
-    }
-    return ret;
 }
 
 string Type::compile_precision() {
@@ -26,6 +37,8 @@ string Type::compile_precision() {
         return "mediump";
     if (precision == "hp")
         return "highp";
+    else
+        return "[ERROR PRECISION]";
 }
 
 string Type::compile_type() {
@@ -75,6 +88,8 @@ string Type::compile_type() {
         return "mat2x4";
     else if (name == "m4x2" || name == "mat4x2")
         return "mat4x2";
+    else
+        return name;
 }
 
 string Type::compile_type_no_precision() {
@@ -124,4 +139,100 @@ string Type::compile_type_no_precision() {
         return "mat2x4";
     else if (name == "m4x2" || name == "mat4x2")
         return "mat4x2";
+    else
+        return name;
+}
+
+string Type::hash_key() {
+    string ret = name;
+    if (precision) {
+        ret += precision.value();
+    }
+    for (auto dimension : array_dimensions) {
+        ret += std::to_string(dimension);
+    }
+    return ret;
+}
+
+bool Type::is_int() {
+    if (name == "i8" || name == "i16" || name == "i32" || name == "u8" || name == "u16" || name == "u32")
+        return true;
+    return false;
+}
+
+bool Type::is_float() {
+    if (name == "f8" || name == "f16" || name == "f32")
+        return true;
+    return false;
+}
+
+bool Type::is_bool() {
+    if (name == "bool")
+        return true;
+    return false;
+}
+
+std::shared_ptr<BaseType> Type::dimension_reduced() {
+    auto new_vec = array_dimensions;
+    new_vec.pop_back();
+    return std::make_shared<Type>(module, name, precision, new_vec);
+}
+
+TypeTuple::TypeTuple(std::shared_ptr<Module> module, vector<std::shared_ptr<BaseType>> types, vector<size_t> array_dimensions)
+: BaseType(module, name, array_dimensions), types(types) {
+    for (size_t i = 0; i < types.size(); ++i) {
+        set_member(std::to_string(i), types[i]);
+    }
+    name = get_mangled_name(types, array_dimensions);
+}
+
+string TypeTuple::get_mangled_name(vector<std::shared_ptr<BaseType>> types, vector<size_t> array_dimensions) {
+    string mangled_name = "typetuple";
+    for (auto type : types) {
+        if (auto derived = std::dynamic_pointer_cast<Type>(type)) {
+            if (derived->precision) {
+                mangled_name += derived->precision.value();
+            }
+            mangled_name += derived->name;
+        }
+        if (auto derived = std::dynamic_pointer_cast<TypeTuple>(type)) {
+            mangled_name += TypeTuple::get_mangled_name(derived->types, derived->array_dimensions);
+        }
+    }
+    if (array_dimensions.size()) {
+        mangled_name += "dimstart_";
+        for (auto dimension : array_dimensions) {
+            mangled_name += std::to_string(dimension)+ "_";
+        }
+        mangled_name += "dimend";
+    }
+    return mangled_name;
+}
+
+string TypeTuple::compile() {
+    return name;
+}
+
+string TypeTuple::compile_type() {
+    return name;
+}
+
+
+string TypeTuple::compile_struct() {
+    string ret = "struct " + name + "{";
+    for (size_t i = 0; i < types.size(); ++i) {
+        ret +=  types[i]->compile() + " _" + std::to_string(i) + ";";
+    }
+    ret += "}";
+    return ret;
+}
+
+string TypeTuple::hash_key() {
+    return name;
+}
+
+std::shared_ptr<BaseType> TypeTuple::dimension_reduced() {
+    auto new_vec = array_dimensions;
+    new_vec.pop_back();
+    return std::make_shared<TypeTuple>(module, types, new_vec);
 }

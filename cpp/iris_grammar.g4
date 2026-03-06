@@ -25,12 +25,12 @@ VERTEX        : 'vertex' ;
 // === Expression operators / unary prefixes ===
 NOT           : 'not' ;
 BITS_NOT      : 'bits_not' ;
-NORM          : 'norm' ;
-INV           : 'inv' ;
-TRANS         : 'trans' ;
-DET           : 'det' ;
-DEG           : 'deg' ;
-RAD           : 'rad' ;
+NORM          : 'norm:' ;
+INV           : 'inv:' ;
+TRANS         : 'trans:' ;
+DET           : 'det:' ;
+DEG           : 'deg:' ;
+RAD           : 'rad:' ;
 
 // === Binary logical / bitwise keywords ===
 AND           : 'and' ;
@@ -118,6 +118,31 @@ function_definition: FUNC LABEL '(' (declaration (',' declaration)*)? ','? ')' (
 // if statement
 conditional_block: IF expr (block | statement) (ELIF expr (block | statement))* ( ELSE (block | statement))?;
 
+// for block
+for_block: 'for' unpacking_list 'in' expr | 'for' iterator=declaration ',' expr ',' expr block;
+
+unpacking_list
+    : unpacking_item (',' unpacking_item)*
+    ;
+
+// The individual item or a nested list in parens
+unpacking_item
+    : LABEL
+    | declaration
+    | '(' unpacking_list ')'
+    ;
+// while block
+while_block: 'while' expr block;
+
+// do while
+do_while_block: 'do' block 'while' expr;
+
+// match case - works like rust match case as either its own statement or as an expression
+match_block: 'match' expr '{' (case_block NEWLINE?)* '}';
+
+// case
+case_block: (expr | 'other') '->' block|expr;
+
 file_path_part: LABEL | '.';
 
 import_label: import_name=LABEL (AS import_alias=LABEL)?;
@@ -146,13 +171,13 @@ expr
     | expr '(' (expr (',' expr)*)? ')'  # Call
     | type '(' (expr (',' expr)*)? ')'  # ConstructorCall
     | expr '[' expr ']'                 # IndexOperator
-    | expr '.' LABEL                    # Getter
+    | expr '.' primitive                    # Getter
 
     // ---------------------------------------------------------
     // LEVEL 3: Unary Operators & Casts
     // ---------------------------------------------------------
     // Unary binds tighter than multiplication
-    | (NOT | BITS_NOT | '+' | '-' | NORM | INV | TRANS | DET | DEG | RAD ) expr # UnaryOperator
+    | op=(NOT | BITS_NOT | '+' | '-' | NORM | INV | TRANS | DET | DEG | RAD ) expr # UnaryOperator
 
     // ---------------------------------------------------------
     // LEVEL 4: Exponentiation
@@ -162,8 +187,8 @@ expr
     // ---------------------------------------------------------
     // LEVEL 5: Multiplicative
     // ---------------------------------------------------------
-    // Includes dot product ('), cross product (><), distance (<->)
-    | expr op=('*' | '/' | '%' | '\'' | '><' | '<->' ) expr # BinaryOperator
+    // Includes dot product (@), cross product (><)
+    | expr op=('*' | '/' | '%' | '@' | '><' ) expr # BinaryOperator
 
     // ---------------------------------------------------------
     // LEVEL 6: Additive
@@ -204,6 +229,11 @@ expr
     // LEVEL 12: Ternary
     // ---------------------------------------------------------
     | conditional                       # Ternary
+
+    // ---------------------------------------------------------
+    // Match assignment
+    // ---------------------------------------------------------
+    | match_block # Match
 
     // ---------------------------------------------------------
     // LEVEL 13: Assignment (Lowest Precedence)
