@@ -55,6 +55,8 @@ public:
 
     virtual std::any visitBlockWhileBlock(iris_grammarParser::BlockWhileBlockContext *context) = 0;
 
+    virtual std::any visitBlockDoWhileBlock(iris_grammarParser::BlockDoWhileBlockContext *context) = 0;
+
     virtual std::any visitBlockForBlock(iris_grammarParser::BlockForBlockContext *context) = 0;
 
     virtual std::any visitBlockConditionalBlock(iris_grammarParser::BlockConditionalBlockContext *context) = 0;

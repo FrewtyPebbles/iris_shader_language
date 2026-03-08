@@ -49,6 +49,7 @@ private:
     std::shared_ptr<Ternary> compile_ternary(iris_grammarParser & parser, iris_grammarParser::TernaryContext* node);
     vector<std::shared_ptr<LanguageNode>> compile_block(iris_grammarParser & parser, iris_grammarParser::BlockContext* node);
     std::shared_ptr<WhileLoop> compile_while_block(iris_grammarParser & parser, iris_grammarParser::While_blockContext* node);
+    std::shared_ptr<DoWhileLoop> compile_do_while_block(iris_grammarParser & parser, iris_grammarParser::Do_while_blockContext* node);
     
 
     // This method compiles all the signatures VVVV

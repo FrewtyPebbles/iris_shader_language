@@ -33,9 +33,9 @@ func main() -> none {
     v_frag_pos = u_model * vec4(a_position, 1.0)
     v_normal = norm:mat3(trans:inv:u_model) * a_normal
     v_uv = a_uv
-    while 1 as bool {
+    do {
         u(1,1)
-    }
+    } while true
 
     gl.Position = u_projection * u_view * v_frag_pos
 }

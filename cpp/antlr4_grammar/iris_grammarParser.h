@@ -31,8 +31,8 @@ public:
     M4X4 = 103, M2X3 = 104, M3X2 = 105, M3X4 = 106, M4X3 = 107, M2X4 = 108, 
     M4X2 = 109, MAT2 = 110, MAT3 = 111, MAT4 = 112, MAT2X3 = 113, MAT2X4 = 114, 
     MAT3X2 = 115, MAT3X4 = 116, MAT4X2 = 117, MAT4X3 = 118, LP = 119, MP = 120, 
-    HP = 121, FLOAT = 122, LABEL = 123, INT = 124, WS = 125, NEWLINE = 126, 
-    LINE_COMMENT = 127, BLOCK_COMMENT = 128, ERROR_TOKEN = 129
+    HP = 121, BOOLEAN = 122, FLOAT = 123, LABEL = 124, INT = 125, WS = 126, 
+    NEWLINE = 127, LINE_COMMENT = 128, BLOCK_COMMENT = 129, ERROR_TOKEN = 130
   };
 
   enum {
@@ -367,6 +367,15 @@ public:
     BlockWhileBlockContext(Block_itemContext *ctx);
 
     While_blockContext *while_block();
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  BlockDoWhileBlockContext : public Block_itemContext {
+  public:
+    BlockDoWhileBlockContext(Block_itemContext *ctx);
+
+    Do_while_blockContext *do_while_block();
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
@@ -715,6 +724,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *INT();
     antlr4::tree::TerminalNode *FLOAT();
+    antlr4::tree::TerminalNode *BOOLEAN();
     antlr4::tree::TerminalNode *LABEL();
 
 

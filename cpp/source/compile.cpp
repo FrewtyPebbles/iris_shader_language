@@ -140,9 +140,15 @@ vector<std::shared_ptr<LanguageNode>> ModuleCompiler::compile_block(iris_grammar
 }
 
 std::shared_ptr<WhileLoop> ModuleCompiler::compile_while_block(iris_grammarParser & parser, iris_grammarParser::While_blockContext* node) {
-    std::shared_ptr<Expression> expression = compile_expression(parser, node->expr());
+    auto expression = compile_expression(parser, node->expr());
     auto body = compile_block(parser, node->block());
     return std::make_shared<WhileLoop>(module, expression, body);
+}
+
+std::shared_ptr<DoWhileLoop> ModuleCompiler::compile_do_while_block(iris_grammarParser & parser, iris_grammarParser::Do_while_blockContext* node) {
+    auto body = compile_block(parser, node->block());
+    auto expression = compile_expression(parser, node->expr());
+    return std::make_shared<DoWhileLoop>(module, expression, body);
 }
 
 std::shared_ptr<Import> ModuleCompiler::compile_import(iris_grammarParser & parser, iris_grammarParser::Import_statementContext* node) {
@@ -325,7 +331,12 @@ std::shared_ptr<Primitive> ModuleCompiler::compile_primitive(iris_grammarParser 
         return std::make_shared<Label>(module, l->getText());
     }
 
-    return std::make_shared<Label>(module, "!!!ERROR!!!");
+    auto b = node->BOOLEAN();
+    if (b) {
+        return std::make_shared<Boolean>(module, b->getText() == "true");
+    }
+    
+    throw_error(ErrorType::SYNTAX_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Primitive not implemented \"" + node->getText() + "\"");
 }
 
 std::shared_ptr<FunctionDefinition> ModuleCompiler::compile_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node) {
