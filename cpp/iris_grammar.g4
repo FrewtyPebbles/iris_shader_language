@@ -147,9 +147,16 @@ file_path_part: LABEL | '.';
 
 import_label: import_name=LABEL (AS import_alias=LABEL)?;
 
-
 // block
-block: '{' (statement NEWLINE?)* '}';
+block: '{' (block_item)* '}';
+
+block_item
+    : ((statement) NEWLINE?) # BlockStatement
+    | while_block # BlockWhileBlock
+    | do_while_block # BlockDoWhileBlock
+    | for_block # BlockForBlock
+    | conditional_block # BlockConditionalBlock
+    ;
 
 // ternary
 conditional: IF expr THEN expr ELSE expr;
@@ -314,8 +321,9 @@ declaration
 // Helper for "end of line"
 eos: ';' ;//(NEWLINE | ';' | EOF);
 
-primitive: INT | FLOAT | LABEL;
+primitive: INT | FLOAT | BOOLEAN | LABEL;
 
+BOOLEAN: 'true' | 'false' ;
 FLOAT: [0-9]+'.'[0-9]+;
 LABEL: [a-zA-Z_][a-zA-Z_0-9]*;
 INT: [0-9]+;

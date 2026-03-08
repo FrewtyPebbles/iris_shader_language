@@ -22,6 +22,8 @@ void MemoryStack::init(std::weak_ptr<Module> module_) {
     auto module_handle = module.lock();
     define_type(std::make_shared<Type>(module_handle, std::make_shared<Label>(module_handle, "none")));
 
+    define_type(std::make_shared<Type>(module_handle, std::make_shared<Label>(module_handle, "bool")));
+
     define_type(std::make_shared<Type>(module_handle, std::make_shared<Label>(module_handle, "f8"), "lp"));
     define_type(std::make_shared<Type>(module_handle, std::make_shared<Label>(module_handle, "f16"), "mp"));
     define_type(std::make_shared<Type>(module_handle, std::make_shared<Label>(module_handle, "f32"), "hp"));

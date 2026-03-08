@@ -20,6 +20,7 @@
 #include "tree/unary_operator.h"
 #include "tree/index_operator.h"
 #include "tree/ternary.h"
+#include "tree/while_loop.h"
 
 class ModuleCompiler {
 public:
@@ -46,6 +47,9 @@ private:
     std::shared_ptr<Cast> compile_cast(iris_grammarParser & parser, iris_grammarParser::CastContext* node);
     std::shared_ptr<IndexOperator> compile_index_operator(iris_grammarParser & parser, iris_grammarParser::IndexOperatorContext* node);
     std::shared_ptr<Ternary> compile_ternary(iris_grammarParser & parser, iris_grammarParser::TernaryContext* node);
+    vector<std::shared_ptr<LanguageNode>> compile_block(iris_grammarParser & parser, iris_grammarParser::BlockContext* node);
+    std::shared_ptr<WhileLoop> compile_while_block(iris_grammarParser & parser, iris_grammarParser::While_blockContext* node);
+    std::shared_ptr<DoWhileLoop> compile_do_while_block(iris_grammarParser & parser, iris_grammarParser::Do_while_blockContext* node);
     
 
     // This method compiles all the signatures VVVV

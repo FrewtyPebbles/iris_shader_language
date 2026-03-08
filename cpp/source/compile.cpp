@@ -126,6 +126,31 @@ std::shared_ptr<Statement> ModuleCompiler::compile_statement(iris_grammarParser 
     throw_error(ErrorType::SYNTAX_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Statement not implemented yet: \"" + node->start->getText() + "\".");
 }
 
+vector<std::shared_ptr<LanguageNode>> ModuleCompiler::compile_block(iris_grammarParser & parser, iris_grammarParser::BlockContext* node) {
+    vector<std::shared_ptr<LanguageNode>> ret;
+    // compile body of whatever block
+    for (auto block_item_node : node->block_item()) {
+        if (auto tagged_node = dynamic_cast<iris_grammarParser::BlockStatementContext *>(block_item_node)) {
+            ret.push_back(compile_statement(parser, tagged_node->statement(), current_function));
+        } else if (auto tagged_node = dynamic_cast<iris_grammarParser::BlockWhileBlockContext *>(block_item_node)) {
+            ret.push_back(compile_while_block(parser, tagged_node->while_block()));
+        }
+    }
+    return ret;
+}
+
+std::shared_ptr<WhileLoop> ModuleCompiler::compile_while_block(iris_grammarParser & parser, iris_grammarParser::While_blockContext* node) {
+    auto expression = compile_expression(parser, node->expr());
+    auto body = compile_block(parser, node->block());
+    return std::make_shared<WhileLoop>(module, expression, body);
+}
+
+std::shared_ptr<DoWhileLoop> ModuleCompiler::compile_do_while_block(iris_grammarParser & parser, iris_grammarParser::Do_while_blockContext* node) {
+    auto body = compile_block(parser, node->block());
+    auto expression = compile_expression(parser, node->expr());
+    return std::make_shared<DoWhileLoop>(module, expression, body);
+}
+
 std::shared_ptr<Import> ModuleCompiler::compile_import(iris_grammarParser & parser, iris_grammarParser::Import_statementContext* node) {
     if (!module->parent.has_value()) {
         throw_error(ErrorType::IMPORT_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Cannot import into module \"" + module->name + "\" which does not have a parent namespace.");
@@ -306,7 +331,12 @@ std::shared_ptr<Primitive> ModuleCompiler::compile_primitive(iris_grammarParser 
         return std::make_shared<Label>(module, l->getText());
     }
 
-    return std::make_shared<Label>(module, "!!!ERROR!!!");
+    auto b = node->BOOLEAN();
+    if (b) {
+        return std::make_shared<Boolean>(module, b->getText() == "true");
+    }
+    
+    throw_error(ErrorType::SYNTAX_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Primitive not implemented \"" + node->getText() + "\"");
 }
 
 std::shared_ptr<FunctionDefinition> ModuleCompiler::compile_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node) {
@@ -323,9 +353,7 @@ std::shared_ptr<FunctionDefinition> ModuleCompiler::compile_function_definition(
     current_function = function;
 
     // compile body
-    for (auto statement_node : node->block()->statement()) {
-        function->body.push_back(compile_statement(parser, statement_node, function));
-    }
+    function->body = compile_block(parser, node->block());
 
     current_function = nullptr;
 

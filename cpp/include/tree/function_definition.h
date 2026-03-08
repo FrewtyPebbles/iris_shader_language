@@ -24,7 +24,7 @@ public:
         std::shared_ptr<Label> name,
         vector<std::shared_ptr<Declaration>> arguments,
         std::shared_ptr<BaseType> return_type,
-        vector<std::shared_ptr<Statement>> body = {}
+        vector<std::shared_ptr<LanguageNode>> body = {}
     );
 
     FunctionDefinition(const FunctionDefinition & src);
@@ -34,7 +34,7 @@ public:
     std::shared_ptr<Label> name;
     vector<std::shared_ptr<Declaration>> arguments;
     std::shared_ptr<BaseType> return_type;
-    vector<std::shared_ptr<Statement>> body;
+    vector<std::shared_ptr<LanguageNode>> body;
 
     std::set<std::weak_ptr<FunctionDefinition>, std::owner_less<std::weak_ptr<FunctionDefinition>>> function_dependencies;
     

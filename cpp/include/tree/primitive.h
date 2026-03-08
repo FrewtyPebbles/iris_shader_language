@@ -45,3 +45,13 @@ public:
     string compile() override;
     std::weak_ptr<BaseType> type() override;
 };
+
+class Boolean : public Primitive {
+public:
+    Boolean(std::weak_ptr<Module> module, bool value);
+
+    bool value;
+
+    string compile() override;
+    std::weak_ptr<BaseType> type() override;
+};

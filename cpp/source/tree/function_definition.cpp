@@ -9,7 +9,7 @@ FunctionDefinition::FunctionDefinition(
     std::shared_ptr<Label> name,
     vector<std::shared_ptr<Declaration>> arguments,
     std::shared_ptr<BaseType> return_type,
-    vector<std::shared_ptr<Statement>> body
+    vector<std::shared_ptr<LanguageNode>> body
 )
 : LanguageNode(module), name(name), arguments(arguments),
 return_type(return_type), body(body) {}

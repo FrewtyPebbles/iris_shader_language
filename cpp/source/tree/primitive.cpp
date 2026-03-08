@@ -66,3 +66,14 @@ string Float::compile() {
 std::weak_ptr<BaseType> Float::type() {
     return module.lock()->memory_stack->get_type("f32");
 }
+
+Boolean::Boolean(std::weak_ptr<Module> module, bool value)
+: Primitive(module), value(value) {}
+
+string Boolean::compile() {
+    return value ? "true" : "false";
+}
+
+std::weak_ptr<BaseType> Boolean::type() {
+    return module.lock()->memory_stack->get_type("bool");
+}
