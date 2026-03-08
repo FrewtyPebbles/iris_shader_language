@@ -6,6 +6,7 @@ Declaration::Declaration(std::weak_ptr<Module> module, std::vector<std::shared_p
 : Expression(module), descriptors(descriptors), label(label), variable_type(variable_type), assignment(assignment) {}
 
 string Declaration::compile() {
+    
     string ret;
     bool use_eq_tok = true;
     for (const auto & descriptor : descriptors) {
