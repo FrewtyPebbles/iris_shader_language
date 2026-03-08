@@ -13,7 +13,6 @@ string Module::mangle_name(string label_name) {
 }
 
 std::shared_ptr<Module> Module::create_shared(string name, std::optional<std::weak_ptr<VirtualModuleGroup>> parent) {
-    std::cout << name << "\n";
     auto mod = std::make_shared<Module>(name, parent);
     mod->memory_stack = std::make_shared<MemoryStack>();
     mod->memory_stack->init(mod);
@@ -21,8 +20,6 @@ std::shared_ptr<Module> Module::create_shared(string name, std::optional<std::we
 }
 
 string Module::compile() {
-    std::cout << "COMPILING " << name << "\n";
-    std::cout << "FUNCTIONS " << functions.size() << "\n";
     string ret = "#version 300 es\n";
     for (const auto& statement : statements) {
         ret += statement->compile();

@@ -25,7 +25,6 @@ std::shared_ptr<FunctionDefinition> FunctionDefinition::create_alias(string alia
 }
 
 string FunctionDefinition::compile() {
-    std::cout << "FUN NAME : " << name->value << "\n";
     string ret = return_type->compile() + " " + name->compile() + "(";
     if (arguments.size()) {
         ret += arguments[0]->compile();
@@ -34,13 +33,11 @@ string FunctionDefinition::compile() {
         }
     }
     ret += "){";
-    std::cout << "PUSHING STACK \n";
     auto module_lock = module.lock();
     module_lock->memory_stack->stack_push();
     for (const auto & statement : body) {
         ret += statement->compile();
     }
-    std::cout << "POPPING STACK \n";
     module_lock->memory_stack->stack_pop();
     ret += "}";
     return ret;

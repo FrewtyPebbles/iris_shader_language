@@ -19,7 +19,6 @@ string LabelDefinition::compile() {
 
 void MemoryStack::init(std::weak_ptr<Module> module_) {
     module = module_;
-    std::cout << "DEFINING TYPES!\n";
     auto module_handle = module.lock();
     define_type(std::make_shared<Type>(module_handle, std::make_shared<Label>(module_handle, "none")));
 
@@ -45,17 +44,10 @@ void MemoryStack::init(std::weak_ptr<Module> module_) {
 }
 
 void MemoryStack::stack_push() {
-    std::cout << "PUSHING STACK INTERNAL \n";
-    if (label_stack.size() > 100) {
-        printf("RECURSION DETECTED: stack size %zu\n", label_stack.size());
-        // Abort early so you can see the trace before the OOM
-        abort(); 
-    }
     label_stack.push_back({});
 }
 
 void MemoryStack::stack_pop() {
-    std::cout << "POPPING STACK INTERNAL \n";
     label_stack.pop_back();
 }
 
@@ -66,7 +58,6 @@ void MemoryStack::define(std::shared_ptr<Label> label, std::weak_ptr<BaseType> t
         };
     }
     auto module_handle = module.lock();
-    std::cout << label_stack.size() << " LABEL STACK SIZE AT " << label->value << " IN MODULE " << module_handle->name << "\n";
     label_stack.back().insert_or_assign(label->value, std::make_shared<LabelDefinition>(module, label, type.lock()->name->value, compile_function));
 }
 
@@ -109,15 +100,10 @@ std::weak_ptr<BaseType> MemoryStack::get_type(std::weak_ptr<Label> label) {
 }
 
 std::weak_ptr<BaseType> MemoryStack::get_type(string label) {
-    printf("Looking up type: %s\n", label.c_str());
-    auto module_handle = module.lock();
-    if (!module_handle) {
-        printf("CRITICAL: Module is null in get_type!\n");
-    }
+    auto module_lock = module.lock();
     if (type_is_defined(label))
         return type_lookup.at(label);
-    printf("Type error triggered\n");
-    throw_error(ErrorType::TYPE_ERROR, module_handle, 0, 0, "Type \"" + label + "\" was not defined.");
+    throw_error(ErrorType::TYPE_ERROR, module_lock, 0, 0, "Type \"" + label + "\" was not defined.");
 }
 
 string MemoryStack::compile_label(std::weak_ptr<Label> label) {
