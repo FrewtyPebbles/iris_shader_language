@@ -126,6 +126,25 @@ std::shared_ptr<Statement> ModuleCompiler::compile_statement(iris_grammarParser 
     throw_error(ErrorType::SYNTAX_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Statement not implemented yet: \"" + node->start->getText() + "\".");
 }
 
+vector<std::shared_ptr<LanguageNode>> ModuleCompiler::compile_block(iris_grammarParser & parser, iris_grammarParser::BlockContext* node) {
+    vector<std::shared_ptr<LanguageNode>> ret;
+    // compile body of whatever block
+    for (auto block_item_node : node->block_item()) {
+        if (auto tagged_node = dynamic_cast<iris_grammarParser::BlockStatementContext *>(block_item_node)) {
+            ret.push_back(compile_statement(parser, tagged_node->statement(), current_function));
+        } else if (auto tagged_node = dynamic_cast<iris_grammarParser::BlockWhileBlockContext *>(block_item_node)) {
+            ret.push_back(compile_while_block(parser, tagged_node->while_block()));
+        }
+    }
+    return ret;
+}
+
+std::shared_ptr<WhileLoop> ModuleCompiler::compile_while_block(iris_grammarParser & parser, iris_grammarParser::While_blockContext* node) {
+    std::shared_ptr<Expression> expression = compile_expression(parser, node->expr());
+    auto body = compile_block(parser, node->block());
+    return std::make_shared<WhileLoop>(module, expression, body);
+}
+
 std::shared_ptr<Import> ModuleCompiler::compile_import(iris_grammarParser & parser, iris_grammarParser::Import_statementContext* node) {
     if (!module->parent.has_value()) {
         throw_error(ErrorType::IMPORT_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Cannot import into module \"" + module->name + "\" which does not have a parent namespace.");
@@ -323,9 +342,7 @@ std::shared_ptr<FunctionDefinition> ModuleCompiler::compile_function_definition(
     current_function = function;
 
     // compile body
-    for (auto statement_node : node->block()->statement()) {
-        function->body.push_back(compile_statement(parser, statement_node, function));
-    }
+    function->body = compile_block(parser, node->block());
 
     current_function = nullptr;
 

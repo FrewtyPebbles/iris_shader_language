@@ -79,6 +79,22 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitBlockStatement(iris_grammarParser::BlockStatementContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitBlockWhileBlock(iris_grammarParser::BlockWhileBlockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitBlockForBlock(iris_grammarParser::BlockForBlockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitBlockConditionalBlock(iris_grammarParser::BlockConditionalBlockContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitConditional(iris_grammarParser::ConditionalContext *ctx) override {
     return visitChildren(ctx);
   }

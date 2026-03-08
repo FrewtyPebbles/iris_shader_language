@@ -19,13 +19,13 @@ public:
         std::shared_ptr<Declaration> declaration,
         std::shared_ptr<Expression> condition,
         std::shared_ptr<Expression> expression,
-        vector<std::shared_ptr<Statement>> body = {}
+        vector<std::shared_ptr<LanguageNode>> body = {}
     );
 
     std::shared_ptr<Declaration> declaration;
     std::shared_ptr<Expression> condition;
     std::shared_ptr<Expression> expression;
-    vector<std::shared_ptr<Statement>> body;
+    vector<std::shared_ptr<LanguageNode>> body;
     
     string compile() override;
 };
@@ -36,12 +36,12 @@ public:
         std::weak_ptr<Module> module,
         std::shared_ptr<UnpackingList> unpacking_list,
         std::shared_ptr<Expression> expression,
-        vector<std::shared_ptr<Statement>> body = {}
+        vector<std::shared_ptr<LanguageNode>> body = {}
     );
 
     std::shared_ptr<UnpackingList> unpacking_list;
     std::shared_ptr<Expression> expression;
-    vector<std::shared_ptr<Statement>> body;
+    vector<std::shared_ptr<LanguageNode>> body;
     
     string compile() override;
 };

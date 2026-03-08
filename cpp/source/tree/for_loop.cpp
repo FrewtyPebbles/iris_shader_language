@@ -6,7 +6,7 @@ ForCLoop::ForCLoop(
     std::shared_ptr<Declaration> declaration,
     std::shared_ptr<Expression> condition,
     std::shared_ptr<Expression> expression,
-    vector<std::shared_ptr<Statement>> body
+    vector<std::shared_ptr<LanguageNode>> body
 ) : LanguageNode(module), declaration(declaration), condition(condition),
 expression(expression), body(body) {}
 
@@ -26,7 +26,7 @@ ForInLoop::ForInLoop(
     std::weak_ptr<Module> module,
     std::shared_ptr<UnpackingList> unpacking_list,
     std::shared_ptr<Expression> expression,
-    vector<std::shared_ptr<Statement>> body
+    vector<std::shared_ptr<LanguageNode>> body
 ) : LanguageNode(module), unpacking_list(unpacking_list), expression(expression), body(body) {}
 
 string ForInLoop::compile() {

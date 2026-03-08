@@ -147,9 +147,15 @@ file_path_part: LABEL | '.';
 
 import_label: import_name=LABEL (AS import_alias=LABEL)?;
 
-
 // block
-block: '{' (statement NEWLINE?)* '}';
+block: '{' (block_item)* '}';
+
+block_item
+    : ((statement) NEWLINE?) # BlockStatement
+    | while_block # BlockWhileBlock
+    | for_block # BlockForBlock
+    | conditional_block # BlockConditionalBlock
+    ;
 
 // ternary
 conditional: IF expr THEN expr ELSE expr;

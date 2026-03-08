@@ -33,8 +33,9 @@ func main() -> none {
     v_frag_pos = u_model * vec4(a_position, 1.0)
     v_normal = norm:mat3(trans:inv:u_model) * a_normal
     v_uv = a_uv
-
-    u(1,1)
+    while 1 as bool {
+        u(1,1)
+    }
 
     gl.Position = u_projection * u_view * v_frag_pos
 }
@@ -63,9 +64,9 @@ async function main() {
         iris_element.innerHTML = test;
         console.log("JS COMPILING");
         glsl_element.innerHTML = (module.compile() as string)
-            .replace(/;/g, ";\n")
-            .replace(/{/g, " {\n")
-            .replace(/}/g, "}\n\n");
+            // .replace(/;/g, ";\n")
+            // .replace(/{/g, " {\n")
+            // .replace(/}/g, "}\n\n");
     } catch (error:any) {
         try {
             if (error instanceof Error) {

@@ -40,9 +40,9 @@ public:
     RuleFunction_definition = 4, RuleConditional_block = 5, RuleFor_block = 6, 
     RuleUnpacking_list = 7, RuleUnpacking_item = 8, RuleWhile_block = 9, 
     RuleDo_while_block = 10, RuleMatch_block = 11, RuleCase_block = 12, 
-    RuleFile_path_part = 13, RuleImport_label = 14, RuleBlock = 15, RuleConditional = 16, 
-    RuleExpr = 17, RuleDescriptor = 18, RulePrecision_qualifier = 19, RuleType = 20, 
-    RuleDeclaration = 21, RuleEos = 22, RulePrimitive = 23
+    RuleFile_path_part = 13, RuleImport_label = 14, RuleBlock = 15, RuleBlock_item = 16, 
+    RuleConditional = 17, RuleExpr = 18, RuleDescriptor = 19, RulePrecision_qualifier = 20, 
+    RuleType = 21, RuleDeclaration = 22, RuleEos = 23, RulePrimitive = 24
   };
 
   explicit iris_grammarParser(antlr4::TokenStream *input);
@@ -78,6 +78,7 @@ public:
   class File_path_partContext;
   class Import_labelContext;
   class BlockContext;
+  class Block_itemContext;
   class ConditionalContext;
   class ExprContext;
   class DescriptorContext;
@@ -338,10 +339,8 @@ public:
   public:
     BlockContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
-    std::vector<StatementContext *> statement();
-    StatementContext* statement(size_t i);
-    std::vector<antlr4::tree::TerminalNode *> NEWLINE();
-    antlr4::tree::TerminalNode* NEWLINE(size_t i);
+    std::vector<Block_itemContext *> block_item();
+    Block_itemContext* block_item(size_t i);
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -349,6 +348,58 @@ public:
   };
 
   BlockContext* block();
+
+  class  Block_itemContext : public antlr4::ParserRuleContext {
+  public:
+    Block_itemContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    Block_itemContext() = default;
+    void copyFrom(Block_itemContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  BlockWhileBlockContext : public Block_itemContext {
+  public:
+    BlockWhileBlockContext(Block_itemContext *ctx);
+
+    While_blockContext *while_block();
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  BlockForBlockContext : public Block_itemContext {
+  public:
+    BlockForBlockContext(Block_itemContext *ctx);
+
+    For_blockContext *for_block();
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  BlockConditionalBlockContext : public Block_itemContext {
+  public:
+    BlockConditionalBlockContext(Block_itemContext *ctx);
+
+    Conditional_blockContext *conditional_block();
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  BlockStatementContext : public Block_itemContext {
+  public:
+    BlockStatementContext(Block_itemContext *ctx);
+
+    StatementContext *statement();
+    antlr4::tree::TerminalNode *NEWLINE();
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  Block_itemContext* block_item();
 
   class  ConditionalContext : public antlr4::ParserRuleContext {
   public:
