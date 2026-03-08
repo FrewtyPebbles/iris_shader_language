@@ -16,9 +16,8 @@ public:
 
 class Import : public Statement {
 public:
-    Import(std::shared_ptr<Module> parent, std::shared_ptr<Module> import_target, vector<ImportName> import_names);
-    std::shared_ptr<Module> parent;
-    std::shared_ptr<Module> import_target;
+    Import(std::weak_ptr<Module> module, std::weak_ptr<Module> import_target, vector<ImportName> import_names);
+    std::weak_ptr<Module> import_target;
     vector<ImportName> import_names;
     string compile() override;
 

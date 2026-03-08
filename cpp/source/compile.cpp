@@ -6,7 +6,7 @@
 #include "tree/braces.h"
 #include "errors.h"
 #include "constants.h"
-#include "virtual_module_group.h"
+#include "tree/virtual_module_group.h"
 #include "tree/return.h"
 
 
@@ -109,45 +109,55 @@ std::shared_ptr<Statement> ModuleCompiler::compile_statement(iris_grammarParser 
     auto declaration_node = node->declaration();
     if (declaration_node) {
         std::shared_ptr<Declaration> declaration = compile_declaration(parser, declaration_node);
-        return std::make_shared<Statement>(declaration, function);
+        return std::make_shared<Statement>(module, declaration, function);
     }
 
     auto expr_node = node->expr();
     if (expr_node) {
         std::shared_ptr<Expression> expression = compile_expression(parser, expr_node);
-        return std::make_shared<Statement>(expression, function);
+        return std::make_shared<Statement>(module, expression, function);
     }
 
     auto import_statement_node = node->import_statement();
     if (import_statement_node) {
-        module->statements.push_back(compile_import(parser, import_statement_node));
+        return compile_import(parser, import_statement_node);
     }
-    return nullptr;
+    
+    throw_error(ErrorType::SYNTAX_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Statement not implemented yet: \"" + node->start->getText() + "\".");
 }
 
 std::shared_ptr<Import> ModuleCompiler::compile_import(iris_grammarParser & parser, iris_grammarParser::Import_statementContext* node) {
-    std::shared_ptr<VirtualModuleGroup> current_group = module->parent;
-    if (!current_group) {
+    if (!module->parent.has_value()) {
         throw_error(ErrorType::IMPORT_ERROR, module, node->start->getLine(), node->start->getCharPositionInLine(), "Cannot import into module \"" + module->name + "\" which does not have a parent namespace.");
     }
+    std::weak_ptr<VirtualModuleGroup> current_group = module->parent.value();
     std::shared_ptr<Module> destination_module = nullptr;
     for (const auto file_path_part_node : node->file_path_part()) {
         auto file_path_part = file_path_part_node->getText();
         if (destination_module) {
             throw_error(ErrorType::IMPORT_ERROR, module, file_path_part_node->start->getLine(), file_path_part_node->start->getCharPositionInLine(), "In module \"" + module->name + "\" an attempt was made to import a namespace or module \"" + file_path_part + "\" from an existing module named \"" + destination_module->name + "\".");
         }
+        auto current_group_lock = current_group.lock();
         if (file_path_part == ".") {
             // go up
-            current_group = current_group->parent;
+            if (current_group_lock->parent.has_value()) {
+                current_group = current_group_lock->parent.value();
+            } else {
+                throw_error(ErrorType::IMPORT_ERROR, module, file_path_part_node->start->getLine(), file_path_part_node->start->getCharPositionInLine(), "In namespace \"" + current_group.lock()->name + "\" an attempt was made to import from a parent namespace when there is no parent namespace.");
+            }
         } else {
-            auto next_destination = current_group->get(file_path_part);
-            if (std::holds_alternative<std::shared_ptr<VirtualModuleGroup>>(next_destination)) {
-                auto destination = std::get<std::shared_ptr<VirtualModuleGroup>>(next_destination);
-                current_group = destination;
+            auto next_destination = current_group_lock->get(file_path_part);
+            if (std::holds_alternative<std::optional<std::weak_ptr<VirtualModuleGroup>>>(next_destination)) {
+                auto destination = std::get<std::optional<std::weak_ptr<VirtualModuleGroup>>>(next_destination);
+                if (destination.has_value()) {
+                    current_group = destination.value().lock();
+                } else {
+                    throw std::runtime_error("Importing a null module group value with an existing key should not be possible, please make a github issue.");
+                }
             } else {
                 // FOUND MODULE
-                auto destination = std::get<std::shared_ptr<Module>>(next_destination);
-                destination_module = destination;
+                auto destination = std::get<std::weak_ptr<Module>>(next_destination);
+                destination_module = destination.lock();
             }
         }
     }
@@ -171,39 +181,44 @@ std::shared_ptr<Import> ModuleCompiler::compile_import(iris_grammarParser & pars
 }
 
 std::shared_ptr<Expression> ModuleCompiler::compile_expression(iris_grammarParser & parser, iris_grammarParser::ExprContext* node) {
+    std::shared_ptr<Expression> result = std::make_shared<Label>(module, "[EXPR NOT YET IMPLEMENTED]");
     if (auto tagged_node = dynamic_cast<iris_grammarParser::BinaryOperatorContext *>(node)) {
-        return compile_binary_operator(parser, tagged_node);
+        result = compile_binary_operator(parser, tagged_node);
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::UnaryOperatorContext *>(node)) {
-        return compile_unary_operator(parser, tagged_node);
+        result = compile_unary_operator(parser, tagged_node);
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::IndexOperatorContext *>(node)) {
-        return compile_index_operator(parser, tagged_node);
+        result = compile_index_operator(parser, tagged_node);
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::CallContext *>(node)) {
-        return compile_call(parser, tagged_node);
+        result = compile_call(parser, tagged_node);
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::ConstructorCallContext *>(node)) {
-        return compile_constructor(parser, tagged_node);
+        result = compile_constructor(parser, tagged_node);
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::ParenthesesContext *>(node)) {
-        return std::make_shared<Parentheses>(module, compile_expression(parser, tagged_node->expr()));
+        result = std::make_shared<Parentheses>(module, compile_expression(parser, tagged_node->expr()));
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::MagnitudeContext *>(node)) {
-        return std::make_shared<Magnitude>(module, compile_expression(parser, tagged_node->expr()));
+        result = std::make_shared<Magnitude>(module, compile_expression(parser, tagged_node->expr()));
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::AbsoluteValueContext *>(node)) {
-        return std::make_shared<AbsoluteValue>(module, compile_expression(parser, tagged_node->expr()));
+        result = std::make_shared<AbsoluteValue>(module, compile_expression(parser, tagged_node->expr()));
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::TernaryContext *>(node)) {
-        return compile_ternary(parser, tagged_node);
+        result = compile_ternary(parser, tagged_node);
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::GetterContext *>(node)) {
-        return compile_getter(parser, tagged_node);
+        result = compile_getter(parser, tagged_node);
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::CastContext *>(node)) {
-        return compile_cast(parser, tagged_node);
+        result = compile_cast(parser, tagged_node);
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::PrimitiveExpressionContext *>(node)) {
-        return compile_primitive(parser, tagged_node->primitive());
+        result = compile_primitive(parser, tagged_node->primitive());
     } else if (auto tagged_node = dynamic_cast<iris_grammarParser::ReturnContext *>(node)) {
         auto ret_expr = tagged_node->return_statement()->expr();
+
         if (ret_expr)
-            return std::make_shared<Return>(module, compile_expression(parser, ret_expr));
+            result = std::make_shared<Return>(module, current_function, compile_expression(parser, ret_expr));
         else
-            return std::make_shared<Return>(module);
+            result = std::make_shared<Return>(module, current_function, nullptr);
     }
+
+    result->line_number = node->start->getLine();
+    result->column_number = node->start->getCharPositionInLine();
     
-    return std::make_shared<Label>(module, "[EXPR NOT YET IMPLEMENTED]");
+    return result;
 }
 
 std::shared_ptr<Ternary> ModuleCompiler::compile_ternary(iris_grammarParser & parser, iris_grammarParser::TernaryContext* node) {
@@ -264,6 +279,7 @@ std::shared_ptr<Call> ModuleCompiler::compile_call(iris_grammarParser & parser, 
         // add function as a function dependency
         current_function->function_dependencies.insert(module->functions.at(expr_nodes[0]->getText()));
     }
+
     for (size_t i = 1; i < expr_nodes.size(); ++i) {
         args.push_back(compile_expression(parser, expr_nodes[i]));
     }
@@ -368,7 +384,7 @@ std::shared_ptr<Descriptor> ModuleCompiler::compile_descriptor(iris_grammarParse
     if (index_node) {
         index = std::stoi(index_node->getText());
     }
-    auto descriptor = std::make_shared<Descriptor>(node->descriptor_name->getText(), index);
+    auto descriptor = std::make_shared<Descriptor>(module, node->descriptor_name->getText(), index);
     descriptor->line_number = node->descriptor_name->getLine();
     descriptor->column_number = node->descriptor_name->getCharPositionInLine();
     return descriptor;

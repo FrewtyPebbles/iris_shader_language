@@ -47,22 +47,32 @@ func helper(arg:f32) -> f32 {
 
 func utility(a:i32, b:i32) -> i32 {
     return (
-        if helper(a) > 2
+        if helper(a) > (2 as f32)
             then 70.0
             else 30.0
-    ) / b as i32
+    ) / (b as f32) as i32
 }
 `;
 
 async function main() {
-    let pkg:VirtualModuleGroup = await create_virtual_module_group("package");
-    pkg.create_module('helper_file', helper_file);
-    pkg.create_module('test', test);
-    let module:Module = pkg.get("test") as Module;
-    iris_element.innerHTML = test;
-    glsl_element.innerHTML = (module.compile() as string)
-        .replace(/;/g, ";\n")
-        .replace(/{/g, " {\n")
-        .replace(/}/g, "}\n\n");
+    using pkg:VirtualModuleGroup = await create_virtual_module_group("package");
+    try  {
+        pkg.create_module('helper_file', helper_file);
+        pkg.create_module('test', test);
+        using module:Module = pkg.get("test") as Module;
+        iris_element.innerHTML = test;
+        console.log("JS COMPILING");
+        glsl_element.innerHTML = (module.compile() as string)
+            .replace(/;/g, ";\n")
+            .replace(/{/g, " {\n")
+            .replace(/}/g, "}\n\n");
+    } catch (error:any) {
+        try {
+            if (error instanceof Error) {
+                console.log(JSON.parse(error.message));
+            }
+        } catch {}
+        throw error;
+    }
 }
 main()

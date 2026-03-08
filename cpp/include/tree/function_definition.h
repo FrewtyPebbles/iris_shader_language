@@ -5,11 +5,10 @@
 #include "tree/language_node.h"
 #include "tree/primitive.h"
 #include <vector>
-#include <unordered_set>
+#include <set>
 
 using std::string;
 using std::vector;
-using std::unordered_set;
 
 class Module;
 class ClassDefinition;
@@ -21,7 +20,7 @@ class FunctionDefinition : public LanguageNode {
 public:
 
     FunctionDefinition(
-        std::shared_ptr<Module> module,
+        std::weak_ptr<Module> module,
         std::shared_ptr<Label> name,
         vector<std::shared_ptr<Declaration>> arguments,
         std::shared_ptr<BaseType> return_type,
@@ -32,13 +31,12 @@ public:
 
     std::shared_ptr<FunctionDefinition> create_alias(string alias_name);
 
-    std::shared_ptr<Module> module;
     std::shared_ptr<Label> name;
     vector<std::shared_ptr<Declaration>> arguments;
     std::shared_ptr<BaseType> return_type;
     vector<std::shared_ptr<Statement>> body;
 
-    unordered_set<std::shared_ptr<FunctionDefinition>> function_dependencies;
+    std::set<std::weak_ptr<FunctionDefinition>, std::owner_less<std::weak_ptr<FunctionDefinition>>> function_dependencies;
     
     string compile() override;
     string compile_prototype();

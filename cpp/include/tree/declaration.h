@@ -14,7 +14,7 @@ class ClassDefinition;
 
 class Declaration : public Expression {
 public:
-    Declaration(std::shared_ptr<Module> module, std::vector<std::shared_ptr<Descriptor>> descriptors, std::shared_ptr<Label> label, std::shared_ptr<BaseType> variable_type = nullptr, std::shared_ptr<Expression> assignment = nullptr);
+    Declaration(std::weak_ptr<Module> module, std::vector<std::shared_ptr<Descriptor>> descriptors, std::shared_ptr<Label> label, std::shared_ptr<BaseType> variable_type = nullptr, std::shared_ptr<Expression> assignment = nullptr);
     
     std::vector<std::shared_ptr<Descriptor>> descriptors;
     std::shared_ptr<Label> label;
@@ -23,5 +23,5 @@ public:
 
     string compile() override;
     string compile_no_assignment();
-    std::shared_ptr<BaseType> type() override;
+    std::weak_ptr<BaseType> type() override;
 };

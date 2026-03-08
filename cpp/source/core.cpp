@@ -8,7 +8,7 @@
 #include "iris_grammarParser.h"
 #include "errors.h"
 #include "compile.h"
-#include "virtual_module_group.h"
+#include "tree/virtual_module_group.h"
 
 using namespace antlr4;
 

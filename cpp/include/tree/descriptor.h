@@ -4,7 +4,7 @@
 
 class Descriptor : public LanguageNode {
 public:
-    Descriptor(string name, std::optional<uint32_t> index = std::nullopt);
+    Descriptor(std::weak_ptr<Module> module, string name, std::optional<uint32_t> index = std::nullopt);
     string name;
     std::optional<uint32_t> index;
     string compile() override;

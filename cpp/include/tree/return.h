@@ -7,9 +7,9 @@ class FunctionDefinition;
 
 class Return : public Expression {
 public:
-    Return(std::shared_ptr<Module> module, std::shared_ptr<Expression> expression = nullptr, std::shared_ptr<FunctionDefinition> calling_function = nullptr);
+    Return(std::weak_ptr<Module> module, std::weak_ptr<FunctionDefinition> calling_function, std::shared_ptr<Expression> expression = nullptr);
+    std::weak_ptr<FunctionDefinition> calling_function;
     std::shared_ptr<Expression> expression;
-    std::shared_ptr<FunctionDefinition> calling_function;
     string compile() override;
-    std::shared_ptr<BaseType> type() override;
+    std::weak_ptr<BaseType> type() override;
 };

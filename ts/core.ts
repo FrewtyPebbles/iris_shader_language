@@ -1,7 +1,21 @@
 import WasmModule, {EmscriptenModule} from "./wasm.js";
 import {Module, VirtualModuleGroup} from "./interfaces.ts";
 
-const module_promise:Promise<EmscriptenModule> = WasmModule();
+const module_promise = WasmModule().then(mod => {
+    // 1. Polyfill the [Symbol.dispose] method for each class
+    // This allows 'using' to work automatically
+    const classes = [mod.VirtualModuleGroup, mod.Module];
+    
+    classes.forEach(cls => {
+        if (cls && cls.prototype && !cls.prototype[Symbol.dispose]) {
+            cls.prototype[Symbol.dispose] = function() {
+                this.delete();
+            };
+        }
+    });
+    
+    return mod;
+});
 
 
 export async function tokenize(source:string):Promise<string[]> {

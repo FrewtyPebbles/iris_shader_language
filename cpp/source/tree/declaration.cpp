@@ -2,7 +2,7 @@
 #include "tree/_type.h"
 #include "tree/descriptor.h"
 
-Declaration::Declaration(std::shared_ptr<Module> module, std::vector<std::shared_ptr<Descriptor>> descriptors, std::shared_ptr<Label> label, std::shared_ptr<BaseType> variable_type, std::shared_ptr<Expression> assignment)
+Declaration::Declaration(std::weak_ptr<Module> module, std::vector<std::shared_ptr<Descriptor>> descriptors, std::shared_ptr<Label> label, std::shared_ptr<BaseType> variable_type, std::shared_ptr<Expression> assignment)
 : Expression(module), descriptors(descriptors), label(label), variable_type(variable_type), assignment(assignment) {}
 
 string Declaration::compile() {
@@ -42,6 +42,6 @@ string Declaration::compile_no_assignment() {
     return ret;
 }
 
-std::shared_ptr<BaseType> Declaration::type() {
+std::weak_ptr<BaseType> Declaration::type() {
     return variable_type;
 }

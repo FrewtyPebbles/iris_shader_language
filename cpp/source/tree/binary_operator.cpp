@@ -3,7 +3,7 @@
 #include "tree/_type.h"
 #include "tree/primitive.h"
 
-BinaryOperator::BinaryOperator(std::shared_ptr<Module> module, std::shared_ptr<Expression> lhs, string op, std::shared_ptr<Expression> rhs)
+BinaryOperator::BinaryOperator(std::weak_ptr<Module> module, std::shared_ptr<Expression> lhs, string op, std::shared_ptr<Expression> rhs)
 : Expression(module), lhs(lhs), op(op), rhs(rhs) {}
 
 string BinaryOperator::compile() {
@@ -84,17 +84,17 @@ string BinaryOperator::compile() {
     }
 }
 
-std::shared_ptr<BaseType> BinaryOperator::type() {
+std::weak_ptr<BaseType> BinaryOperator::type() {
     size_t lh_size = 0;
     size_t rh_size = 0;
     auto lhs_type = lhs->type();
     auto rhs_type = rhs->type();
     for (size_t i = 0; i < TYPES_BY_SIZE_ASCENDING.size(); ++i) {
-        if (TYPES_BY_SIZE_ASCENDING[i] == lhs_type->name) {
+        if (TYPES_BY_SIZE_ASCENDING[i] == lhs_type.lock()->name) {
             lh_size = i;
         }
 
-        if (TYPES_BY_SIZE_ASCENDING[i] == rhs_type->name) {
+        if (TYPES_BY_SIZE_ASCENDING[i] == rhs_type.lock()->name) {
             rh_size = i;
         }
     }

@@ -15,14 +15,13 @@ class Statement;
 class ForCLoop : public LanguageNode {
 public:
     ForCLoop(
-        std::shared_ptr<Module> module,
+        std::weak_ptr<Module> module,
         std::shared_ptr<Declaration> declaration,
         std::shared_ptr<Expression> condition,
         std::shared_ptr<Expression> expression,
         vector<std::shared_ptr<Statement>> body = {}
     );
 
-    std::shared_ptr<Module> module;
     std::shared_ptr<Declaration> declaration;
     std::shared_ptr<Expression> condition;
     std::shared_ptr<Expression> expression;
@@ -34,13 +33,12 @@ public:
 class ForInLoop : public LanguageNode {
 public:
     ForInLoop(
-        std::shared_ptr<Module> module,
+        std::weak_ptr<Module> module,
         std::shared_ptr<UnpackingList> unpacking_list,
         std::shared_ptr<Expression> expression,
         vector<std::shared_ptr<Statement>> body = {}
     );
 
-    std::shared_ptr<Module> module;
     std::shared_ptr<UnpackingList> unpacking_list;
     std::shared_ptr<Expression> expression;
     vector<std::shared_ptr<Statement>> body;

@@ -13,7 +13,7 @@ class Statement;
 class WhileLoop : public LanguageNode {
 public:
     WhileLoop(
-        std::shared_ptr<Expression> expression,
+        std::weak_ptr<Module> module, std::shared_ptr<Expression> expression,
         vector<std::shared_ptr<Statement>> body = {}
     );
 

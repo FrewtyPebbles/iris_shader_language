@@ -16,9 +16,9 @@ enum ErrorType {
 
 class Module;
 
-string create_error_message(ErrorType type, std::shared_ptr<Module> module, uint32_t line, uint32_t column, string message);
+string create_error_message(ErrorType type, std::weak_ptr<Module> module, uint32_t line, uint32_t column, string message);
 
-void throw_error(ErrorType type, std::shared_ptr<Module> module, uint32_t line, uint32_t column, string message);
+void throw_error(ErrorType type, std::weak_ptr<Module> module, uint32_t line, uint32_t column, string message);
 
 class PreciseErrorListener : public antlr4::BaseErrorListener {
 public:

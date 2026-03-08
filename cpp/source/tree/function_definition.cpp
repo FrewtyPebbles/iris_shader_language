@@ -5,17 +5,17 @@
 #include <iostream>
 
 FunctionDefinition::FunctionDefinition(
-    std::shared_ptr<Module> module,
+    std::weak_ptr<Module> module,
     std::shared_ptr<Label> name,
     vector<std::shared_ptr<Declaration>> arguments,
     std::shared_ptr<BaseType> return_type,
     vector<std::shared_ptr<Statement>> body
 )
-: module(module), name(name), arguments(arguments),
+: LanguageNode(module), name(name), arguments(arguments),
 return_type(return_type), body(body) {}
 
 FunctionDefinition::FunctionDefinition(const FunctionDefinition & src)
-: module(src.module), name(src.name), arguments(src.arguments),
+: LanguageNode(src.module), name(src.name), arguments(src.arguments),
 return_type(src.return_type), body(src.body), function_dependencies(src.function_dependencies) {}
 
 std::shared_ptr<FunctionDefinition> FunctionDefinition::create_alias(string alias_name) {
@@ -25,6 +25,7 @@ std::shared_ptr<FunctionDefinition> FunctionDefinition::create_alias(string alia
 }
 
 string FunctionDefinition::compile() {
+    std::cout << "FUN NAME : " << name->value << "\n";
     string ret = return_type->compile() + " " + name->compile() + "(";
     if (arguments.size()) {
         ret += arguments[0]->compile();
@@ -33,11 +34,14 @@ string FunctionDefinition::compile() {
         }
     }
     ret += "){";
-    module->memory_stack.stack_push();
+    std::cout << "PUSHING STACK \n";
+    auto module_lock = module.lock();
+    module_lock->memory_stack->stack_push();
     for (const auto & statement : body) {
         ret += statement->compile();
     }
-    module->memory_stack.stack_pop();
+    std::cout << "POPPING STACK \n";
+    module_lock->memory_stack->stack_pop();
     ret += "}";
     return ret;
 }

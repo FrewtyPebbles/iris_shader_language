@@ -16,19 +16,19 @@ class Label;
 
 class UnpackingItem : public Expression {
 public:
-    UnpackingItem(std::shared_ptr<Module> module);
+    UnpackingItem(std::weak_ptr<Module> module);
     virtual string compile_declarations() = 0;
 };
 
 class UnpackingList : public UnpackingItem {
 public:
-    UnpackingList(std::shared_ptr<Module> module, std::vector<std::shared_ptr<UnpackingItem>> unpacking_items);
+    UnpackingList(std::weak_ptr<Module> module, std::vector<std::shared_ptr<UnpackingItem>> unpacking_items);
     
     std::vector<std::shared_ptr<UnpackingItem>> unpacking_items;
 
     string compile() override;
     string compile_declarations() override;
-    std::shared_ptr<BaseType> type() override;
+    std::weak_ptr<BaseType> type() override;
 };
 
 class UnpackingLabel : public UnpackingItem {
@@ -40,17 +40,17 @@ public:
     
     string compile() override;
     string compile_declarations() override;
-    std::shared_ptr<BaseType> type() override;
+    std::weak_ptr<BaseType> type() override;
 };
 
 class UnpackingDeclaration : public UnpackingItem {
 public:
     // Doesn't need an assignment since declaration already has one.
-    UnpackingDeclaration(std::shared_ptr<Module> module, std::shared_ptr<Declaration> declaration);
+    UnpackingDeclaration(std::weak_ptr<Module> module, std::shared_ptr<Declaration> declaration);
     
     std::shared_ptr<Declaration> declaration;
     
     string compile() override;
     string compile_declarations() override;
-    std::shared_ptr<BaseType> type() override;
+    std::weak_ptr<BaseType> type() override;
 };

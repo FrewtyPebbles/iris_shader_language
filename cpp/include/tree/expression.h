@@ -7,8 +7,7 @@ class Module;
 
 class Expression : public LanguageNode {
 public:
-    Expression(std::shared_ptr<Module> module);
+    Expression(std::weak_ptr<Module> module);
     virtual ~Expression() = default;
-    std::shared_ptr<Module> module;
-    virtual std::shared_ptr<BaseType> type() = 0;
+    virtual std::weak_ptr<BaseType> type() = 0;
 };

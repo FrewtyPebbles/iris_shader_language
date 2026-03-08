@@ -11,22 +11,26 @@ class Label;
 
 class BaseType : public Expression, public std::enable_shared_from_this<BaseType> {
 public:
-    BaseType(std::shared_ptr<Module> module, std::shared_ptr<Label> name, vector<size_t> array_dimensions);
+    BaseType(std::weak_ptr<Module> module, std::shared_ptr<Label> name, const vector<size_t>& array_dimensions);
     std::shared_ptr<Label> name;
     vector<size_t> array_dimensions;
-    unordered_map<string, std::shared_ptr<BaseType>> members;
-    void set_member(string key, std::shared_ptr<BaseType> member_type);
+    unordered_map<string, std::weak_ptr<BaseType>> members;
+    void set_member(string key, std::weak_ptr<BaseType> member_type);
     virtual string hash_key() = 0;
     virtual string compile_type() = 0;
-    virtual std::shared_ptr<BaseType> dimension_reduced() = 0;
+    virtual std::weak_ptr<BaseType> dimension_reduced() = 0;
     string compile_array_dimensions();
-    std::shared_ptr<BaseType> type() override;
+    std::weak_ptr<BaseType> type() override;
     
+protected:
+    // this is a ptr to a dimension reduced version of the type.
+    // this way dimension_reduced() can return a weak ptr to the reduced dimension version of the type.
+    std::shared_ptr<BaseType> dimension_reduced_u_ptr = nullptr;
 };
 
 class Type : public BaseType {
 public:
-    Type(std::shared_ptr<Module> module, std::shared_ptr<Label> name, std::optional<string> precision = std::nullopt, vector<size_t> array_dimensions = {});
+    Type(std::weak_ptr<Module> module, std::shared_ptr<Label> name, std::optional<string> precision = std::nullopt, const vector<size_t>& array_dimensions = {});
     
     std::optional<string> precision;
     string compile() override;
@@ -39,21 +43,29 @@ public:
     bool is_float();
     bool is_bool();
 
-    std::shared_ptr<BaseType> dimension_reduced() override;
+    std::weak_ptr<BaseType> dimension_reduced() override;
 };
 
 class TypeTuple : public BaseType {
 public:
-    TypeTuple(std::shared_ptr<Module> module, vector<std::shared_ptr<BaseType>> types, vector<size_t> array_dimensions = {});
+    TypeTuple(std::weak_ptr<Module> module, vector<std::weak_ptr<BaseType>> types, const vector<size_t>& array_dimensions = {});
     
-    vector<std::shared_ptr<BaseType>> types;
+    vector<std::weak_ptr<BaseType>> types;
     // name is a mangled version of the types names concatenated together.
 
     string compile() override;
     string compile_type() override;
     string compile_struct();
     string hash_key() override;
-    static string get_mangled_name(vector<std::shared_ptr<BaseType>> types, vector<size_t> array_dimensions = {});
+    static string get_mangled_name(vector<std::weak_ptr<BaseType>> types, vector<size_t> array_dimensions = {});
     
-    std::shared_ptr<BaseType> dimension_reduced() override;
+    std::weak_ptr<BaseType> dimension_reduced() override;
 };
+
+bool operator==(const std::shared_ptr<Type>& lhs, const std::shared_ptr<Type>& rhs);
+
+bool operator==(const std::shared_ptr<TypeTuple>& lhs, const std::shared_ptr<Type>& rhs);
+
+bool operator==(const std::shared_ptr<Type>& lhs, const std::shared_ptr<TypeTuple>& rhs);
+
+bool operator==(const std::shared_ptr<TypeTuple>& lhs, const std::shared_ptr<TypeTuple>& rhs);

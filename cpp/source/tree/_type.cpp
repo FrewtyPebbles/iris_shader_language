@@ -2,10 +2,10 @@
 #include <iostream>
 #include "tree/primitive.h"
 
-BaseType::BaseType(std::shared_ptr<Module> module, std::shared_ptr<Label> name, vector<size_t> array_dimensions)
+BaseType::BaseType(std::weak_ptr<Module> module, std::shared_ptr<Label> name, const vector<size_t>& array_dimensions)
 : Expression(module), name(name), array_dimensions(array_dimensions) {}
 
-void BaseType::set_member(string key, std::shared_ptr<BaseType> member_type) {
+void BaseType::set_member(string key, std::weak_ptr<BaseType> member_type) {
     members.insert_or_assign(key, member_type);
 }
 
@@ -17,12 +17,18 @@ string BaseType::compile_array_dimensions() {
     return ret;
 }
 
-std::shared_ptr<BaseType> BaseType::type() {
-    return shared_from_this();
+std::weak_ptr<BaseType> BaseType::type() {
+    return weak_from_this();
 }
 
-Type::Type(std::shared_ptr<Module> module, std::shared_ptr<Label> name, std::optional<string> precision, vector<size_t> array_dimensions)
-: BaseType(module, name, array_dimensions), precision(precision) {}
+Type::Type(std::weak_ptr<Module> module, std::shared_ptr<Label> name, std::optional<string> precision, const vector<size_t>& array_dimensions)
+: BaseType(module, name, array_dimensions), precision(precision) {
+    if (array_dimensions.size()){
+        auto new_vec = array_dimensions;
+        new_vec.pop_back();
+        dimension_reduced_u_ptr = std::make_shared<Type>(module.lock(), name, precision, new_vec);
+    }
+}
 
 string Type::compile() {
     if (precision)
@@ -173,31 +179,37 @@ bool Type::is_bool() {
     return false;
 }
 
-std::shared_ptr<BaseType> Type::dimension_reduced() {
-    auto new_vec = array_dimensions;
-    new_vec.pop_back();
-    return std::make_shared<Type>(module, name, precision, new_vec);
+std::weak_ptr<BaseType> Type::dimension_reduced() {
+    return dimension_reduced_u_ptr;
 }
 
-TypeTuple::TypeTuple(std::shared_ptr<Module> module, vector<std::shared_ptr<BaseType>> types, vector<size_t> array_dimensions)
+TypeTuple::TypeTuple(std::weak_ptr<Module> module, vector<std::weak_ptr<BaseType>> types, const vector<size_t>& array_dimensions)
 : BaseType(module, std::make_shared<Label>(module, ""), array_dimensions), types(types) {
     for (size_t i = 0; i < types.size(); ++i) {
         set_member(std::to_string(i), types[i]);
     }
     name->value = get_mangled_name(types, array_dimensions);
+
+    if (array_dimensions.size()) {
+        auto new_vec = array_dimensions;
+        new_vec.pop_back();
+        dimension_reduced_u_ptr = std::make_shared<TypeTuple>(module.lock(), types, new_vec);
+    }
 }
 
-string TypeTuple::get_mangled_name(vector<std::shared_ptr<BaseType>> types, vector<size_t> array_dimensions) {
+string TypeTuple::get_mangled_name(vector<std::weak_ptr<BaseType>> types, vector<size_t> array_dimensions) {
     string mangled_name = "typetuple";
     for (auto type : types) {
-        if (auto derived = std::dynamic_pointer_cast<Type>(type)) {
-            if (derived->precision) {
-                mangled_name += derived->precision.value();
+        if (auto locked_type = type.lock()) {
+
+            if (auto derived = std::dynamic_pointer_cast<Type>(locked_type)) {
+                if (derived->precision) {
+                    mangled_name += derived->precision.value();
+                }
+                mangled_name += derived->name->value;
+            } else if (auto derived = std::dynamic_pointer_cast<TypeTuple>(locked_type)) {
+                mangled_name += TypeTuple::get_mangled_name(derived->types, derived->array_dimensions);
             }
-            mangled_name += derived->name->value;
-        }
-        if (auto derived = std::dynamic_pointer_cast<TypeTuple>(type)) {
-            mangled_name += TypeTuple::get_mangled_name(derived->types, derived->array_dimensions);
         }
     }
     if (array_dimensions.size()) {
@@ -222,7 +234,7 @@ string TypeTuple::compile_type() {
 string TypeTuple::compile_struct() {
     string ret = "struct " + name->value + "{";
     for (size_t i = 0; i < types.size(); ++i) {
-        ret +=  types[i]->compile() + " _" + std::to_string(i) + ";";
+        ret +=  types[i].lock()->compile() + " _" + std::to_string(i) + ";";
     }
     ret += "}";
     return ret;
@@ -232,8 +244,22 @@ string TypeTuple::hash_key() {
     return name->value;
 }
 
-std::shared_ptr<BaseType> TypeTuple::dimension_reduced() {
-    auto new_vec = array_dimensions;
-    new_vec.pop_back();
-    return std::make_shared<TypeTuple>(module, types, new_vec);
+std::weak_ptr<BaseType> TypeTuple::dimension_reduced() {
+    return dimension_reduced_u_ptr;
+}
+
+bool operator==(const std::shared_ptr<Type>& lhs, const std::shared_ptr<Type>& rhs) {
+    return lhs->name->value == rhs->name->value && lhs->precision== rhs->precision;
+}
+
+bool operator==(const std::shared_ptr<TypeTuple>& lhs, const std::shared_ptr<Type>& rhs) {
+    return false;
+}
+
+bool operator==(const std::shared_ptr<Type>& lhs, const std::shared_ptr<TypeTuple>& rhs) {
+    return false;
+}
+
+bool operator==(const std::shared_ptr<TypeTuple>& lhs, const std::shared_ptr<TypeTuple>& rhs){
+    return lhs->name->value == rhs->name->value;
 }

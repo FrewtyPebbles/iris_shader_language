@@ -15,7 +15,7 @@ std::string escape_quotes(std::string str) {
     return str;
 }
 
-string create_error_message(ErrorType type, std::shared_ptr<Module> module, uint32_t line, uint32_t column, string message) {
+string create_error_message(ErrorType type, std::weak_ptr<Module> module, uint32_t line, uint32_t column, string message) {
     string error_type = "UNKNOWN";
 
     switch (type)
@@ -47,13 +47,13 @@ string create_error_message(ErrorType type, std::shared_ptr<Module> module, uint
 
     return
         "{\"error_type\":\"" + error_type + "\"" +
-        ",\"module\":" + escape_quotes(module ? module->name : "null") +
+        ",\"module\":" + (module.lock() ? "\"" + escape_quotes(module.lock()->name) + "\"" : "null") +
         ",\"line\":" + std::to_string(line) +
         ",\"column\":" + std::to_string(column) +
         ",\"reason\":\"" + escape_quotes(message) + "\"}";
 }
 
-void throw_error(ErrorType type, std::shared_ptr<Module> module, uint32_t line, uint32_t column, string message) {
+void throw_error(ErrorType type, std::weak_ptr<Module> module, uint32_t line, uint32_t column, string message) {
     throw std::runtime_error(create_error_message(type, module, line, column, message));
 }
 

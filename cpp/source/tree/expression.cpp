@@ -1,4 +1,4 @@
 #include "tree/expression.h"
 
-Expression::Expression(std::shared_ptr<Module> module)
-: module(module) {}
+Expression::Expression(std::weak_ptr<Module> module)
+: LanguageNode(module) {}

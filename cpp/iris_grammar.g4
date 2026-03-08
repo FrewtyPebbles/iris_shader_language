@@ -105,7 +105,7 @@ statement
     | expr
     ;
 
-return_statement: 'return' expr;
+return_statement: 'return' expr?;
 
 import_statement
     : FROM (file_path_part ('.' file_path_part)*) IMPORT ((import_label (',' import_label)*) | '*')
@@ -159,9 +159,9 @@ expr
     // ---------------------------------------------------------
     // LEVEL 1: Primaries & Grouping (Highest Precedence)
     // ---------------------------------------------------------
-    : '(' expr ')'                      # Parentheses
+    : return_statement                  # Return
+    | '(' expr ')'                      # Parentheses
     | primitive                         # PrimitiveExpression
-    | return_statement                  # Return
     | '||' expr '||'                    # Magnitude
     | '|' expr '|'                      # AbsoluteValue
 

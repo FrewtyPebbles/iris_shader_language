@@ -3,9 +3,9 @@
 
 class UnaryOperator : public Expression {
 public:
-    UnaryOperator(std::shared_ptr<Module> module, string op, std::shared_ptr<Expression> expression);
+    UnaryOperator(std::weak_ptr<Module> module, string op, std::shared_ptr<Expression> expression);
     string op;
     std::shared_ptr<Expression> expression;
     string compile() override;
-    std::shared_ptr<BaseType> type() override;
+    std::weak_ptr<BaseType> type() override;
 };

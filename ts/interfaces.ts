@@ -2,6 +2,8 @@ export interface Module {
     name:string;
     parent:VirtualModuleGroup;
     compile(): string;
+    delete(): void;
+    [Symbol.dispose](): void;
 }
 
 export interface VirtualModuleGroup {
@@ -18,4 +20,5 @@ export interface VirtualModuleGroup {
 
     get(path: string): VirtualModuleGroup | Module | undefined;
     delete(): void; // Required for memory management
+    [Symbol.dispose](): void;
 }

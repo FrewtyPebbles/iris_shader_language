@@ -8,9 +8,9 @@ class Expression;
 
 class Statement : public LanguageNode {
 public:
-    Statement();
-    Statement(std::shared_ptr<Expression> expression, std::shared_ptr<FunctionDefinition> function = nullptr);
+    Statement(std::weak_ptr<Module> module);
+    Statement(std::weak_ptr<Module> module, std::shared_ptr<Expression> expression, std::optional<std::weak_ptr<FunctionDefinition>> function = std::nullopt);
     std::shared_ptr<Expression> expression;
-    std::shared_ptr<FunctionDefinition> function;
+    std::optional<std::weak_ptr<FunctionDefinition>> function;
     string compile() override;
 };

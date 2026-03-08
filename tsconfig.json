@@ -14,7 +14,7 @@
 
     "strict": true,
     "skipLibCheck": true,
-
+    "lib": ["ESNext", "ESNext.Disposable", "DOM"],
     "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,

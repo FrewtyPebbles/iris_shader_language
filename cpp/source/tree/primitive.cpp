@@ -1,25 +1,25 @@
 #include "tree/primitive.h"
 
-Primitive::Primitive(std::shared_ptr<Module> module)
+Primitive::Primitive(std::weak_ptr<Module> module)
 : Expression(module) {}
 
-Label::Label(std::shared_ptr<Module> module, string value)
+Label::Label(std::weak_ptr<Module> module, string value)
 : Primitive(module), value(value) {}
 
 string Label::compile() {
-    return module->memory_stack.compile_label(shared_from_this());
+    return module.lock()->memory_stack->compile_label(shared_from_this());
 }
 
-void Label::define(std::shared_ptr<BaseType> type, std::function<string()> compile_function) {
-    module->memory_stack.define(shared_from_this(), type, compile_function);
+void Label::define(std::weak_ptr<BaseType> type, std::function<string()> compile_function) {
+    module.lock()->memory_stack->define(shared_from_this(), type, compile_function);
 }
 
-std::shared_ptr<LabelDefinition> Label::lookup() {
-    return module->memory_stack.get(shared_from_this());
+std::weak_ptr<LabelDefinition> Label::lookup() {
+    return module.lock()->memory_stack->get(shared_from_this());
 }
 
-std::shared_ptr<BaseType> Label::type() {
-    return lookup()->type();
+std::weak_ptr<BaseType> Label::type() {
+    return lookup().lock()->type();
 }
 
 bool operator==(const std::shared_ptr<Label>& lhs, const std::string& rhs) {
@@ -31,15 +31,15 @@ bool operator==(const std::string& lhs, const std::shared_ptr<Label>& rhs) {
     return lhs == rhs->value; // Compare the internal string
 }
 
-Integer::Integer(std::shared_ptr<Module> module, int64_t value)
+Integer::Integer(std::weak_ptr<Module> module, int64_t value)
 : Primitive(module), value(value) {}
 
 string Integer::compile() {
     return std::to_string(value);
 }
 
-std::shared_ptr<BaseType> Integer::type() {
-    return module->memory_stack.get_type("i32");
+std::weak_ptr<BaseType> Integer::type() {
+    return module.lock()->memory_stack->get_type("i32");
 }
 
 string remove_trailing_zeros(string str) {
@@ -56,13 +56,13 @@ string remove_trailing_zeros(string str) {
     return str;
 }
 
-Float::Float(std::shared_ptr<Module> module, double value)
+Float::Float(std::weak_ptr<Module> module, double value)
 : Primitive(module), value(value) {}
 
 string Float::compile() {
     return remove_trailing_zeros(std::to_string(value));
 }
 
-std::shared_ptr<BaseType> Float::type() {
-    return module->memory_stack.get_type("f32");
+std::weak_ptr<BaseType> Float::type() {
+    return module.lock()->memory_stack->get_type("f32");
 }

@@ -2,7 +2,7 @@
 #include "tree/_type.h"
 #include "errors.h"
 
-Cast::Cast(std::shared_ptr<Module> module, std::shared_ptr<Expression> expression, std::shared_ptr<BaseType> casting_type)
+Cast::Cast(std::weak_ptr<Module> module, std::shared_ptr<Expression> expression, std::shared_ptr<BaseType> casting_type)
 : Expression(module), expression(expression), casting_type(casting_type) {}
 
 string Cast::compile() {
@@ -16,6 +16,6 @@ string Cast::compile() {
     }
 }
 
-std::shared_ptr<BaseType> Cast::type() {
+std::weak_ptr<BaseType> Cast::type() {
     return casting_type;
 }
