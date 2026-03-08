@@ -33,3 +33,4 @@ Thumbs.db
 /tools/
 */.antlr/
 /external/
+ts/wasm.js
