@@ -45,13 +45,7 @@ string Getter::compile() {
 
 std::weak_ptr<BaseType> Getter::type() {
     if (auto parent_type_lock = parent->type().lock()) {
-        if (auto child_label_label = std::dynamic_pointer_cast<Label>(child_label)) {
-            return parent_type_lock->members.at(child_label_label->compile());
-        } else if (auto child_label_integer = std::dynamic_pointer_cast<Integer>(child_label)) {
-            return parent_type_lock->members.at(child_label_integer->compile());
-        } else {
-            throw_error(ErrorType::SYNTAX_ERROR, module, line_number, column_number, "The type \"" + child_label->type().lock()->name->value + "\" cannot be used to perform namespace lookups.");
-        }
+        return parent_type_lock->get_member_type(child_label);
     } else {
         throw std::runtime_error("Unable to get parent type, please make a github issue.");
     }

@@ -21,6 +21,7 @@
 #include "tree/index_operator.h"
 #include "tree/ternary.h"
 #include "tree/while_loop.h"
+#include "tree/class_definition.h"
 
 class ModuleCompiler {
 public:
@@ -50,11 +51,15 @@ private:
     vector<std::shared_ptr<LanguageNode>> compile_block(iris_grammarParser & parser, iris_grammarParser::BlockContext* node);
     std::shared_ptr<WhileLoop> compile_while_block(iris_grammarParser & parser, iris_grammarParser::While_blockContext* node);
     std::shared_ptr<DoWhileLoop> compile_do_while_block(iris_grammarParser & parser, iris_grammarParser::Do_while_blockContext* node);
+    std::shared_ptr<ClassDefinition> compile_class_definition(iris_grammarParser & parser, iris_grammarParser::Class_definitionContext* node);
     
 
     // This method compiles all the signatures VVVV
     void read_signatures(iris_grammarParser & parser, iris_grammarParser::RootContext* node);
     void read_statement(iris_grammarParser & parser, iris_grammarParser::StatementContext* node);
+    void read_class_definition(iris_grammarParser & parser, iris_grammarParser::Class_definitionContext* node);
+    std::shared_ptr<ClassMethodDefinition> read_class_method_definition(iris_grammarParser & parser, iris_grammarParser::Class_method_definitionContext* node);
+    std::shared_ptr<ClassOperatorDefinition> read_class_operator_definition(iris_grammarParser & parser, iris_grammarParser::Class_operator_definitionContext* node);
     void read_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node);
 
     // Helpers

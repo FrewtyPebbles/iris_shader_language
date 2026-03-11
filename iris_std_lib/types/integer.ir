@@ -1,0 +1,66 @@
+## INTEGER CLASS
+# operator functions will not self recurse.
+define int as BaseInteger {
+    # when derived classes are compiled, BaseInteger will be substituted for whatever the derived class is.
+    func inline op add( left right self, other:BaseInteger) -> BaseInteger {
+        return (self as int) + (other as int)
+    }
+    func inline op sub( left right self, other:BaseInteger) -> BaseInteger {
+        return (self as int) - (other as int)
+    }
+    func inline op mul( left right self, other:BaseInteger) -> BaseInteger {
+        return (self as int) * (other as int)
+    }
+    func inline op div( left right self, other:BaseInteger) -> BaseInteger {
+        return (self as int) / (other as int)
+    }
+    func inline op mod( left right self, other:BaseInteger) -> BaseInteger {
+        return (self as int) % (other as int)
+    }
+    func inline op pow( left self, other:BaseInteger) -> BaseInteger {
+        return (self as int) ^ (other as int)
+    }
+    func inline op pow( right self, other:BaseInteger) -> BaseInteger {
+        return (other as int) ^ (self as int)
+    }
+    func inline op abs(self) -> BaseInteger {
+        return |self as int|
+    }
+    func inline op neg(self) -> BaseInteger {
+        return -(self as int)
+    }
+}
+
+# SIGNED INT
+define BaseInteger as i8 {
+    comp_name GLSL "int"
+    comp_name WGSL "i32"
+    comp_precision lp
+}
+define BaseInteger as i16 {
+    comp_name GLSL "int"
+    comp_name WGSL "i32"
+    comp_precision mp
+}
+define BaseInteger as i32 {
+    comp_name GLSL "int"
+    comp_name WGSL "i32"
+    comp_precision hp
+}
+
+# UNSIGNED INT
+define BaseInteger as u8 {
+    comp_name GLSL "uint"
+    comp_name WGSL "u32"
+    comp_precision lp
+}
+define BaseInteger as u16 {
+    comp_name GLSL "uint"
+    comp_name WGSL "u32"
+    comp_precision mp
+}
+define BaseInteger as u32 {
+    comp_name GLSL "uint"
+    comp_name WGSL "u32"
+    comp_precision hp
+}

@@ -96,7 +96,7 @@ LP            : 'lp' ;
 MP            : 'mp' ;
 HP            : 'hp' ;
 
-root: (function_definition eos? | statement eos? )* EOF;
+root: (function_definition | class_definition | statement eos? )* EOF;
 
 // statement
 statement
@@ -114,6 +114,60 @@ import_statement
 
 // missing type implies none for functions
 function_definition: FUNC LABEL '(' (declaration (',' declaration)*)? ','? ')' ('->' type)? NEWLINE* block;
+
+class_method_definition: FUNC LABEL '(' self_declaration (',' declaration)* ','? ')' ('->' type)? NEWLINE* block;
+
+class_operator_definition: FUNC inline='inline'? 'op' class_operator_label '(' self_declaration (',' declaration)* ','? ')' ('->' type)? NEWLINE* block;
+
+self_declaration: self_descriptor* 'self';
+
+self_descriptor: descriptor | 'right' | 'left';
+
+class_operator_label
+    : 'constructor'
+    | 'destructor'
+    | 'index'
+    | 'add'
+    | 'sub'
+    | 'mul'
+    | 'div'
+    | 'mod'
+    | 'pow'
+    | 'dot'
+    | 'cross'
+    | 'greater'
+    | 'less'
+    | 'equal'
+    | 'less_equal'
+    | 'greater_equal'
+    | 'call'
+    ;
+
+class_definition
+    : 'define' base_class_name AS name=LABEL ('with' trait=LABEL (',' trait=LABEL)*)? ('{'
+        class_block_item*
+    '}')?// block is optional so you can just create classes by combining traits if you want.
+    ;
+
+base_class_name: base_type | LABEL;
+
+class_block_item
+    : declaration NEWLINE?
+    | class_compiler_directive NEWLINE?
+    | class_method_definition NEWLINE?
+    | class_operator_definition NEWLINE?
+    ;
+
+class_compiler_directive
+    : tag='comp_name' TARGET_LANGUAGE label=STRING_LITERAL // this is a compiler directive to change the string name the raw type compiles to.
+    | tag='comp_precision' precision_qualifier
+    ;
+
+TARGET_LANGUAGE
+    : 'GLSL'
+    | 'WGSL'
+    | 'SPIRV'
+    ;
 
 // if statement
 conditional_block: IF expr (block | statement) (ELIF expr (block | statement))* ( ELSE (block | statement))?;
@@ -268,49 +322,11 @@ descriptor:
 
 precision_qualifier: LP | MP | HP;
 
-type:( precision_qualifier )?
-    (type_name=(
-      NONE
-    | I8
-    | I16
-    | I32
-    | U8
-    | U16
-    | U32
-    | F8
-    | F16
-    | F32
-    | F64
-    | BOOL
-    | VEC2
-    | VEC3
-    | VEC4
-    | V2
-    | V3
-    | V4
-    | M2
-    | M3
-    | M4
-    | M2X2
-    | M3X3
-    | M4X4
-    | M2X3
-    | M3X2
-    | M3X4
-    | M4X3
-    | M2X4
-    | M4X2
-    | MAT2
-    | MAT3
-    | MAT4
-    | MAT2X3
-    | MAT2X4
-    | MAT3X2
-    | MAT3X4
-    | MAT4X2
-    | MAT4X3)
-    ) ('[' INT ']')*
+type
+    : ( precision_qualifier )? type_name ('[' INT ']')*
     ;
+
+type_name: LABEL | base_type;
 
 declaration
     : descriptor LABEL ('=' expr)?
@@ -321,12 +337,41 @@ declaration
 // Helper for "end of line"
 eos: ';' ;//(NEWLINE | ';' | EOF);
 
-primitive: INT | FLOAT | BOOLEAN | LABEL;
+base_type
+    : NONE
+    | 'class'
+    | 'int'
+    | 'uint'
+    | 'float'
+    | 'bool'
+    | 'vector2'
+    | 'vector3'
+    | 'vector4'
+    | 'matrix2x2'
+    | 'matrix3x3'
+    | 'matrix4x4'
+    | 'matrix2x3'
+    | 'matrix2x4'
+    | 'matrix3x2'
+    | 'matrix3x4'
+    | 'matrix4x2'
+    | 'matrix4x3'
+    | 'struct'
+    | 'tuple'
+    ;
+
+primitive: INT | FLOAT | BOOLEAN | LABEL | STRING_LITERAL;
 
 BOOLEAN: 'true' | 'false' ;
 FLOAT: [0-9]+'.'[0-9]+;
 LABEL: [a-zA-Z_][a-zA-Z_0-9]*;
 INT: [0-9]+;
+STRING_LITERAL : '"' ( EscapeSequence | ~('"' | '\\' | '\r' | '\n') )* '"' ;
+
+// Fragment rules can only be used by other lexer rules (hence lowercase 'f').
+fragment EscapeSequence
+    : '\\\\' ('"' | '\\' | '/' | 'b' | 'f' | 'n' | 'r' | 't')
+    ;
 
 WS: [ \t\n\r]+ -> skip;
 NEWLINE: '\r'? '\n' | '\r';

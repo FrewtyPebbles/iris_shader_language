@@ -18,31 +18,41 @@ public:
     T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
     T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, T__30 = 31, T__31 = 32, 
     T__32 = 33, T__33 = 34, T__34 = 35, T__35 = 36, T__36 = 37, T__37 = 38, 
-    T__38 = 39, T__39 = 40, T__40 = 41, T__41 = 42, T__42 = 43, FUNC = 44, 
-    IF = 45, ELIF = 46, ELSE = 47, THEN = 48, IMPORT = 49, FROM = 50, DEF = 51, 
-    IN = 52, OUT = 53, UNIFORM = 54, MUT = 55, VERTEX = 56, NOT = 57, BITS_NOT = 58, 
-    NORM = 59, INV = 60, TRANS = 61, DET = 62, DEG = 63, RAD = 64, AND = 65, 
-    OR = 66, BITS_AND = 67, BITS_XOR = 68, BITS_OR = 69, BITS_LEFT = 70, 
-    BITS_RIGHT = 71, AND_EQ = 72, OR_EQ = 73, BITS_AND_EQ = 74, BITS_XOR_EQ = 75, 
-    BITS_OR_EQ = 76, BITS_LEFT_EQ = 77, BITS_RIGHT_EQ = 78, AS = 79, NONE = 80, 
-    I8 = 81, I16 = 82, I32 = 83, U8 = 84, U16 = 85, U32 = 86, F8 = 87, F16 = 88, 
-    F32 = 89, F64 = 90, BOOL = 91, VEC2 = 92, VEC3 = 93, VEC4 = 94, V2 = 95, 
-    V3 = 96, V4 = 97, M2 = 98, M3 = 99, M4 = 100, M2X2 = 101, M3X3 = 102, 
-    M4X4 = 103, M2X3 = 104, M3X2 = 105, M3X4 = 106, M4X3 = 107, M2X4 = 108, 
-    M4X2 = 109, MAT2 = 110, MAT3 = 111, MAT4 = 112, MAT2X3 = 113, MAT2X4 = 114, 
-    MAT3X2 = 115, MAT3X4 = 116, MAT4X2 = 117, MAT4X3 = 118, LP = 119, MP = 120, 
-    HP = 121, BOOLEAN = 122, FLOAT = 123, LABEL = 124, INT = 125, WS = 126, 
-    NEWLINE = 127, LINE_COMMENT = 128, BLOCK_COMMENT = 129, ERROR_TOKEN = 130
+    T__38 = 39, T__39 = 40, T__40 = 41, T__41 = 42, T__42 = 43, T__43 = 44, 
+    T__44 = 45, T__45 = 46, T__46 = 47, T__47 = 48, T__48 = 49, T__49 = 50, 
+    T__50 = 51, T__51 = 52, T__52 = 53, T__53 = 54, T__54 = 55, T__55 = 56, 
+    T__56 = 57, T__57 = 58, T__58 = 59, T__59 = 60, T__60 = 61, T__61 = 62, 
+    T__62 = 63, T__63 = 64, T__64 = 65, T__65 = 66, T__66 = 67, T__67 = 68, 
+    T__68 = 69, T__69 = 70, T__70 = 71, T__71 = 72, T__72 = 73, T__73 = 74, 
+    FUNC = 75, IF = 76, ELIF = 77, ELSE = 78, THEN = 79, IMPORT = 80, FROM = 81, 
+    DEF = 82, IN = 83, OUT = 84, UNIFORM = 85, MUT = 86, VERTEX = 87, NOT = 88, 
+    BITS_NOT = 89, NORM = 90, INV = 91, TRANS = 92, DET = 93, DEG = 94, 
+    RAD = 95, AND = 96, OR = 97, BITS_AND = 98, BITS_XOR = 99, BITS_OR = 100, 
+    BITS_LEFT = 101, BITS_RIGHT = 102, AND_EQ = 103, OR_EQ = 104, BITS_AND_EQ = 105, 
+    BITS_XOR_EQ = 106, BITS_OR_EQ = 107, BITS_LEFT_EQ = 108, BITS_RIGHT_EQ = 109, 
+    AS = 110, NONE = 111, I8 = 112, I16 = 113, I32 = 114, U8 = 115, U16 = 116, 
+    U32 = 117, F8 = 118, F16 = 119, F32 = 120, F64 = 121, BOOL = 122, VEC2 = 123, 
+    VEC3 = 124, VEC4 = 125, V2 = 126, V3 = 127, V4 = 128, M2 = 129, M3 = 130, 
+    M4 = 131, M2X2 = 132, M3X3 = 133, M4X4 = 134, M2X3 = 135, M3X2 = 136, 
+    M3X4 = 137, M4X3 = 138, M2X4 = 139, M4X2 = 140, MAT2 = 141, MAT3 = 142, 
+    MAT4 = 143, MAT2X3 = 144, MAT2X4 = 145, MAT3X2 = 146, MAT3X4 = 147, 
+    MAT4X2 = 148, MAT4X3 = 149, LP = 150, MP = 151, HP = 152, TARGET_LANGUAGE = 153, 
+    BOOLEAN = 154, FLOAT = 155, LABEL = 156, INT = 157, STRING_LITERAL = 158, 
+    WS = 159, NEWLINE = 160, LINE_COMMENT = 161, BLOCK_COMMENT = 162, ERROR_TOKEN = 163
   };
 
   enum {
     RuleRoot = 0, RuleStatement = 1, RuleReturn_statement = 2, RuleImport_statement = 3, 
-    RuleFunction_definition = 4, RuleConditional_block = 5, RuleFor_block = 6, 
-    RuleUnpacking_list = 7, RuleUnpacking_item = 8, RuleWhile_block = 9, 
-    RuleDo_while_block = 10, RuleMatch_block = 11, RuleCase_block = 12, 
-    RuleFile_path_part = 13, RuleImport_label = 14, RuleBlock = 15, RuleBlock_item = 16, 
-    RuleConditional = 17, RuleExpr = 18, RuleDescriptor = 19, RulePrecision_qualifier = 20, 
-    RuleType = 21, RuleDeclaration = 22, RuleEos = 23, RulePrimitive = 24
+    RuleFunction_definition = 4, RuleClass_method_definition = 5, RuleClass_operator_definition = 6, 
+    RuleSelf_declaration = 7, RuleSelf_descriptor = 8, RuleClass_operator_label = 9, 
+    RuleClass_definition = 10, RuleBase_class_name = 11, RuleClass_block_item = 12, 
+    RuleClass_compiler_directive = 13, RuleConditional_block = 14, RuleFor_block = 15, 
+    RuleUnpacking_list = 16, RuleUnpacking_item = 17, RuleWhile_block = 18, 
+    RuleDo_while_block = 19, RuleMatch_block = 20, RuleCase_block = 21, 
+    RuleFile_path_part = 22, RuleImport_label = 23, RuleBlock = 24, RuleBlock_item = 25, 
+    RuleConditional = 26, RuleExpr = 27, RuleDescriptor = 28, RulePrecision_qualifier = 29, 
+    RuleType = 30, RuleType_name = 31, RuleDeclaration = 32, RuleEos = 33, 
+    RuleBase_type = 34, RulePrimitive = 35
   };
 
   explicit iris_grammarParser(antlr4::TokenStream *input);
@@ -67,6 +77,15 @@ public:
   class Return_statementContext;
   class Import_statementContext;
   class Function_definitionContext;
+  class Class_method_definitionContext;
+  class Class_operator_definitionContext;
+  class Self_declarationContext;
+  class Self_descriptorContext;
+  class Class_operator_labelContext;
+  class Class_definitionContext;
+  class Base_class_nameContext;
+  class Class_block_itemContext;
+  class Class_compiler_directiveContext;
   class Conditional_blockContext;
   class For_blockContext;
   class Unpacking_listContext;
@@ -84,8 +103,10 @@ public:
   class DescriptorContext;
   class Precision_qualifierContext;
   class TypeContext;
+  class Type_nameContext;
   class DeclarationContext;
   class EosContext;
+  class Base_typeContext;
   class PrimitiveContext; 
 
   class  RootContext : public antlr4::ParserRuleContext {
@@ -95,6 +116,8 @@ public:
     antlr4::tree::TerminalNode *EOF();
     std::vector<Function_definitionContext *> function_definition();
     Function_definitionContext* function_definition(size_t i);
+    std::vector<Class_definitionContext *> class_definition();
+    Class_definitionContext* class_definition(size_t i);
     std::vector<StatementContext *> statement();
     StatementContext* statement(size_t i);
     std::vector<EosContext *> eos();
@@ -175,6 +198,156 @@ public:
   };
 
   Function_definitionContext* function_definition();
+
+  class  Class_method_definitionContext : public antlr4::ParserRuleContext {
+  public:
+    Class_method_definitionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *FUNC();
+    antlr4::tree::TerminalNode *LABEL();
+    Self_declarationContext *self_declaration();
+    BlockContext *block();
+    std::vector<DeclarationContext *> declaration();
+    DeclarationContext* declaration(size_t i);
+    TypeContext *type();
+    std::vector<antlr4::tree::TerminalNode *> NEWLINE();
+    antlr4::tree::TerminalNode* NEWLINE(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_method_definitionContext* class_method_definition();
+
+  class  Class_operator_definitionContext : public antlr4::ParserRuleContext {
+  public:
+    antlr4::Token *inline_ = nullptr;
+    Class_operator_definitionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *FUNC();
+    Class_operator_labelContext *class_operator_label();
+    Self_declarationContext *self_declaration();
+    BlockContext *block();
+    std::vector<DeclarationContext *> declaration();
+    DeclarationContext* declaration(size_t i);
+    TypeContext *type();
+    std::vector<antlr4::tree::TerminalNode *> NEWLINE();
+    antlr4::tree::TerminalNode* NEWLINE(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_operator_definitionContext* class_operator_definition();
+
+  class  Self_declarationContext : public antlr4::ParserRuleContext {
+  public:
+    Self_declarationContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    std::vector<Self_descriptorContext *> self_descriptor();
+    Self_descriptorContext* self_descriptor(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Self_declarationContext* self_declaration();
+
+  class  Self_descriptorContext : public antlr4::ParserRuleContext {
+  public:
+    Self_descriptorContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    DescriptorContext *descriptor();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Self_descriptorContext* self_descriptor();
+
+  class  Class_operator_labelContext : public antlr4::ParserRuleContext {
+  public:
+    Class_operator_labelContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_operator_labelContext* class_operator_label();
+
+  class  Class_definitionContext : public antlr4::ParserRuleContext {
+  public:
+    antlr4::Token *name = nullptr;
+    antlr4::Token *trait = nullptr;
+    Class_definitionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    Base_class_nameContext *base_class_name();
+    antlr4::tree::TerminalNode *AS();
+    std::vector<antlr4::tree::TerminalNode *> LABEL();
+    antlr4::tree::TerminalNode* LABEL(size_t i);
+    std::vector<Class_block_itemContext *> class_block_item();
+    Class_block_itemContext* class_block_item(size_t i);
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_definitionContext* class_definition();
+
+  class  Base_class_nameContext : public antlr4::ParserRuleContext {
+  public:
+    Base_class_nameContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    Base_typeContext *base_type();
+    antlr4::tree::TerminalNode *LABEL();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Base_class_nameContext* base_class_name();
+
+  class  Class_block_itemContext : public antlr4::ParserRuleContext {
+  public:
+    Class_block_itemContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    DeclarationContext *declaration();
+    antlr4::tree::TerminalNode *NEWLINE();
+    Class_compiler_directiveContext *class_compiler_directive();
+    Class_method_definitionContext *class_method_definition();
+    Class_operator_definitionContext *class_operator_definition();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_block_itemContext* class_block_item();
+
+  class  Class_compiler_directiveContext : public antlr4::ParserRuleContext {
+  public:
+    antlr4::Token *tag = nullptr;
+    antlr4::Token *label = nullptr;
+    Class_compiler_directiveContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *TARGET_LANGUAGE();
+    antlr4::tree::TerminalNode *STRING_LITERAL();
+    Precision_qualifierContext *precision_qualifier();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Class_compiler_directiveContext* class_compiler_directive();
 
   class  Conditional_blockContext : public antlr4::ParserRuleContext {
   public:
@@ -637,51 +810,12 @@ public:
 
   class  TypeContext : public antlr4::ParserRuleContext {
   public:
-    antlr4::Token *type_name = nullptr;
     TypeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    Type_nameContext *type_name();
     Precision_qualifierContext *precision_qualifier();
     std::vector<antlr4::tree::TerminalNode *> INT();
     antlr4::tree::TerminalNode* INT(size_t i);
-    antlr4::tree::TerminalNode *NONE();
-    antlr4::tree::TerminalNode *I8();
-    antlr4::tree::TerminalNode *I16();
-    antlr4::tree::TerminalNode *I32();
-    antlr4::tree::TerminalNode *U8();
-    antlr4::tree::TerminalNode *U16();
-    antlr4::tree::TerminalNode *U32();
-    antlr4::tree::TerminalNode *F8();
-    antlr4::tree::TerminalNode *F16();
-    antlr4::tree::TerminalNode *F32();
-    antlr4::tree::TerminalNode *F64();
-    antlr4::tree::TerminalNode *BOOL();
-    antlr4::tree::TerminalNode *VEC2();
-    antlr4::tree::TerminalNode *VEC3();
-    antlr4::tree::TerminalNode *VEC4();
-    antlr4::tree::TerminalNode *V2();
-    antlr4::tree::TerminalNode *V3();
-    antlr4::tree::TerminalNode *V4();
-    antlr4::tree::TerminalNode *M2();
-    antlr4::tree::TerminalNode *M3();
-    antlr4::tree::TerminalNode *M4();
-    antlr4::tree::TerminalNode *M2X2();
-    antlr4::tree::TerminalNode *M3X3();
-    antlr4::tree::TerminalNode *M4X4();
-    antlr4::tree::TerminalNode *M2X3();
-    antlr4::tree::TerminalNode *M3X2();
-    antlr4::tree::TerminalNode *M3X4();
-    antlr4::tree::TerminalNode *M4X3();
-    antlr4::tree::TerminalNode *M2X4();
-    antlr4::tree::TerminalNode *M4X2();
-    antlr4::tree::TerminalNode *MAT2();
-    antlr4::tree::TerminalNode *MAT3();
-    antlr4::tree::TerminalNode *MAT4();
-    antlr4::tree::TerminalNode *MAT2X3();
-    antlr4::tree::TerminalNode *MAT2X4();
-    antlr4::tree::TerminalNode *MAT3X2();
-    antlr4::tree::TerminalNode *MAT3X4();
-    antlr4::tree::TerminalNode *MAT4X2();
-    antlr4::tree::TerminalNode *MAT4X3();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -689,6 +823,20 @@ public:
   };
 
   TypeContext* type();
+
+  class  Type_nameContext : public antlr4::ParserRuleContext {
+  public:
+    Type_nameContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *LABEL();
+    Base_typeContext *base_type();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Type_nameContext* type_name();
 
   class  DeclarationContext : public antlr4::ParserRuleContext {
   public:
@@ -718,6 +866,20 @@ public:
 
   EosContext* eos();
 
+  class  Base_typeContext : public antlr4::ParserRuleContext {
+  public:
+    Base_typeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *NONE();
+    antlr4::tree::TerminalNode *BOOL();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Base_typeContext* base_type();
+
   class  PrimitiveContext : public antlr4::ParserRuleContext {
   public:
     PrimitiveContext(antlr4::ParserRuleContext *parent, size_t invokingState);
@@ -726,6 +888,7 @@ public:
     antlr4::tree::TerminalNode *FLOAT();
     antlr4::tree::TerminalNode *BOOLEAN();
     antlr4::tree::TerminalNode *LABEL();
+    antlr4::tree::TerminalNode *STRING_LITERAL();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

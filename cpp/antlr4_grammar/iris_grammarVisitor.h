@@ -29,6 +29,24 @@ public:
 
     virtual std::any visitFunction_definition(iris_grammarParser::Function_definitionContext *context) = 0;
 
+    virtual std::any visitClass_method_definition(iris_grammarParser::Class_method_definitionContext *context) = 0;
+
+    virtual std::any visitClass_operator_definition(iris_grammarParser::Class_operator_definitionContext *context) = 0;
+
+    virtual std::any visitSelf_declaration(iris_grammarParser::Self_declarationContext *context) = 0;
+
+    virtual std::any visitSelf_descriptor(iris_grammarParser::Self_descriptorContext *context) = 0;
+
+    virtual std::any visitClass_operator_label(iris_grammarParser::Class_operator_labelContext *context) = 0;
+
+    virtual std::any visitClass_definition(iris_grammarParser::Class_definitionContext *context) = 0;
+
+    virtual std::any visitBase_class_name(iris_grammarParser::Base_class_nameContext *context) = 0;
+
+    virtual std::any visitClass_block_item(iris_grammarParser::Class_block_itemContext *context) = 0;
+
+    virtual std::any visitClass_compiler_directive(iris_grammarParser::Class_compiler_directiveContext *context) = 0;
+
     virtual std::any visitConditional_block(iris_grammarParser::Conditional_blockContext *context) = 0;
 
     virtual std::any visitFor_block(iris_grammarParser::For_blockContext *context) = 0;
@@ -97,9 +115,13 @@ public:
 
     virtual std::any visitType(iris_grammarParser::TypeContext *context) = 0;
 
+    virtual std::any visitType_name(iris_grammarParser::Type_nameContext *context) = 0;
+
     virtual std::any visitDeclaration(iris_grammarParser::DeclarationContext *context) = 0;
 
     virtual std::any visitEos(iris_grammarParser::EosContext *context) = 0;
+
+    virtual std::any visitBase_type(iris_grammarParser::Base_typeContext *context) = 0;
 
     virtual std::any visitPrimitive(iris_grammarParser::PrimitiveContext *context) = 0;
 

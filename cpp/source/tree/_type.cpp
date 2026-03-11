@@ -1,13 +1,12 @@
 #include "tree/_type.h"
 #include <iostream>
 #include "tree/primitive.h"
+#include "tree/class_definition.h"
+#include "tree/declaration.h"
+#include "errors.h"
 
 BaseType::BaseType(std::weak_ptr<Module> module, std::shared_ptr<Label> name, const vector<size_t>& array_dimensions)
 : Expression(module), name(name), array_dimensions(array_dimensions) {}
-
-void BaseType::set_member(string key, std::weak_ptr<BaseType> member_type) {
-    members.insert_or_assign(key, member_type);
-}
 
 string BaseType::compile_array_dimensions() {
     string ret = "";
@@ -21,13 +20,20 @@ std::weak_ptr<BaseType> BaseType::type() {
     return weak_from_this();
 }
 
-Type::Type(std::weak_ptr<Module> module, std::shared_ptr<Label> name, std::optional<string> precision, const vector<size_t>& array_dimensions)
-: BaseType(module, name, array_dimensions), precision(precision) {
+Type::Type(std::weak_ptr<Module> module, std::shared_ptr<Label> name, std::optional<std::weak_ptr<ClassDefinition>> class_definition, std::optional<string> precision, const vector<size_t>& array_dimensions)
+: BaseType(module, name, array_dimensions), class_definition(class_definition), precision(precision) {
     if (array_dimensions.size()){
         auto new_vec = array_dimensions;
         new_vec.pop_back();
         dimension_reduced_u_ptr = std::make_shared<Type>(module.lock(), name, precision, new_vec);
     }
+}
+
+std::weak_ptr<BaseType> Type::get_member_type(std::weak_ptr<Primitive> member_key) {
+    if (class_definition.has_value())
+    return class_definition->lock()->get_struct_member(member_key).lock()->type();
+    else
+        throw_error(ErrorType::TYPE_ERROR, module, line_number, column_number, "The base type \"" + name->value + "\" does not have any struct members to query.");
 }
 
 string Type::compile() {
@@ -184,11 +190,15 @@ std::weak_ptr<BaseType> Type::dimension_reduced() {
 }
 
 TypeTuple::TypeTuple(std::weak_ptr<Module> module, vector<std::weak_ptr<BaseType>> types, const vector<size_t>& array_dimensions)
-: BaseType(module, std::make_shared<Label>(module, ""), array_dimensions), types(types) {
+: BaseType(module, std::make_shared<Label>(module, ""), array_dimensions) {
     for (size_t i = 0; i < types.size(); ++i) {
-        set_member(std::to_string(i), types[i]);
+        members.insert_or_assign(i, types[i]);
     }
-    name->value = get_mangled_name(types, array_dimensions);
+    
+    for (size_t i = 0; i < types.size(); ++i) {
+        set_member(i, types[i]);
+    }
+    name->value = get_mangled_name(members, array_dimensions);
 
     if (array_dimensions.size()) {
         auto new_vec = array_dimensions;
@@ -197,18 +207,33 @@ TypeTuple::TypeTuple(std::weak_ptr<Module> module, vector<std::weak_ptr<BaseType
     }
 }
 
-string TypeTuple::get_mangled_name(vector<std::weak_ptr<BaseType>> types, vector<size_t> array_dimensions) {
-    string mangled_name = "typetuple";
-    for (auto type : types) {
-        if (auto locked_type = type.lock()) {
+std::weak_ptr<BaseType> TypeTuple::get_member_type(std::weak_ptr<Primitive> member_key) {
+    auto member_key_lock = member_key.lock();
+    if (auto integer = std::dynamic_pointer_cast<Integer>(member_key_lock))
+    if (integer->value >= 0)
+        return members.at(integer->value);
+    else
+        throw_error(ErrorType::SYNTAX_ERROR, module, member_key_lock->line_number, member_key_lock->column_number, "The members of a tuple can only be accessed with a positive index.");
+    else
+        throw_error(ErrorType::SYNTAX_ERROR, module, member_key_lock->line_number, member_key_lock->column_number, "The members of a tuple can only be accessed using literal digits.");
+}
 
+void TypeTuple::set_member(size_t key, std::weak_ptr<BaseType> member_type) {
+    members.insert_or_assign(key, member_type);
+}
+
+string TypeTuple::get_mangled_name(map<size_t, std::weak_ptr<BaseType>> members, vector<size_t> array_dimensions) {
+    string mangled_name = "typetuple";
+    for (auto [key, type] : members) {
+        if (auto locked_type = type.lock()) {
+            mangled_name += std::to_string(key);
             if (auto derived = std::dynamic_pointer_cast<Type>(locked_type)) {
                 if (derived->precision) {
                     mangled_name += derived->precision.value();
                 }
                 mangled_name += derived->name->value;
             } else if (auto derived = std::dynamic_pointer_cast<TypeTuple>(locked_type)) {
-                mangled_name += TypeTuple::get_mangled_name(derived->types, derived->array_dimensions);
+                mangled_name += TypeTuple::get_mangled_name(derived->members, derived->array_dimensions);
             }
         }
     }
@@ -233,8 +258,8 @@ string TypeTuple::compile_type() {
 
 string TypeTuple::compile_struct() {
     string ret = "struct " + name->value + "{";
-    for (size_t i = 0; i < types.size(); ++i) {
-        ret +=  types[i].lock()->compile() + " _" + std::to_string(i) + ";";
+    for (auto [key, value] : members) {
+        ret +=  value.lock()->compile() + " _" + std::to_string(key) + ";";
     }
     ret += "}";
     return ret;
@@ -260,6 +285,22 @@ bool operator==(const std::shared_ptr<Type>& lhs, const std::shared_ptr<TypeTupl
     return false;
 }
 
-bool operator==(const std::shared_ptr<TypeTuple>& lhs, const std::shared_ptr<TypeTuple>& rhs){
+bool operator==(const std::shared_ptr<TypeTuple>& lhs, const std::shared_ptr<TypeTuple>& rhs) {
     return lhs->name->value == rhs->name->value;
+}
+
+bool operator==(const std::weak_ptr<Type>& lhs, const std::weak_ptr<Type>& rhs) {
+    return lhs.lock()->name->value == rhs.lock()->name->value && lhs.lock()->precision== rhs.lock()->precision;
+}
+
+bool operator==(const std::weak_ptr<TypeTuple>& lhs, const std::weak_ptr<Type>& rhs) {
+    return false;
+}
+
+bool operator==(const std::weak_ptr<Type>& lhs, const std::weak_ptr<TypeTuple>& rhs) {
+    return false;
+}
+
+bool operator==(const std::weak_ptr<TypeTuple>& lhs, const std::weak_ptr<TypeTuple>& rhs) {
+    return lhs.lock()->name->value == rhs.lock()->name->value;
 }

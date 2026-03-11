@@ -21,6 +21,7 @@ public:
     std::shared_ptr<BaseType> variable_type;
     std::shared_ptr<Expression> assignment;
 
+    bool contains_descriptor(string descriptor);
     string compile() override;
     string compile_no_assignment();
     std::weak_ptr<BaseType> type() override;

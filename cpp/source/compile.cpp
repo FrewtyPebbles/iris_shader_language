@@ -42,6 +42,10 @@ std::shared_ptr<Module> ModuleCompiler::compile(string name, string source, std:
 
 void ModuleCompiler::read_signatures(iris_grammarParser & parser, iris_grammarParser::RootContext* node) {
     // This method is where we will compile all of the signatures internal and external so we can know what exists globally
+    for (auto class_definition_node : node->class_definition()) {
+        read_class_definition(parser, class_definition_node);
+    }
+    
     for (auto statement : node->statement()) {
         read_statement(parser, statement);
     }
@@ -49,6 +53,59 @@ void ModuleCompiler::read_signatures(iris_grammarParser & parser, iris_grammarPa
     for (auto function_definition : node->function_definition()) {
         read_function_definition(parser, function_definition);
     }
+}
+
+void ModuleCompiler::read_class_definition(iris_grammarParser & parser, iris_grammarParser::Class_definitionContext* node) {
+    std::shared_ptr<Label> name;
+    unordered_map<string, std::shared_ptr<Declaration>> struct_members;
+    // the base_type is set on the second pass in case it derives a type defined after it.
+    unordered_map<string, std::weak_ptr<ClassMethodDefinition>> member_functions;
+    unordered_map<string, std::weak_ptr<ClassOperatorDefinition>> operator_functions;
+    unordered_map<string, vector<string>> compiler_directives;
+
+    name = std::make_shared<Label>(module, node->name->getText());
+
+    auto class_block_item_nodes = node->class_block_item();
+
+    // class body
+    for (auto class_block_item_node : class_block_item_nodes) {
+        // compiler directives
+        auto class_compiler_directive_node = class_block_item_node->class_compiler_directive();
+        if (class_compiler_directive_node) {
+            auto tag = class_compiler_directive_node->tag->getText();
+            if (tag == "comp_name") {
+                compiler_directives.insert_or_assign(
+                    "comp_name",
+                    vector<string>{
+                        class_compiler_directive_node->TARGET_LANGUAGE()->getText(),
+                        class_compiler_directive_node->label->getText()
+                    }
+                );
+            } else if (tag == "comp_precision") {
+                compiler_directives.insert_or_assign(
+                    "comp_precision",
+                    vector<string>{
+                        class_compiler_directive_node->precision_qualifier()->getText()
+                    }
+                );
+            }
+        }
+
+        auto class_method_definition_node = class_block_item_node->class_method_definition();
+        if (class_method_definition_node) {
+            auto class_method_definition = read_class_method_definition(parser, class_method_definition_node);
+            member_functions.insert_or_assign(class_method_definition->name->value, class_method_definition);
+        }
+
+        auto class_operator_definition_node = class_block_item_node->class_operator_definition();
+        if (class_operator_definition_node) {
+            auto class_operator_definition = read_class_operator_definition(parser, class_operator_definition_node);
+            operator_functions.insert_or_assign(class_operator_definition->name->value, class_operator_definition);
+        }
+    }
+
+    auto class_definition = std::make_shared<ClassDefinition>(module, name, std::nullopt, struct_members, member_functions, operator_functions, compiler_directives);
+    module->classes.insert_or_assign(name->value, class_definition);
 }
 
 void ModuleCompiler::read_function_definition(iris_grammarParser & parser, iris_grammarParser::Function_definitionContext* node) {
@@ -74,7 +131,7 @@ void ModuleCompiler::read_function_definition(iris_grammarParser & parser, iris_
         auto void_ret = std::make_shared<Label>(module, "none");
         void_ret->line_number = name->line_number;
         void_ret->column_number = name->column_number;
-        return_type = std::make_shared<Type>(module, void_ret);
+        return_type = std::make_shared<Type>(module, void_ret, module->classes.at("none"));
         return_type->line_number = name->line_number;
         return_type->column_number = name->column_number;
     }
@@ -390,10 +447,13 @@ std::shared_ptr<BaseType> ModuleCompiler::compile_type(iris_grammarParser & pars
     for (auto dimension : node->INT()) {
         dimensions.push_back(std::stoi(dimension->getText()));
     }
-    name = std::make_shared<Label>(module, node->type_name->getText());
 
-    name->line_number = node->type_name->getLine();
-    name->column_number = node->type_name->getCharPositionInLine();
+    auto type_name_node = node->type_name();
+
+    name = std::make_shared<Label>(module, type_name_node->getText());
+
+    name->line_number = type_name_node->start->getLine();
+    name->column_number = type_name_node->start->getCharPositionInLine();
     
     auto precision_node = node->precision_qualifier();
 
@@ -401,7 +461,7 @@ std::shared_ptr<BaseType> ModuleCompiler::compile_type(iris_grammarParser & pars
         precision = precision_node->getText();
     }
 
-    return std::make_shared<Type>(module, name, precision, dimensions);
+    return std::make_shared<Type>(module, name, module->classes.at(name->value), precision, dimensions);
 }
 
 std::shared_ptr<Descriptor> ModuleCompiler::compile_descriptor(iris_grammarParser & parser, iris_grammarParser::DescriptorContext* node) {

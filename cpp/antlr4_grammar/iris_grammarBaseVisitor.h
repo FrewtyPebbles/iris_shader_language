@@ -35,6 +35,42 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitClass_method_definition(iris_grammarParser::Class_method_definitionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_operator_definition(iris_grammarParser::Class_operator_definitionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitSelf_declaration(iris_grammarParser::Self_declarationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitSelf_descriptor(iris_grammarParser::Self_descriptorContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_operator_label(iris_grammarParser::Class_operator_labelContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_definition(iris_grammarParser::Class_definitionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitBase_class_name(iris_grammarParser::Base_class_nameContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_block_item(iris_grammarParser::Class_block_itemContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitClass_compiler_directive(iris_grammarParser::Class_compiler_directiveContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitConditional_block(iris_grammarParser::Conditional_blockContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -171,11 +207,19 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitType_name(iris_grammarParser::Type_nameContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitDeclaration(iris_grammarParser::DeclarationContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual std::any visitEos(iris_grammarParser::EosContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitBase_type(iris_grammarParser::Base_typeContext *ctx) override {
     return visitChildren(ctx);
   }
 
